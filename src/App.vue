@@ -1,52 +1,32 @@
 <template>
-  <div class="home">
-    <button v-on:click="postTweet">ツイート</button>
-    <!-- 変更点１ -->
-    <div>
-      <p v-for="tweet in tweets" :key="tweet.id">
-        {{ tweet.text }}
-      </p>
+  <div id="app">
+    <div id="nav">
+      <router-link to="/">Home</router-link> |
+      <router-link to="/about">About</router-link>
     </div>
+    <router-view />
   </div>
 </template>
 
-<script>
-import db from "@/firebase";
+<style>
+#app {
+  font-family: Avenir, Helvetica, Arial, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-align: center;
+  color: #2c3e50;
+}
 
-export default {
-  name: "home",
-  data() {
-    return {
-      /* 変更点１ */
-      tweets: [
-        // {
-        //   id: "0GwoGZuhTNhqHQDBeiVW",
-        //   text: "こんにちは、ツイートの本文です。"
-        // }
-      ],
-    };
-  },
-  methods: {
-    postTweet() {
-      db.collection("tweets").add({
-        text: "こんにちは、ツイートの本文です。",
-      });
-    },
-  },
-  /* 変更点２ */
-  created() {
-    db.collection("tweets")
-      .get()
-      .then(snapshot => {
-        snapshot.docs.forEach(doc => {
-          this.tweets.push({
-            id: doc.id,
-            ...doc.data(),
-          });
-        });
-      });
-  },
-};
-</script>
+#nav {
+  padding: 30px;
+}
 
-<style></style>
+#nav a {
+  font-weight: bold;
+  color: #2c3e50;
+}
+
+#nav a.router-link-exact-active {
+  color: #42b983;
+}
+</style>
