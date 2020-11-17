@@ -5,6 +5,12 @@
     <input type="email" v-model="email" placeholder="example@mail.com" />
     <input type="password" v-model="password" placeholder="パスワード" />
     <button v-on:click="login">ログイン</button>
+
+    <div class="signin/up">
+      アカウントをお持ちでない方→<router-link to="/signup"
+        >サインアップ</router-link
+      >
+    </div>
   </div>
 </template>
 
