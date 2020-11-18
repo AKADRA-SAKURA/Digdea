@@ -7,6 +7,7 @@
     <button v-on:click="login">ログイン</button>
 
     <button v-on:click="google">Googleアカウントでログイン</button>
+    <router-link to="/signup">初めての方はこちら</router-link> |
   </div>
 </template>
 

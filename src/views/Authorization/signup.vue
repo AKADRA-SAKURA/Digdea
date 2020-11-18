@@ -10,6 +10,7 @@
       placeholder="パスワード(確認用)"
     />
     <button v-on:click="signup">サインアップ</button>
+    <router-link to="/signin">アカウントをお持ちの方はこちら</router-link> |
   </div>
 </template>
 

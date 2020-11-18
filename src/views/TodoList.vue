@@ -7,6 +7,7 @@
     <div v-for="obj in List" v-bind:key="obj">
       {{ obj.todo }}
     </div>
+    <button v-on:click="logout">ログアウト</button>
   </div>
 </template>
 
@@ -48,6 +49,19 @@ export default {
           created_at: this.now,
         });
       this.todolist == "";
+    },
+    logout() {
+      firebase
+        .auth()
+        .signOut()
+        .then(() => {
+          this.$router.push("/signin");
+          // Sign-out successful.
+        })
+        .catch(function(error) {
+          alert("ログアウトできませんでした" + error);
+          // An error happened.
+        });
     },
   },
   mounted() {
