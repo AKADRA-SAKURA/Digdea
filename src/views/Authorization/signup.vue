@@ -10,6 +10,7 @@
       placeholder="パスワード(確認用)"
     />
     <button v-on:click="signup">サインアップ</button>
+    <router-link to="/signin">アカウントをお持ちの方はこちら</router-link> |
   </div>
 </template>
 
@@ -46,8 +47,8 @@ export default {
         })
         .catch(function(error) {
           // Handle Errors here.
-          var errorCode = error.code;
-          var errorMessage = error.message;
+          const errorCode = error.code;
+          const errorMessage = error.message;
           // ...
           alert(
             "ログインに失敗しました エラーコード" +
