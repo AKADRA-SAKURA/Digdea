@@ -1,6 +1,7 @@
 import Vue from "vue";
 import VueRouter from "vue-router";
 import Home from "../views/Home.vue";
+import Calendar from "../views/Calendar.vue";
 import firebase from "firebase";
 
 Vue.use(VueRouter);
@@ -45,6 +46,11 @@ const routes = [
       import(
         /* webpackChunkName: "about" */ "../views/Authorization/signup.vue"
       ),
+  },
+  {
+    path: "/calendar",
+    name: "Calendar",
+    component: Calendar,
   },
 ];
 
