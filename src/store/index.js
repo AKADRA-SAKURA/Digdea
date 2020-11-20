@@ -12,6 +12,7 @@ const store = new Vuex.Store({
     //メソッド
     setUserId(state, payload) {
       state.now_user_id = payload.userId;
+      console.log(state.now_user_id);
     },
   },
   getters: {
