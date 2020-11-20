@@ -69,7 +69,7 @@ export default {
           timelimit: this.timelimit,
           created_at: this.nowtime,
         });
-      this.goaltext == "", this.status == false, this.timelimit == "";
+      this.goaltext === "", this.status === false, this.timelimit === "";
     },
   },
   mounted() {

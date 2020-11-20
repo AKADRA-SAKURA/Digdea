@@ -16,6 +16,7 @@
 <script>
 // @ is an alias to /src
 import firebase from "firebase";
+/* import store from "../store"; */
 
 export default {
   name: "List",
@@ -51,7 +52,7 @@ export default {
           todo: this.todolist,
           created_at: this.now,
           limit: this.timelimit,
-          /*           user_id: now_user_id, */
+          /*           user_id: store.state.now_user_id, */
         });
       this.todolist == "";
       this.timelimit == "";

@@ -16,7 +16,7 @@ const store = new Vuex.Store({
   },
   getters: {
     getUserId(state) {
-      return state.userId;
+      return state.now_user_id;
     },
   },
   actions: {
