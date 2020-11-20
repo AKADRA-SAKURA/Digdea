@@ -1,6 +1,8 @@
 <template>
   <div>
-    <input type="text" v-model="todolist" v-on:keyup.enter="addlist" />
+    todo :
+    <input type="text" v-model="todolist" v-on:keyup.enter="addlist" /> 期限 :
+    <input type="date" v-model="timelimit" v-on:keyup.enter="addlist" />
     <button v-on:click="addlist" v-on:keyup.enter="addlist">
       送信
     </button>
@@ -22,6 +24,7 @@ export default {
     return {
       List: [],
       todolist: "",
+      timelimit: "",
       now: "00:00:00",
     };
   },
@@ -47,8 +50,11 @@ export default {
         .add({
           todo: this.todolist,
           created_at: this.now,
+          limit: this.timelimit,
+          /*           user_id: now_user_id, */
         });
       this.todolist == "";
+      this.timelimit == "";
     },
     logout() {
       firebase
@@ -68,6 +74,7 @@ export default {
     firebase
       .firestore()
       .collection("todo")
+      /*       .where("user_id", "==", "now_user_id") */
       .get()
       .then(snapshot => {
         snapshot.docs.forEach(doc => {

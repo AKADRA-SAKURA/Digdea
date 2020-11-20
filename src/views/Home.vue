@@ -5,11 +5,7 @@
     <h1>ホームです</h1>
     目標 :<input type="text" v-model="goaltext" v-on:keyup.enter="addgoal" />
     状態 :<input type="checkbox" v-model="status" v-on:keyup.enter="addgoal" />
-    期限 :<input
-      type="datetime"
-      v-model="timelimit"
-      v-on:keyup.enter="addgoal"
-    />
+    期限 :<input type="date" v-model="timelimit" v-on:keyup.enter="addgoal" />
     <button v-on:click="addgoal" v-on:keyup.enter="addgoal">
       送信
     </button>
