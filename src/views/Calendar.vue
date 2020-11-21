@@ -2,10 +2,9 @@
   <div>
     <button @click="toggleWeekends">toggle weekends</button>
     <FullCalendar :options="calendarOptions" />
-     <div class="example-modal-window">
-      <p>ボタンを押すとモーダルウィンドウが開きます</p>
+    <!-- モーダル -->
+    <div class="example-modal-window">
       <button @click="openModal">開く</button>
-
       <!-- コンポーネント MyModal -->
       <Modal @close="closeModal" v-if="modal">
         <!-- default スロットコンテンツ -->
@@ -27,12 +26,21 @@ import FullCalendar from '@fullcalendar/vue'
 import dayGridPlugin from '@fullcalendar/daygrid'
 import interactionPlugin from '@fullcalendar/interaction'
 import Modal from '../components/modal.vue'
+// import TodoList from './TodoList'
+import { mapGetters } from 'vuex'
+
 
 export default {
   
   components: {
     FullCalendar, // make the <FullCalendar> tag available
     Modal,
+    // TodoList,
+  },
+  computed: {
+    ...mapGetters([
+      'allTodos',
+    ]),
   },
   data() {
     return {
@@ -40,16 +48,16 @@ export default {
         
         plugins: [ dayGridPlugin, interactionPlugin ],
         initialView: 'dayGridMonth',
-        weekends: false, // initial value,
-        events: [
-          { title: 'おぬまっち', date: '2020-11-20' },
-          { title: 'event 2', date: '2020-11-02' },
-          { title: 'ホゲホゲ', date: '2020-11-21' }
+        weekends: true, // initial value,
+        events: [ 
         ]
       },
       modal: false,
       message: ''
     }
+  },
+  created(){
+    this.addEvent()
   },
   methods: {
     toggleWeekends: function() {
@@ -69,7 +77,20 @@ export default {
       } else {
         alert('メッセージを入力してください')
       }
+    },
+    // イベントを追加する関数
+    addEvent(){
+      this.calendarOptions.events = this.$store.getters.allTodos
     }
+  },
+  // 読み込んだと同時にカレンダーを更新する
+  mounted(){
+    this.$store.watch(
+      (state, getters) => getters.allTodos,
+      () => {
+      this.addEvent()
+      }
+    )
   }
 }
 </script>

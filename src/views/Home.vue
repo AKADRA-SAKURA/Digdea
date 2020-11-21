@@ -1,7 +1,6 @@
 <template>
   <div class="home">
     <img alt="Vue logo" src="../assets/logo.png" />
-    <HelloWorld msg="Welcome to Your Vue.js App" />
     <h1>ホームです</h1>
     目標 :<input type="text" v-model="goaltext" v-on:keyup.enter="addgoal" />
     状態 :<input type="checkbox" v-model="status" v-on:keyup.enter="addgoal" />
@@ -9,7 +8,7 @@
     <button v-on:click="addgoal" v-on:keyup.enter="addgoal">
       送信
     </button>
-    <div v-for="obj in goalList" v-bind:key="obj">
+    <div v-for="(obj,index) in goalList" v-bind:key="index">
       {{ obj.text }}, {{ obj.status }}, {{ obj.timelimit }}
     </div>
     <button v-on:click="logout">ログアウト</button>
