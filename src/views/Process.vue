@@ -71,6 +71,18 @@ export default {
           memo: this.memo,
           created_at: this.nowtime,
         });
+      firebase
+        .firestore()
+        .collection("process")
+        .get()
+        .then(snapshot => {
+          snapshot.docs.forEach(doc => {
+            this.List.push({
+              id: doc.id,
+              ...doc.data(),
+            });
+          });
+        });
       this.now == "",
         this.need == "",
         this.facto == "",

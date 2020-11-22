@@ -54,6 +54,18 @@ export default {
           limit: this.timelimit,
           user_id: store.state.now_user_id,
         });
+      firebase
+        .firestore()
+        .collection("todo")
+        .get()
+        .then(snapshot => {
+          snapshot.docs.forEach(doc => {
+            this.List.push({
+              id: doc.id,
+              ...doc.data(),
+            });
+          });
+        });
       this.todolist == "";
       this.timelimit == "";
     },
@@ -75,7 +87,7 @@ export default {
     firebase
       .firestore()
       .collection("todo")
-      .where("user_id", "==", "now_user_id")
+      /*       .where("user_id", "==", "now_user_id") */
       .get()
       .then(snapshot => {
         snapshot.docs.forEach(doc => {

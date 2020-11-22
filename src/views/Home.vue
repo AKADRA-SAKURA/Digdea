@@ -69,6 +69,18 @@ export default {
           timelimit: this.timelimit,
           created_at: this.nowtime,
         });
+      firebase
+        .firestore()
+        .collection("goal")
+        .get()
+        .then(snapshot => {
+          snapshot.docs.forEach(doc => {
+            this.List.push({
+              id: doc.id,
+              ...doc.data(),
+            });
+          });
+        });
       this.goaltext === "", this.status === false, this.timelimit === "";
     },
   },
