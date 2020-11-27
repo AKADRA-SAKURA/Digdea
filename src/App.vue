@@ -3,14 +3,44 @@
     <div id="nav">
       <router-link to="/">Home</router-link> |
       <router-link to="/process">Process</router-link> |
-      <router-link to="/todolist">TodoList</router-link>
+      <router-link to="/todolist">TodoList</router-link> |
+      <router-link to="/calendar">Calendar</router-link>
     </div>
     <router-view />
   </div>
 </template>
 
 <script>
-export default {};
+import firebase from "firebase";
+
+export default {
+  mounted() {
+    firebase
+      .firestore()
+      .collection("todo")
+      /*       .where("user_id", "==", "now_user_id") */
+      .get()
+      .then(snapshot => {
+        const list = []
+        snapshot.docs.forEach(doc => {
+          list.push({
+            id: doc.id,
+            ...doc.data(),
+          });
+        });
+        //vuexにもデータを同時に入れてる
+        const newTodos = list.map(todo => {
+        const obj = {}
+        obj.date = todo.limit
+        obj.title = todo.todo
+        return obj
+        })
+      this.$store.dispatch("setTodoAction",{"todos": newTodos})
+
+      });
+     
+  },
+};
 </script>
 
 <style>

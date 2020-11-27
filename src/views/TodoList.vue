@@ -1,13 +1,15 @@
 <template>
   <div>
     todo :
-    <input type="text" v-model="todolist" v-on:keyup.enter="addlist" /> 期限 :
+    <input type="text" v-model="text" v-on:keyup.enter="addlist" /> 期限 :
     <input type="date" v-model="timelimit" v-on:keyup.enter="addlist" />
     <button v-on:click="addlist" v-on:keyup.enter="addlist">
       送信
     </button>
-    <div v-for="obj in List" v-bind:key="obj">
+    <!-- indexはv-forで一つ増えるためkeyにできる -->
+    <div v-for="(obj,index) in List" v-bind:key="index">
       {{ obj.todo }}
+      {{ obj.limit }}
     </div>
     <button v-on:click="logout">ログアウト</button>
   </div>
@@ -24,7 +26,7 @@ export default {
   data() {
     return {
       List: [],
-      todolist: "",
+      text: "",
       timelimit: "",
       now: "00:00:00",
     };
@@ -44,17 +46,25 @@ export default {
         date.getMinutes() +
         ":" +
         date.getSeconds();
-      this.List.push(this.todolist);
+      this.List.push(this.text);
       firebase
         .firestore()
         .collection("todo")
         .add({
-          todo: this.todolist,
+          todo: this.text,
           created_at: this.now,
           limit: this.timelimit,
           /*           user_id: store.state.now_user_id, */
         });
-      this.todolist == "";
+      // todoの中身の情報を整形する
+      const newTodos = this.List.map(todo => {
+        const obj = {}
+        obj.date = todo.limit
+        obj.title = todo.todo
+        return obj
+        })
+      this.$store.dispatch("setTodoAction",{"todos": newTodos})
+      this.text == "";
       this.timelimit == "";
     },
     logout() {
@@ -84,6 +94,15 @@ export default {
             ...doc.data(),
           });
         });
+        //ページ読み込んだと同時にvuexにもデータを同時に入れてる
+        const newTodos = this.List.map(todo => {
+        const obj = {}
+        obj.date = todo.limit
+        obj.title = todo.todo
+        return obj
+        })
+      this.$store.dispatch("setTodoAction",{"todos": newTodos})
+
       });
   },
 };
