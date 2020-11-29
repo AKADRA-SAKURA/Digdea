@@ -1,9 +1,9 @@
 <template>
   <div>
     todo :
-    <input type="text" v-model="text" v-on:keyup.enter="addlist" /> 期限 :
-    <input type="date" v-model="timelimit" v-on:keyup.enter="addlist" />
-    <button v-on:click="addlist" v-on:keyup.enter="addlist">
+    <input type="text" v-model="text" /> 期限 :
+    <input type="date" v-model="timelimit" />
+    <button v-on:click="addlist">
       送信
     </button>
     <div v-for="(obj, index) in List" :key="index">
@@ -58,6 +58,7 @@ export default {
         .firestore()
         .collection("todo")
         .where("user_id", "==", store.getters.getUserId)
+        .where("process_id", "==", store.getters.getProcessId)
         .get()
         .then(snapshot => {
           snapshot.docs.forEach(doc => {
@@ -69,12 +70,12 @@ export default {
         });
       // todoの中身の情報を整形する
       const newTodos = this.List.map(todo => {
-        const obj = {}
-        obj.date = todo.limit
-        obj.title = todo.todo
-        return obj
-        })
-      this.$store.dispatch("setTodoAction",{"todos": newTodos})
+        const obj = {};
+        obj.date = todo.limit;
+        obj.title = todo.todo;
+        return obj;
+      });
+      this.$store.dispatch("setTodoAction", { todos: newTodos });
       this.text == "";
       this.timelimit == "";
     },
@@ -97,6 +98,7 @@ export default {
       .firestore()
       .collection("todo")
       .where("user_id", "==", store.getters.getUserId)
+      .where("process_id", "==", store.getters.getProcessId)
       .get()
       .then(snapshot => {
         snapshot.docs.forEach(doc => {
@@ -107,13 +109,12 @@ export default {
         });
         //ページ読み込んだと同時にvuexにもデータを同時に入れてる
         const newTodos = this.List.map(todo => {
-        const obj = {}
-        obj.date = todo.limit
-        obj.title = todo.todo
-        return obj
-        })
-      this.$store.dispatch("setTodoAction",{"todos": newTodos})
-
+          const obj = {};
+          obj.date = todo.limit;
+          obj.title = todo.todo;
+          return obj;
+        });
+        this.$store.dispatch("setTodoAction", { todos: newTodos });
       });
   },
 };

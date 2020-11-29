@@ -2,13 +2,19 @@
   <div class="home">
     <img alt="Vue logo" src="../assets/logo.png" />
     <h1>ホームです</h1>
-    目標 :<input type="text" v-model="goaltext" v-on:keyup.enter="addgoal" />
-    状態 :<input type="checkbox" v-model="status" v-on:keyup.enter="addgoal" />
-    期限 :<input type="date" v-model="timelimit" v-on:keyup.enter="addgoal" />
-    <button v-on:click="addgoal" v-on:keyup.enter="addgoal">
+    目標 :<input type="text" v-model="goaltext" /> 状態 :<input
+      type="checkbox"
+      v-model="status"
+    />
+    期限 :<input type="date" v-model="timelimit" />
+    <button v-on:click="addgoal">
       送信
     </button>
-    <div v-for="(obj, index) in goalList" :key="index">
+    <div
+      v-for="(obj, index) in goalList"
+      :key="index"
+      v-on:click="ToProcess(index)"
+    >
       {{ obj.text }}, {{ obj.status }}, {{ obj.timelimit }}
     </div>
     <button v-on:click="logout">ログアウト</button>
@@ -46,6 +52,10 @@ export default {
           // An error happened.
         });
     },
+    ToProcess(index) {
+      store.dispatch("setGoalIdAction", { id: this.goalList[index].id });
+      this.$router.push("/process");
+    },
     addgoal() {
       var date = new Date();
       this.nowtime =
@@ -82,6 +92,7 @@ export default {
               ...doc.data(),
             });
           });
+          /*           console.log(this.List); */
         });
       this.goaltext === "", this.status === false, this.timelimit === "";
     },
@@ -99,6 +110,7 @@ export default {
             ...doc.data(),
           });
         });
+        /*         console.log(this.goalList); */
       });
   },
 };
