@@ -16,7 +16,7 @@
     <button v-on:click="addprocess" v-on:keyup.enter="addprocess">
       送信
     </button>
-    <div v-for="obj in processlisttype" v-bind:key="obj">
+    <div v-for="(obj, index) in processlisttype" :key="index">
       {{ obj.now }}, {{ obj.need }}, {{ obj.factor }}, {{ obj.emerge }},
       {{ obj.essential }}, {{ obj.memo }}
     </div>
@@ -27,6 +27,7 @@
 <script>
 // @ is an alias to /src
 import firebase from "firebase";
+import store from "../store";
 
 export default {
   name: "Process",
@@ -62,6 +63,7 @@ export default {
       firebase
         .firestore()
         .collection("process")
+        .where("user_id", "==", store.getters.getUserId)
         .add({
           now: this.now,
           need: this.need,
@@ -70,6 +72,20 @@ export default {
           emerge: this.emerge,
           memo: this.memo,
           created_at: this.nowtime,
+          user_id: store.state.now_user_id,
+        });
+      firebase
+        .firestore()
+        .collection("process")
+        .where("this.user_id", "==", "now_user_id")
+        .get()
+        .then(snapshot => {
+          snapshot.docs.forEach(doc => {
+            this.List.push({
+              id: doc.id,
+              ...doc.data(),
+            });
+          });
         });
       this.now == "",
         this.need == "",
@@ -96,6 +112,7 @@ export default {
     firebase
       .firestore()
       .collection("process")
+      .where("user_id", "==", store.getters.getUserId)
       .get()
       .then(snapshot => {
         snapshot.docs.forEach(doc => {

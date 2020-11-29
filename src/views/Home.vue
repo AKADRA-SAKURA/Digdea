@@ -8,7 +8,7 @@
     <button v-on:click="addgoal" v-on:keyup.enter="addgoal">
       送信
     </button>
-    <div v-for="(obj,index) in goalList" v-bind:key="index">
+    <div v-for="(obj, index) in goalList" :key="index">
       {{ obj.text }}, {{ obj.status }}, {{ obj.timelimit }}
     </div>
     <button v-on:click="logout">ログアウト</button>
@@ -18,6 +18,7 @@
 <script>
 // @ is an alias to /src
 import firebase from "firebase";
+import store from "../store";
 
 export default {
   name: "GOAL",
@@ -67,6 +68,20 @@ export default {
           status: this.status,
           timelimit: this.timelimit,
           created_at: this.nowtime,
+          user_id: store.state.now_user_id,
+        });
+      firebase
+        .firestore()
+        .collection("goal")
+        .where("user_id", "==", store.getters.getUserId)
+        .get()
+        .then(snapshot => {
+          snapshot.docs.forEach(doc => {
+            this.List.push({
+              id: doc.id,
+              ...doc.data(),
+            });
+          });
         });
       this.goaltext === "", this.status === false, this.timelimit === "";
     },
@@ -75,6 +90,7 @@ export default {
     firebase
       .firestore()
       .collection("goal")
+      .where("user_id", "==", store.getters.getUserId)
       .get()
       .then(snapshot => {
         snapshot.docs.forEach(doc => {

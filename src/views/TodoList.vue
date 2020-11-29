@@ -6,10 +6,8 @@
     <button v-on:click="addlist" v-on:keyup.enter="addlist">
       送信
     </button>
-    <!-- indexはv-forで一つ増えるためkeyにできる -->
-    <div v-for="(obj,index) in List" v-bind:key="index">
-      {{ obj.todo }}
-      {{ obj.limit }}
+    <div v-for="(obj, index) in List" :key="index">
+      {{ obj.todo }} / {{ obj.limit }}
     </div>
     <button v-on:click="logout">ログアウト</button>
   </div>
@@ -18,7 +16,7 @@
 <script>
 // @ is an alias to /src
 import firebase from "firebase";
-/* import store from "../store"; */
+import store from "../store";
 
 export default {
   name: "List",
@@ -54,7 +52,20 @@ export default {
           todo: this.text,
           created_at: this.now,
           limit: this.timelimit,
-          /*           user_id: store.state.now_user_id, */
+          user_id: store.state.now_user_id,
+        });
+      firebase
+        .firestore()
+        .collection("todo")
+        .where("user_id", "==", store.getters.getUserId)
+        .get()
+        .then(snapshot => {
+          snapshot.docs.forEach(doc => {
+            this.List.push({
+              id: doc.id,
+              ...doc.data(),
+            });
+          });
         });
       // todoの中身の情報を整形する
       const newTodos = this.List.map(todo => {
@@ -85,7 +96,7 @@ export default {
     firebase
       .firestore()
       .collection("todo")
-      /*       .where("user_id", "==", "now_user_id") */
+      .where("user_id", "==", store.getters.getUserId)
       .get()
       .then(snapshot => {
         snapshot.docs.forEach(doc => {
