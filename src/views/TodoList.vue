@@ -6,8 +6,8 @@
     <button v-on:click="addlist" v-on:keyup.enter="addlist">
       送信
     </button>
-    <div v-for="obj in List" v-bind:key="obj">
-      {{ obj.todo }}
+    <div v-for="(obj, index) in List" :key="index">
+      {{ obj.todo }} / {{ obj.limit }}
     </div>
     <button v-on:click="logout">ログアウト</button>
   </div>
@@ -57,6 +57,7 @@ export default {
       firebase
         .firestore()
         .collection("todo")
+        .where("user_id", "==", store.getters.getUserId)
         .get()
         .then(snapshot => {
           snapshot.docs.forEach(doc => {
@@ -87,7 +88,7 @@ export default {
     firebase
       .firestore()
       .collection("todo")
-      /*       .where("user_id", "==", "now_user_id") */
+      .where("user_id", "==", store.getters.getUserId)
       .get()
       .then(snapshot => {
         snapshot.docs.forEach(doc => {

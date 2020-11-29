@@ -1,7 +1,7 @@
 import Vue from "vue";
 import VueRouter from "vue-router";
 import Home from "../views/Home.vue";
-import firebase from "firebase";
+/* import firebase from "firebase"; */
 import store from "../store";
 
 Vue.use(VueRouter);
@@ -60,19 +60,14 @@ router.beforeEach((to, from, next) => {
   if (requiresAuth) {
     // このルートはログインされているかどうか認証が必要です。
     // もしされていないならば、ログインページにリダイレクトします。
-    firebase.auth().onAuthStateChanged(user => {
-      if (user) {
-        console.log(user);
-        store.dispatch("setUserIdAction", { id: user.uid });
-        next();
-      } else {
-        console.log(user);
-        next({
-          path: "/signin",
-          query: { redirect: to.fullPath },
-        });
-      }
-    });
+    if (store.getters.getUserId != null) {
+      next();
+    } else {
+      next({
+        path: "/signin",
+        query: { redirect: to.fullPath },
+      });
+    }
   } else {
     next(); // next() を常に呼び出すようにしてください!
   }

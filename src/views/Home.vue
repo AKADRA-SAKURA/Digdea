@@ -1,7 +1,6 @@
 <template>
   <div class="home">
     <img alt="Vue logo" src="../assets/logo.png" />
-    <HelloWorld msg="Welcome to Your Vue.js App" />
     <h1>ホームです</h1>
     目標 :<input type="text" v-model="goaltext" v-on:keyup.enter="addgoal" />
     状態 :<input type="checkbox" v-model="status" v-on:keyup.enter="addgoal" />
@@ -9,7 +8,7 @@
     <button v-on:click="addgoal" v-on:keyup.enter="addgoal">
       送信
     </button>
-    <div v-for="obj in goalList" v-bind:key="obj">
+    <div v-for="(obj, index) in goalList" :key="index">
       {{ obj.text }}, {{ obj.status }}, {{ obj.timelimit }}
     </div>
     <button v-on:click="logout">ログアウト</button>
@@ -19,6 +18,7 @@
 <script>
 // @ is an alias to /src
 import firebase from "firebase";
+import store from "../store";
 
 export default {
   name: "GOAL",
@@ -68,10 +68,12 @@ export default {
           status: this.status,
           timelimit: this.timelimit,
           created_at: this.nowtime,
+          user_id: store.state.now_user_id,
         });
       firebase
         .firestore()
         .collection("goal")
+        .where("user_id", "==", store.getters.getUserId)
         .get()
         .then(snapshot => {
           snapshot.docs.forEach(doc => {
@@ -88,6 +90,7 @@ export default {
     firebase
       .firestore()
       .collection("goal")
+      .where("user_id", "==", store.getters.getUserId)
       .get()
       .then(snapshot => {
         snapshot.docs.forEach(doc => {

@@ -1,5 +1,7 @@
 import firebase from "firebase";
 import "firebase/firestore";
+import store from "@/store/index.js";
+
 // For Firebase JS SDK v7.20.0 and later, measurementId is optional
 const firebaseConfig = {
   apiKey: "AIzaSyD1gxX9ayhgCl_wasdWfVR2RtvJqnnGzp8",
@@ -14,3 +16,12 @@ const firebaseConfig = {
 if (!firebase.apps.length) {
   firebase.initializeApp(firebaseConfig);
 }
+
+firebase.auth().onAuthStateChanged(user => {
+  if (user) {
+    console.log(user);
+    store.dispatch("setUserIdAction", { id: user.uid });
+  } else {
+    console.log(user);
+  }
+});
