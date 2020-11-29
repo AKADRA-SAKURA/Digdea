@@ -76,6 +76,7 @@ export default {
           memo: this.memo,
           created_at: this.nowtime,
           user_id: store.state.now_user_id,
+          goal_id: store.getters.getGoalId,
         });
       firebase
         .firestore()

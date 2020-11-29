@@ -21,7 +21,7 @@ export default {
       /*       .where("user_id", "==", "now_user_id") */
       .get()
       .then(snapshot => {
-        const list = []
+        const list = [];
         snapshot.docs.forEach(doc => {
           list.push({
             id: doc.id,
@@ -30,15 +30,13 @@ export default {
         });
         //vuexにもデータを同時に入れてる
         const newTodos = list.map(todo => {
-        const obj = {}
-        obj.date = todo.limit
-        obj.title = todo.todo
-        return obj
-        })
-      this.$store.dispatch("setTodoAction",{"todos": newTodos})
-
+          const obj = {};
+          obj.date = todo.limit;
+          obj.title = todo.todo;
+          return obj;
+        });
+        this.$store.dispatch("setTodoAction", { todos: newTodos });
       });
-     
   },
 };
 </script>

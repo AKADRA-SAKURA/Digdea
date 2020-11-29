@@ -7,8 +7,22 @@
       送信
     </button>
     <div v-for="(obj, index) in List" :key="index">
-      {{ obj.todo }} / {{ obj.limit }}
+      {{ obj.todo }} / {{ obj.limit }} :
+      <!--       <button class="delete" @click="show = !show">
+        ×
+      </button> -->
     </div>
+    <!--     <div v-show="show == false" id="overlay">
+      <div id="delateAlarm">
+        <p>この投稿を削除します</p>
+        <button @click="show = !show">
+          戻る
+        </button>
+        <button @click="deleteItem(index)">
+          削除
+        </button>
+      </div>
+    </div> -->
     <button v-on:click="logout">ログアウト</button>
   </div>
 </template>
@@ -27,6 +41,7 @@ export default {
       text: "",
       timelimit: "",
       now: "00:00:00",
+      show: true,
     };
   },
   methods: {
@@ -53,6 +68,7 @@ export default {
           created_at: this.now,
           limit: this.timelimit,
           user_id: store.state.now_user_id,
+          process_id: store.getters.getProcessId,
         });
       firebase
         .firestore()
@@ -78,6 +94,19 @@ export default {
       this.$store.dispatch("setTodoAction", { todos: newTodos });
       this.text == "";
       this.timelimit == "";
+    },
+    switchDelateAlarm() {
+      return false;
+    },
+    getIndex(index) {
+      this.delateId = this.List[index].id;
+    },
+    deleteItem(deleteId) {
+      firebase
+        .collection("todo")
+        .doc(deleteId)
+        .delete();
+      this.show == false;
     },
     logout() {
       firebase
