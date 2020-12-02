@@ -1,14 +1,21 @@
 <template>
   <div class="home">
-    目標 :<input type="text" v-model="goaltext" v-on:keyup.enter="addgoal" />
-    状態 :<input type="checkbox" v-model="status" v-on:keyup.enter="addgoal" />
-    期限 :<input type="date" v-model="timelimit" v-on:keyup.enter="addgoal" />
-    <button v-on:click="addgoal" v-on:keyup.enter="addgoal">
+     目標 :<input type="text" v-model="goaltext" /> 状態 :<input
+      type="checkbox"
+      v-model="status"
+    />
+    期限 :<input type="date" v-model="timelimit" />
+    <button v-on:click="addgoal">
       送信
     </button>
+
     <div class="goal-area">
       <div class="page-title">GOALS</div>
-      <div v-for="(obj, index) in goalList" :key="index">
+       <div
+          v-for="(obj, index) in goalList"
+          :key="index"
+          v-on:click="ToProcess(index)"
+        >
         {{ obj.status }}, 
         <div class="card-base">
           <div class="card-status-icon">
@@ -60,6 +67,10 @@ export default {
           // An error happened.
         });
     },
+    ToProcess(index) {
+      store.dispatch("setGoalIdAction", { id: this.goalList[index].id });
+      this.$router.push("/process");
+    },
     addgoal() {
       var date = new Date();
       this.nowtime =
@@ -96,6 +107,7 @@ export default {
               ...doc.data(),
             });
           });
+          /*           console.log(this.List); */
         });
       this.goaltext === "", this.status === false, this.timelimit === "";
     },
@@ -113,6 +125,7 @@ export default {
             ...doc.data(),
           });
         });
+        /*         console.log(this.goalList); */
       });
   },
 };

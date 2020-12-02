@@ -1,9 +1,14 @@
 <template>
   <div class="Process">
-    <div v-for="(obj, index) in processlisttype" :key="index">
+    <div
+      v-for="(obj, index) in processlisttype"
+      :key="index"
+      v-on:click="ToToDo(index)"
+    >
       {{ obj.now }}, {{ obj.need }}, {{ obj.factor }}, {{ obj.emerge }},
       {{ obj.essential }}, {{ obj.memo }}
     </div>
+    
     <div class="page-title">PROCESS</div>
     <div class="process-base">
       <div class="process-title">
@@ -76,8 +81,7 @@
           class="process-cotent-input" placeholder="メモ"/> 
       </div>
     </div>
-
-    <button v-on:click="addprocess" v-on:keyup.enter="addprocess" class="process-submit">
+    <button v-on:click="addprocess" class="process-submit">
       ➡︎
     </button>
       </div>
@@ -128,7 +132,6 @@ export default {
       firebase
         .firestore()
         .collection("process")
-        .where("user_id", "==", store.getters.getUserId)
         .add({
           now: this.now,
           need: this.need,
@@ -138,11 +141,13 @@ export default {
           memo: this.memo,
           created_at: this.nowtime,
           user_id: store.state.now_user_id,
+          goal_id: store.getters.getGoalId,
         });
       firebase
         .firestore()
         .collection("process")
-        .where("this.user_id", "==", "now_user_id")
+        .where("user_id", "==", store.getters.getUserId)
+        .where("goal_id", "==", store.getters.getGoalId)
         .get()
         .then(snapshot => {
           snapshot.docs.forEach(doc => {
@@ -158,6 +163,12 @@ export default {
         this.essential == "",
         this.emerge == "",
         this.memo == "";
+    },
+    ToToDo(index) {
+      store.dispatch("setProcessIdAction", {
+        id: this.processlisttype[index].id,
+      });
+      this.$router.push("/TodoList");
     },
     logout() {
       firebase
@@ -178,6 +189,7 @@ export default {
       .firestore()
       .collection("process")
       .where("user_id", "==", store.getters.getUserId)
+      .where("goal_id", "==", store.getters.getGoalId)
       .get()
       .then(snapshot => {
         snapshot.docs.forEach(doc => {
