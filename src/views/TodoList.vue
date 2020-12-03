@@ -8,21 +8,16 @@
     </button>
     <div v-for="(obj, index) in List" :key="index">
       {{ obj.todo }} / {{ obj.limit }} :
-      <!--       <button class="delete" @click="show = !show">
-        ×
-      </button> -->
-    </div>
-    <!--     <div v-show="show == false" id="overlay">
-      <div id="delateAlarm">
-        <p>この投稿を削除します</p>
-        <button @click="show = !show">
-          戻る
-        </button>
-        <button @click="deleteItem(index)">
-          削除
-        </button>
+      <button @click="deletetodo(index)">削除</button>
+
+      <div v-if="editflag === false">
+        <button @click="changeflag">編集</button>
       </div>
-    </div> -->
+      <div v-else>
+        <input type="text" v-model="List.id" />
+        <button @click="edittodo(index)">更新</button>
+      </div>
+    </div>
     <button v-on:click="logout">ログアウト</button>
   </div>
 </template>
@@ -95,19 +90,14 @@ export default {
       this.text == "";
       this.timelimit == "";
     },
-    switchDelateAlarm() {
-      return false;
+    deletetodo(x) {
+      this.todos.splice(x, 1);
+      this.savetodos();
     },
-    getIndex(index) {
-      this.delateId = this.List[index].id;
+    changeflag() {
+      this.editflag = true;
     },
-    deleteItem(deleteId) {
-      firebase
-        .collection("todo")
-        .doc(deleteId)
-        .delete();
-      this.show == false;
-    },
+    edittodo() {},
     logout() {
       firebase
         .auth()
