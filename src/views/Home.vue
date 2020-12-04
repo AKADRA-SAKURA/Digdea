@@ -1,7 +1,5 @@
 <template>
   <div class="home">
-    <img alt="Vue logo" src="../assets/logo.png" />
-    <h1>ホームです</h1>
     目標 :<input type="text" v-model="goaltext" /> 期限 :<input
       type="date"
       v-model="timelimit"
@@ -9,13 +7,33 @@
     <button v-on:click="addgoal">
       送信
     </button>
-    <div v-for="(obj, index) in goalList" :key="index">
-      <input type="checkbox" v-model="obj.status" /> :
-      <span v-on:click="ToProcess(index)">
-        {{ obj.text }}, {{ obj.status }}, {{ obj.timelimit }}</span
-      >
-      <button v-on:click="deletegoal(obj.id)">削除</button>
-      <button v-on:click="openModal(obj.id)">編集</button>
+
+
+    <div class="goal-area">
+      <div class="page-title">GOALS</div>
+       <div v-for="(obj, index) in goalList" :key="index">
+       
+        {{ obj.status }}, 
+        <div class="card-base">
+          <div class="card-status-icon">
+           <input type="checkbox" v-model="obj.status" /> 
+           <font-awesome-icon icon="cloud" class="cloud" />
+          </div>
+          <div class="card-contents">
+            <span v-on:click="ToProcess(index)">
+              <div class="card-contents-title">
+                {{ obj.text }}
+              </div>
+              <div class="card-contents-timelimit">
+                {{ obj.timelimit }}
+              </div>
+             </span>
+             <button v-on:click="deletegoal(obj.id)">削除</button>
+             <button v-on:click="openModal(obj.id)">編集</button>
+          </div>
+        </div>
+      </div>
+
     </div>
     <button v-on:click="logout">ログアウト</button>
 
@@ -214,3 +232,62 @@ export default {
   },
 };
 </script>
+<style>
+.home{
+  margin: auto;
+}
+.page-title{
+  width: 100%;
+  height: 50px;
+  font-family: "Noto Sans JP";
+  font-weight: bold;
+  font-size: 24px;
+  color: #3D9E8D;
+  line-height: 50px;
+  letter-spacing: 0.05em;
+  text-align: center;
+}
+.goal-area{
+  align-items: center;
+}
+.card-base{
+  width: 335px;
+  height: 50px;
+  background-color: white;
+  display: flex;
+  padding: 10px;
+  border-radius: 10px;
+}
+/* アイコンに関して */
+.card-status-icon{
+  width: 50px; 
+  margin: auto;
+  text-align: center;
+}
+.svg-inline--fa.fa-w-20{
+  width: 30px;
+  height: 20px;
+  margin: 10px;
+  color: #3D9E8D;
+}
+
+/* カードの内容に関して */
+.card-contents{
+  width: 285px;
+}
+.card-contents-title{
+  height: 26px;
+  font-weight: bold;
+  font-size: 15.5px;
+  line-height: 25px;
+}
+
+.card-contents-timelimit{
+  height: 20px;
+  font-family: "Noto Sans JP";
+  font-weight: normal;
+  font-size: 10px;
+  line-height: 20px;
+  color: #757575;
+}
+</style>

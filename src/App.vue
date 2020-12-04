@@ -1,10 +1,10 @@
 <template>
-  <div id="app">
+  <div id="app" class="app" >
     <div id="nav">
-      <router-link to="/">Home</router-link> |
-      <router-link to="/process">Process</router-link> |
-      <router-link to="/todolist">TodoList</router-link> |
-      <router-link to="/calendar">Calendar</router-link>
+      <router-link to="/"><font-awesome-icon icon="home"/></router-link> |
+      <router-link to="/process"><font-awesome-icon icon="brain"/></router-link> |
+      <router-link to="/todolist"><font-awesome-icon icon="list"/></router-link> |
+      <router-link to="/calendar"><font-awesome-icon icon="calendar-check"/></router-link>
     </div>
     <router-view />
   </div>
@@ -40,24 +40,31 @@ export default {
 </script>
 
 <style>
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-}
+  body {
+      margin: 0px;
+  }
+  #app {
+    font-family: Avenir, Helvetica, Arial, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    color: #2c3e50;
+    background: #F2E9E3;
+    font-family: "Noto Sans JP";
+  }
 
-#nav {
-  padding: 30px;
-}
+  #nav {
+    padding: 30px;
+  }
 
-#nav a {
-  font-weight: bold;
-  color: #2c3e50;
-}
+  #nav a {
+    font-weight: bold;
+    color: #2c3e50;
+  }
 
-#nav a.router-link-exact-active {
-  color: #42b983;
-}
+  #nav a.router-link-exact-active {
+    color: #3D9E8D;
+  }
+  .bg-white{
+    color: white;
+  }
 </style>
