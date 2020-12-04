@@ -2,7 +2,7 @@
   "hosting": {
     "public": "./",
     "rewrites": [ {
-        "source": "/linetodo*",
+        "source": "/linetodo/*",
         "function": "linetodo"
     } ],
     "ignore": [
