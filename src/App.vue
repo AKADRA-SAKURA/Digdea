@@ -11,14 +11,13 @@
 </template>
 
 <script>
-import firebase from "firebase";
+/* import firebase from "firebase";
 
 export default {
   mounted() {
     firebase
       .firestore()
       .collection("todo")
-      /*       .where("user_id", "==", "now_user_id") */
       .get()
       .then(snapshot => {
         const list = [];
@@ -28,7 +27,6 @@ export default {
             ...doc.data(),
           });
         });
-        //vuexにもデータを同時に入れてる
         const newTodos = list.map(todo => {
           const obj = {};
           obj.date = todo.limit;
@@ -38,7 +36,7 @@ export default {
         this.$store.dispatch("setTodoAction", { todos: newTodos });
       });
   },
-};
+}; */
 </script>
 
 <style>

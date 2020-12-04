@@ -16,13 +16,12 @@
     <button v-on:click="addprocess">
       送信
     </button>
-    <div
-      v-for="(obj, index) in processlisttype"
-      :key="index"
-      v-on:click="ToToDo(index)"
-    >
-      {{ obj.now }}, {{ obj.need }}, {{ obj.factor }}, {{ obj.emerge }},
-      {{ obj.essential }}, {{ obj.memo }}
+    <div v-for="(obj, index) in processlisttype" :key="index">
+      <input type="checkbox" v-model="obj.status" /> :
+      <span v-on:click="ToToDo(index)"
+        >{{ obj.now }}, {{ obj.need }}, {{ obj.factor }}, {{ obj.emerge }},
+        {{ obj.essential }}, {{ obj.memo }}</span
+      >
     </div>
     <button v-on:click="logout">ログアウト</button>
   </div>
@@ -83,7 +82,7 @@ export default {
         .collection("process")
         .where("user_id", "==", store.getters.getUserId)
         .where("goal_id", "==", store.getters.getGoalId)
-        .get()
+        .update()
         .then(snapshot => {
           snapshot.docs.forEach(doc => {
             this.List.push({

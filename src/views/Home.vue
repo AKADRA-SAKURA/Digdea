@@ -2,20 +2,18 @@
   <div class="home">
     <img alt="Vue logo" src="../assets/logo.png" />
     <h1>ホームです</h1>
-    目標 :<input type="text" v-model="goaltext" /> 状態 :<input
-      type="checkbox"
-      v-model="status"
+    目標 :<input type="text" v-model="goaltext" /> 期限 :<input
+      type="date"
+      v-model="timelimit"
     />
-    期限 :<input type="date" v-model="timelimit" />
     <button v-on:click="addgoal">
       送信
     </button>
-    <div
-      v-for="(obj, index) in goalList"
-      :key="index"
-      v-on:click="ToProcess(index)"
-    >
-      {{ obj.text }}, {{ obj.status }}, {{ obj.timelimit }}
+    <div v-for="(obj, index) in goalList" :key="index">
+      <input type="checkbox" v-model="obj.status" /> :
+      <span v-on:click="ToProcess(index)">
+        {{ obj.text }}, {{ obj.status }}, {{ obj.timelimit }}</span
+      >
     </div>
     <button v-on:click="logout">ログアウト</button>
   </div>
@@ -84,7 +82,7 @@ export default {
         .firestore()
         .collection("goal")
         .where("user_id", "==", store.getters.getUserId)
-        .get()
+        .update()
         .then(snapshot => {
           snapshot.docs.forEach(doc => {
             this.List.push({

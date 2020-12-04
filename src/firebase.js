@@ -19,9 +19,9 @@ if (!firebase.apps.length) {
 
 firebase.auth().onAuthStateChanged(user => {
   if (user) {
-    console.log(user);
+    /*     console.log(user); */
     store.dispatch("setUserIdAction", { id: user.uid });
   } else {
-    console.log(user);
+    /*     console.log(user); */
   }
 });
