@@ -1,0 +1,14 @@
+{
+  "hosting": {
+    "public": "./",
+    "rewrites": [ {
+        "source": "/linetodo*",
+        "function": "linetodo"
+    } ],
+    "ignore": [
+    "firebase.json",
+    "**/.*",
+    "**/node_modules/**"
+    ]
+  }
+}  

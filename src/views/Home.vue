@@ -1,38 +1,65 @@
 <template>
-  <div class="home">
-     目標 :<input type="text" v-model="goaltext" /> 状態 :<input
-      type="checkbox"
-      v-model="status"
-    />
-    期限 :<input type="date" v-model="timelimit" />
-    <button v-on:click="addgoal">
-      送信
-    </button>
-
-    <div class="goal-area">
-      <div class="page-title">GOALS</div>
-       <div
-          v-for="(obj, index) in goalList"
-          :key="index"
-          v-on:click="ToProcess(index)"
-        >
-        {{ obj.status }}, 
-        <div class="card-base">
-          <div class="card-status-icon">
-            <font-awesome-icon icon="cloud" class="cloud" />
-          </div>
-          <div class="card-contents">
-            <div class="card-contents-title">
-              {{ obj.text }}
+  <div class="base">
+      <div>
+          目標 :<input type="text" v-model="goaltext" /> 状態 :<input
+          type="checkbox"
+          v-model="status"
+        />
+        期限 :<input type="date" v-model="timelimit" />
+        <button v-on:click="addgoal">
+          送信
+        </button>
+      </div>
+      <div class="base-content">
+        <div class="goal-area">
+          <div class="page-title">GOALS</div>
+            <div
+                v-for="(obj, index) in goalList"
+                :key="index"
+                v-on:click="ToProcess(index)"
+              >
+              {{ obj.status }}, 
+              <div class="card-base">
+                <div class="card-status-icon">
+                  <font-awesome-icon icon="cloud" class="cloud" />
+                </div>
+                <div class="card-contents">
+                  <div class="card-contents-title">
+                    {{ obj.text }}
+                  </div>
+                  <div class="card-contents-timelimit">
+                    {{ obj.timelimit }}
+                  </div>
+                </div>
+              </div>
             </div>
-            <div class="card-contents-timelimit">
-              {{ obj.timelimit }}
+        </div>
+        <div class="goal-area">
+          <div class="page-title">DONE</div>
+          <div
+              v-for="(obj, index) in goalList"
+              :key="index"
+              v-on:click="ToProcess(index)"
+            >
+            {{ obj.status }}, 
+            <div class="card-base">
+              <div class="card-status-icon">
+                <font-awesome-icon icon="cloud" class="cloud" />
+              </div>
+              <div class="card-contents">
+                <div class="card-contents-title">
+                  {{ obj.text }}
+                </div>
+                <div class="card-contents-timelimit">
+                  {{ obj.timelimit }}
+                </div>
+              </div>
             </div>
           </div>
         </div>
       </div>
-    </div>
-    <button v-on:click="logout">ログアウト</button>
+      <button v-on:click="logout">ログアウト</button>
+
   </div>
 </template>
 
@@ -131,7 +158,20 @@ export default {
 };
 </script>
 <style>
+.base{
+  max-width: 1440px;
+  min-width: 375px;
+}
+.base-content{
+  display: flex;
+  flex-wrap: wrap;
+}
 .home{
+  margin: auto;
+}
+.goal-area{
+  max-width: 650px;
+  min-width: 375px;
   margin: auto;
 }
 .page-title{
@@ -145,9 +185,6 @@ export default {
   letter-spacing: 0.05em;
   text-align: center;
 }
-.goal-area{
-  align-items: center;
-}
 .card-base{
   width: 335px;
   height: 50px;
@@ -155,6 +192,7 @@ export default {
   display: flex;
   padding: 10px;
   border-radius: 10px;
+  margin: auto;
 }
 /* アイコンに関して */
 .card-status-icon{
