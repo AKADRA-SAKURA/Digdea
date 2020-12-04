@@ -65,6 +65,8 @@ export default {
     closeModal: function() {
       this.showContent = false;
       this.List = [];
+      this.clearbox();
+      this.reload();
     },
     reload() {
       this.List = [];
@@ -140,11 +142,10 @@ export default {
         return obj;
       });
       this.$store.dispatch("setTodoAction", { todos: newTodos });
-      this.text == "";
-      this.timelimit == "";
+      this.clearbox();
     },
     deletetodo(index) {
-      console.log(index);
+      /*       console.log(index); */
       var res = confirm("削除してもいいですか？");
       if (res == true) {
         firebase
@@ -158,8 +159,8 @@ export default {
           .catch(function(error) {
             alert.error("Error removing document: ", error);
           });
+        this.reload();
       }
-      this.reload();
     },
     edittodo(index) {
       firebase
@@ -174,6 +175,9 @@ export default {
           this.reload();
         });
       this.closeModal();
+      this.clearbox();
+    },
+    clearbox() {
       this.text = "";
       this.timelimit = "";
     },
@@ -182,6 +186,7 @@ export default {
         .firestore()
         .collection("todo")
         .doc(index)
+        .get()
         .add({
           status: this.List.status,
         });
