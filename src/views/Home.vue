@@ -230,10 +230,25 @@ export default {
 };
 </script>
 <style>
-.home {
+
+.base{
+  max-width: 1440px;
+  min-width: 375px;
+}
+.base-content{
+  display: flex;
+  flex-wrap: wrap;
+}
+.home{
   margin: auto;
 }
-.page-title {
+.goal-area{
+  max-width: 650px;
+  min-width: 375px;
+  margin: auto;
+}
+.page-title{
+
   width: 100%;
   height: 50px;
   font-family: "Noto Sans JP";
@@ -244,16 +259,16 @@ export default {
   letter-spacing: 0.05em;
   text-align: center;
 }
-.goal-area {
-  align-items: center;
-}
-.card-base {
+
+.card-base{
+
   width: 335px;
   height: 50px;
   background-color: white;
   display: flex;
   padding: 10px;
   border-radius: 10px;
+  margin: 10px auto;
 }
 /* アイコンに関して */
 .card-status-icon {

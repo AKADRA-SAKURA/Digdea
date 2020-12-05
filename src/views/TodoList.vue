@@ -1,30 +1,53 @@
 <template>
-  <div>
-    {{ processtitle }}
-    todo :
-    <input type="text" v-model="text" /> 期限 :
-    <input type="date" v-model="timelimit" />
-    <button v-on:click="addlist">
-      送信
-    </button>
-    <div v-for="(obj, index) in List" :key="index">
-      <input type="checkbox" v-model="obj.status" v-on:click="check(obj.id)" />
-      : {{ obj.todo }} / {{ obj.limit }} :
-      <button v-on:click="deletetodo(obj.id)">削除</button>
-      <button v-on:click="openModal(obj.id)">編集</button>
-    </div>
-    <button v-on:click="logout">ログアウト</button>
-
-    <div id="overlay" v-show="showContent">
-      <div id="content">
-        <p>これがモーダルウィンドウです。</p>
+  <div class="base">
+    <div class="base-content">
+      <div class="goal-area">
+        <div class="page-title">TODO LIST</div>
+        {{ processtitle }}
         todo :
-        <input type="text" v-model="text" />
-        期限 : <input type="date" v-model="timelimit" />
-        <button v-on:click="edittodo(editingId)">
+        <input type="text" v-model="text" /> 期限 :
+        <input type="date" v-model="timelimit" />
+        <button v-on:click="addlist">
           送信
         </button>
-        <button v-on:click="closeModal">Close</button>
+
+        <div v-for="(obj, index) in List" :key="index">
+          <div class="card-base">
+            <div class="card-status-icon">
+              <input
+                type="checkbox"
+                v-model="obj.status"
+                v-on:click="check(obj.id)"
+              />
+              <font-awesome-icon icon="cloud" class="cloud" />
+            </div>
+            <div class="card-contents">
+              <div class="card-contents-title">
+                {{ obj.todo }}
+              </div>
+              <div class="card-contents-timelimit">
+                {{ obj.limit }}
+              </div>
+              <button v-on:click="deletetodo(obj.id)">削除</button>
+              <button v-on:click="openModal(obj.id)">編集</button>
+            </div>
+          </div>
+        </div>
+
+        <button v-on:click="logout">ログアウト</button>
+
+        <div id="overlay" v-show="showContent">
+          <div id="content">
+            <p>これがモーダルウィンドウです。</p>
+            todo :
+            <input type="text" v-model="text" />
+            期限 : <input type="date" v-model="timelimit" />
+            <button v-on:click="edittodo(editingId)">
+              送信
+            </button>
+            <button v-on:click="closeModal">Close</button>
+          </div>
+        </div>
       </div>
     </div>
   </div>

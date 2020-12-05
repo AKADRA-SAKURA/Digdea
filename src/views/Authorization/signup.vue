@@ -9,6 +9,7 @@
       v-model="password2"
       placeholder="パスワード(確認用)"
     />
+    <input type="email" v-model="lineID" placeholder="lineID" />
     <button v-on:click="signup">サインアップ</button>
     <router-link to="/signin">アカウントをお持ちの方はこちら</router-link> |
   </div>
@@ -23,6 +24,7 @@ export default {
       email: "",
       password: "",
       password2: "",
+      lineID: "",
     };
   },
   methods: {
@@ -39,11 +41,24 @@ export default {
         alert("パスワードが一致しません");
         return;
       }
+      if (this.lineID != this.lineID) {
+        alert("LineIDが未入力です。");
+        return;
+      }
       firebase
         .auth()
         .createUserWithEmailAndPassword(this.email, this.password)
-        .then(() => {
+        .then((res) => {
+          console.log(res);
+          const linearisa = {
+            user_id: res.user.uid,
+            line_id: this.lineID,
+          }
           this.$router.push("/");
+          firebase
+            .firestore()
+            .collection("line")
+            .add(linearisa)
         })
         .catch(function(error) {
           // Handle Errors here.
