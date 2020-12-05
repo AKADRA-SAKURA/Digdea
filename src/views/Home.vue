@@ -1,13 +1,5 @@
 <template>
   <div class="home">
-    目標 :<input type="text" v-model="goaltext" /> 期限 :<input
-      type="date"
-      v-model="timelimit"
-    />
-    <button v-on:click="addgoal">
-      送信
-    </button>
-
     <div class="goal-area">
       <div class="page-title">GOALS</div>
       <div v-for="(obj, index) in goalList" :key="index">
@@ -32,6 +24,7 @@
         </div>
       </div>
     </div>
+    <button v-on:click="openNewModal()">新規作成</button>
     <button v-on:click="logout">ログアウト</button>
 
     <div id="overlay" v-show="showContent">
@@ -45,6 +38,20 @@
           送信
         </button>
         <button v-on:click="closeModal">Close</button>
+      </div>
+    </div>
+
+    <div id="overlay" v-show="showContent2">
+      <p>新規作成</p>
+      <div id="content">
+        目標 :<input type="text" v-model="goaltext" /> 期限 :<input
+          type="date"
+          v-model="timelimit"
+        />
+        <button v-on:click="addgoal">
+          送信
+        </button>
+        <button v-on:click="closeNewModal">Close</button>
       </div>
     </div>
   </div>
@@ -66,6 +73,7 @@ export default {
       timelimit: "",
       nowtime: "00:00:00",
       showContent: false,
+      showContent2: false,
       editingId: "",
     };
   },
@@ -83,9 +91,18 @@ export default {
         });
       this.showContent = true;
     },
+    openNewModal() {
+      this.showContent2 = true;
+    },
     closeModal: function() {
       this.showContent = false;
       this.goalList = [];
+      this.clearbox();
+      this.reload();
+    },
+    closeNewModal: function() {
+      this.showContent2 = false;
+      this.List = [];
       this.clearbox();
       this.reload();
     },
@@ -193,6 +210,8 @@ export default {
           created_at: this.nowtime,
           user_id: store.state.now_user_id,
         });
+      this.clearbox();
+      this.closeNewModal();
       firebase
         .firestore()
         .collection("goal")
@@ -207,8 +226,6 @@ export default {
             });
           });
         });
-      this.goaltext = "";
-      this.timelimit = "";
     },
   },
   mounted() {
