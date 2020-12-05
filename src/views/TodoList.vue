@@ -33,26 +33,70 @@
 
         <div id="overlay" v-show="showContent">
           <div id="content">
-            <p>編集</p>
-            todo :
-            <input type="text" v-model="text" />
-            期限 : <input type="date" v-model="timelimit" />
-            <button v-on:click="edittodo(editingId)">
-              送信
-            </button>
-            <button v-on:click="closeModal">Close</button>
+            <div id="content" class="modal_base">
+              <div class="page-title">
+                <font-awesome-icon
+                  icon="window-close"
+                  v-on:click="closeModal"
+                />
+                EDIT TODO
+              </div>
+              <div class="modal_content_area">
+                <div class="modal_todo_title">
+                  <div class="modal_icon">
+                    <font-awesome-icon icon="edit" />
+                  </div>
+                  <input type="text" v-model="text" class="input_text" />
+                </div>
+                <div class="modal_time">
+                  <div class="modal_icon">
+                    <font-awesome-icon icon="clock" />
+                  </div>
+                  <input type="date" v-model="timelimit" class="input_data" />
+                </div>
+                <div class="modal_submit">
+                  <button
+                    v-on:click="edittodo(editingId)"
+                    class="process-submit"
+                  >
+                    ➡︎
+                  </button>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
+
         <div id="overlay" v-show="showContent2">
           <div id="content">
-            <p>新規作成</p>
-            todo :
-            <input type="text" v-model="text" /> 期限 :
-            <input type="date" v-model="timelimit" />
-            <button v-on:click="addlist">
-              送信
-            </button>
-            <button v-on:click="closeNewModal">Close</button>
+            <div id="content" class="modal_base">
+              <div class="page-title">
+                <font-awesome-icon
+                  icon="window-close"
+                  v-on:click="closeNewModal"
+                />
+                新規作成
+              </div>
+              <div class="modal_content_area">
+                <div class="modal_todo_title">
+                  <div class="modal_icon">
+                    <font-awesome-icon icon="edit" />
+                  </div>
+                  <input type="text" v-model="text" class="input_text" />
+                </div>
+                <div class="modal_time">
+                  <div class="modal_icon">
+                    <font-awesome-icon icon="clock" />
+                  </div>
+                  <input type="date" v-model="timelimit" class="input_data" />
+                </div>
+                <div class="modal_submit">
+                  <button v-on:click="addlist" class="process-submit">
+                    ➡︎
+                  </button>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </div>
