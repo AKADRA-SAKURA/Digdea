@@ -38,6 +38,23 @@ exports.linetodo = functions.https.onRequest(async (req, res) => {
     });
 });
 
+
+exports.getLineUsers = functions.https.onRequest(async (req, res) => {
+  let userData = [];
+  fireStore.collection("line")
+    .get()
+    .then(function(querySnapshot) {
+      querySnapshot.forEach((doc) =>{
+        userData.push(doc.data().line_id);
+      });
+      res.json(userData);
+    })
+    .catch(function(error) {
+      console.log("Error getting documents: ", error);
+      res.status(500).end(error)
+    });
+});
+
 const todoCheck = function (uid) {
 
 }
