@@ -248,7 +248,6 @@ export default {
   margin: auto;
 }
 .page-title{
-
   width: 100%;
   height: 50px;
   font-family: "Noto Sans JP";

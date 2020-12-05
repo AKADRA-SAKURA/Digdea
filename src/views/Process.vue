@@ -1,15 +1,16 @@
 <template>
   <div class="Process">
     <div class="page-title">PROCESS</div>
-    {{ goaltitle }}
-    <div v-for="(obj, index) in processlisttype" :key="index">
-      <input type="checkbox" v-model="obj.status" /> :
-      <span v-on:click="ToToDo(index)">{{ obj.title }}</span>
-      <button v-on:click="deleteprocess(obj.id)">削除</button>
-      <button v-on:click="openModal(obj.id)">編集</button>
+    <div class="goal-show-base">
+      {{ goaltitle }}
+      <div v-for="(obj, index) in processlisttype" :key="index">
+        <input type="checkbox" v-model="obj.status" /> :
+        <span v-on:click="ToToDo(index)">{{ obj.title }}</span>
+        <button v-on:click="deleteprocess(obj.id)">削除</button>
+        <button v-on:click="openModal(obj.id)">編集</button>
+      </div>
+      <button v-on:click="openNewModal()">新規作成</button>
     </div>
-    <button v-on:click="openNewModal()">新規作成</button>
-
     <button v-on:click="logout">ログアウト</button>
 
     <div id="overlay" v-show="showContent2">
@@ -395,11 +396,18 @@ export default {
   padding: 1em;
   background: #fff;
 }
+
 .Process {
   max-width: 1000px;
   min-width: 375px;
+  background-color: aquamarine;
   text-align: center;
   margin: auto;
+}
+.goal-show-base{
+  width: 80%;
+  margin: auto;
+  background-color: blue;
 }
 .process-base {
   width: 95%;
