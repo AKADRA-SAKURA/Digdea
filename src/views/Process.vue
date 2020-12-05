@@ -1,108 +1,139 @@
 <template>
   <div class="Process">
+    <div class="page-title">PROCESS</div>
     {{ goaltitle }}
     <div v-for="(obj, index) in processlisttype" :key="index">
       <input type="checkbox" v-model="obj.status" /> :
-      <span v-on:click="ToToDo(index)"
-        >{{ obj.title }}, {{ obj.now }}, {{ obj.need }}, {{ obj.factor }},
-        {{ obj.emerge }}, {{ obj.essential }}, {{ obj.memo }}</span
-      >
+      <span v-on:click="ToToDo(index)">{{ obj.title }}</span>
       <button v-on:click="deleteprocess(obj.id)">削除</button>
       <button v-on:click="openModal(obj.id)">編集</button>
     </div>
-
-    <div class="page-title">PROCESS</div>
-    <div class="process-base">
-      <div class="process-title">
-        {{ title }}
-      </div>
-      <div class="process-contents">
-        <!-- 現状 -->
-        <div class="process-cotent">
-          <div class="process-cotent-title-area">
-            <font-awesome-icon icon="cloud" class="process-icon" />
-            <div class="process-cotent-title">現状</div>
-          </div>
-          <div class="process-cotent-input-area">
-            <input
-              type="text"
-              v-model="now"
-              class="process-cotent-input"
-              placeholder="今の状態を書いてみよう"
-            />
-          </div>
-        </div>
-        <!-- 考えられる原因 -->
-        <div class="process-cotent">
-          <div class="process-cotent-title-area">
-            <font-awesome-icon icon="dizzy" class="process-icon" />
-            <div class="process-cotent-title">考えられる要因</div>
-          </div>
-          <div class="process-cotent-input-area">
-            <input
-              type="text"
-              v-model="factor"
-              class="process-cotent-input"
-              placeholder="現状が起こっている原因はなんだろう？"
-            />
-          </div>
-        </div>
-        <!-- 理想状態に向けて -->
-        <div class="process-cotent">
-          <div class="process-cotent-title-area">
-            <font-awesome-icon icon="sun" class="process-icon" />
-            <div class="process-cotent-title">理想状態に向けて</div>
-          </div>
-          <div class="process-cotent-input-area">
-            <input
-              type="text"
-              v-model="need"
-              class="process-cotent-input"
-              placeholder="原因を踏まえて、理想に近づけるために必要なことを書いてみよう！"
-            />
-          </div>
-        </div>
-        <div class="number-area">
-          緊急度:<input type="number" v-model="emerge" class="number-box" />
-          重要度:<input type="number" v-model="essential" class="number-box" />
-        </div>
-        <!-- メモ -->
-        <div class="process-cotent">
-          <div class="process-cotent-title-area">
-            <font-awesome-icon icon="pen" class="cloud" />
-            <div class="process-cotent-title">メモ</div>
-          </div>
-          <div class="process-cotent-input-area">
-            <input
-              type="text"
-              v-model="memo"
-              class="process-cotent-input"
-              placeholder="メモ"
-            />
-          </div>
-        </div>
-        <button v-on:click="addprocess" class="process-submit">
-          ➡︎
-        </button>
-      </div>
-    </div>
+    <button v-on:click="openNewModal()">新規作成</button>
 
     <button v-on:click="logout">ログアウト</button>
 
+    <div id="overlay" v-show="showContent2">
+      <div id="content">
+        <div class="process-base">
+          <div class="process-title">
+            {{ title }}
+          </div>
+          <div class="process-contents">
+            <!-- タイトル -->
+            <div class="process-cotent">
+              <div class="process-cotent-input-area">
+                <input
+                  type="text"
+                  v-model="title"
+                  class="process-cotent-input"
+                  placeholder="タイトル"
+                />
+              </div>
+            </div>
+            <!-- 現状 -->
+            <div class="process-cotent">
+              <div class="process-cotent-title-area">
+                <font-awesome-icon icon="cloud" class="process-icon" />
+                <div class="process-cotent-title">現状</div>
+              </div>
+              <div class="process-cotent-input-area">
+                <input
+                  type="text"
+                  v-model="now"
+                  class="process-cotent-input"
+                  placeholder="今の状態を書いてみよう"
+                />
+              </div>
+            </div>
+            <!-- 考えられる原因 -->
+            <div class="process-cotent">
+              <div class="process-cotent-title-area">
+                <font-awesome-icon icon="dizzy" class="process-icon" />
+                <div class="process-cotent-title">考えられる要因</div>
+              </div>
+              <div class="process-cotent-input-area">
+                <input
+                  type="text"
+                  v-model="factor"
+                  class="process-cotent-input"
+                  placeholder="現状が起こっている原因はなんだろう？"
+                />
+              </div>
+            </div>
+            <!-- 理想状態に向けて -->
+            <div class="process-cotent">
+              <div class="process-cotent-title-area">
+                <font-awesome-icon icon="sun" class="process-icon" />
+                <div class="process-cotent-title">理想状態に向けて</div>
+              </div>
+              <div class="process-cotent-input-area">
+                <input
+                  type="text"
+                  v-model="need"
+                  class="process-cotent-input"
+                  placeholder="原因を踏まえて、理想に近づけるために必要なことを書いてみよう！"
+                />
+              </div>
+            </div>
+            <div class="number-area">
+              緊急度:<input
+                type="number"
+                v-model="emerge"
+                class="number-box"
+                min="1"
+                max="10"
+              />
+              重要度:<input
+                type="number"
+                v-model="essential"
+                class="number-box"
+                min="1"
+                max="10"
+              />
+            </div>
+            <!-- メモ -->
+            <div class="process-cotent">
+              <div class="process-cotent-title-area">
+                <font-awesome-icon icon="pen" class="cloud" />
+                <div class="process-cotent-title">メモ</div>
+              </div>
+              <div class="process-cotent-input-area">
+                <input
+                  type="text"
+                  v-model="memo"
+                  class="process-cotent-input"
+                  placeholder="メモ"
+                />
+              </div>
+            </div>
+            <button v-on:click="addprocess" class="process-submit">
+              ➡︎
+            </button>
+          </div>
+        </div>
+        <button v-on:click="closeNewModal">Close</button>
+      </div>
+    </div>
+
     <div id="overlay" v-show="showContent">
       <div id="content">
-        <p>これがモーダルウィンドウです。</p>
-        現状:<input type="text" v-model="now" /> 考えられる要因:<input
+        <p>編集</p>
+        タイトル:<input type="text" v-model="title" /> 現状:<input
           type="text"
-          v-model="factor"
+          v-model="now"
         />
+        考えられる要因:<input type="text" v-model="factor" />
         理想状態に向けて:<input type="text" v-model="need" /> 緊急度:<input
           type="number"
           v-model="emerge"
+          min="1"
+          max="10"
         />
         重要度:<input type="number" v-model="essential" /> メモ:<input
           type="text"
           v-model="memo"
+          min="1"
+          max="10"
         />
         <button v-on:click="editprocess(editingId)">
           送信
@@ -134,6 +165,7 @@ export default {
       memo: "",
       nowtime: "00:00:00",
       showContent: false,
+      showContent2: false,
       editingId: "",
     };
   },
@@ -156,7 +188,7 @@ export default {
         .doc(index)
         .get()
         .then(doc => {
-          this.title = doc.data().now;
+          this.title = doc.data().title;
           this.now = doc.data().now;
           this.factor = doc.data().factor;
           this.emerge = doc.data().emerge;
@@ -166,8 +198,17 @@ export default {
         });
       this.showContent = true;
     },
+    openNewModal() {
+      this.showContent2 = true;
+    },
     closeModal: function() {
       this.showContent = false;
+      this.processlisttype = [];
+      this.clearbox();
+      this.reload();
+    },
+    closeNewModal: function() {
+      this.showContent2 = false;
       this.processlisttype = [];
       this.clearbox();
       this.reload();
@@ -220,6 +261,8 @@ export default {
           user_id: store.state.now_user_id,
           goal_id: store.getters.getGoalId,
         });
+      this.clearbox();
+      this.closeNewModal();
       firebase
         .firestore()
         .collection("process")
@@ -234,7 +277,6 @@ export default {
             });
           });
         });
-      this.clearbox();
     },
     deleteprocess(index) {
       var res = confirm("削除してもいいですか？");
@@ -250,6 +292,7 @@ export default {
           .catch(function(error) {
             alert.error("Error removing document: ", error);
           });
+        this.clearbox();
         this.reload();
       }
     },
