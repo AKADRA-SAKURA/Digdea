@@ -1,5 +1,6 @@
 <template>
   <div>
+    {{ processtitle }}
     todo :
     <input type="text" v-model="text" /> 期限 :
     <input type="date" v-model="timelimit" />
@@ -39,6 +40,7 @@ export default {
   components: {},
   data() {
     return {
+      processtitle: "",
       List: [],
       text: "",
       timelimit: "",
@@ -49,6 +51,16 @@ export default {
     };
   },
   methods: {
+    processrecall() {
+      firebase
+        .firestore()
+        .collection("process")
+        .doc(store.getters.getProcessId)
+        .get()
+        .then(doc => {
+          this.processtitle = doc.data().title;
+        });
+    },
     openModal(index) {
       this.editingId = index;
       firebase
@@ -69,6 +81,7 @@ export default {
       this.reload();
     },
     reload() {
+      this.processrecall();
       this.List = [];
       firebase
         .firestore()
@@ -145,7 +158,6 @@ export default {
       this.clearbox();
     },
     deletetodo(index) {
-      /*       console.log(index); */
       var res = confirm("削除してもいいですか？");
       if (res == true) {
         firebase
@@ -182,14 +194,15 @@ export default {
       this.timelimit = "";
     },
     check(index) {
-      firebase
+      console.log(index, this.status);
+      /*       firebase
         .firestore()
         .collection("todo")
         .doc(index)
         .get()
         .add({
           status: this.List.status,
-        });
+        }); */
     },
     logout() {
       firebase
@@ -206,6 +219,7 @@ export default {
     },
   },
   mounted() {
+    this.processrecall();
     firebase
       .firestore()
       .collection("todo")
