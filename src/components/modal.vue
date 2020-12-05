@@ -3,7 +3,7 @@
     <div class="modal modal-overlay" @click.self="$emit('close')">
       <div class="modal-window">
         <div class="modal-content">
-          <slot/>
+          <slot />
         </div>
         <footer class="modal-footer">
           <slot name="footer">
@@ -48,7 +48,8 @@
 }
 
 // オーバーレイのトランジション
-.modal-enter-active, .modal-leave-active {
+.modal-enter-active,
+.modal-leave-active {
   transition: opacity 0.4s;
 
   // オーバーレイに包含されているモーダルウィンドウのトランジション
@@ -62,7 +63,8 @@
   transition: opacity 0.6s ease 0.4s;
 }
 
-.modal-enter, .modal-leave-to {
+.modal-enter,
+.modal-leave-to {
   opacity: 0;
 
   .modal-window {
