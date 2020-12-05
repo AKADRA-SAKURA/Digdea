@@ -230,25 +230,23 @@ export default {
 };
 </script>
 <style>
-
-.base{
+.base {
   max-width: 1440px;
   min-width: 375px;
 }
-.base-content{
+.base-content {
   display: flex;
   flex-wrap: wrap;
 }
-.home{
+.home {
   margin: auto;
 }
-.goal-area{
+.goal-area {
   max-width: 650px;
   min-width: 375px;
   margin: auto;
 }
-.page-title{
-
+.page-title {
   width: 100%;
   height: 50px;
   font-family: "Noto Sans JP";
@@ -260,8 +258,7 @@ export default {
   text-align: center;
 }
 
-.card-base{
-
+.card-base {
   width: 335px;
   height: 50px;
   background-color: white;
