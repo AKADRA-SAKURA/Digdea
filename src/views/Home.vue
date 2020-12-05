@@ -192,7 +192,7 @@ export default {
   display: flex;
   padding: 10px;
   border-radius: 10px;
-  margin: auto;
+  margin: 10px auto;
 }
 /* アイコンに関して */
 .card-status-icon{

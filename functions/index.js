@@ -39,6 +39,5 @@ exports.linetodo = functions.https.onRequest(async (req, res) => {
 });
 
 const todoCheck = function (uid) {
-  
-  
+
 }

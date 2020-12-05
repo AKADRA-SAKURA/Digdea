@@ -1,29 +1,35 @@
 <template>
-  <div>
-    todo :
-    <input type="text" v-model="text" /> 期限 :
-    <input type="date" v-model="timelimit" />
-    <button v-on:click="addlist">
-      送信
-    </button>
-    <div v-for="(obj, index) in List" :key="index">
-      {{ obj.todo }} / {{ obj.limit }} :
-      <!--       <button class="delete" @click="show = !show">
-        ×
-      </button> -->
-    </div>
-    <!--     <div v-show="show == false" id="overlay">
-      <div id="delateAlarm">
-        <p>この投稿を削除します</p>
-        <button @click="show = !show">
-          戻る
+  <div class="base">
+    <div class="base-content">
+      <div class="goal-area">
+        <div class="page-title">TODO LIST</div>
+      
+        todo :
+        <input type="text" v-model="text" /> 期限 :
+        <input type="date" v-model="timelimit" />
+        <button v-on:click="addlist">
+          送信
         </button>
-        <button @click="deleteItem(index)">
-          削除
-        </button>
+
+        <div v-for="(obj, index) in List" :key="index">
+          <div class="card-base">
+            <div class="card-status-icon">
+              <font-awesome-icon icon="cloud" class="cloud" />
+            </div>
+            <div class="card-contents">
+              <div class="card-contents-title">
+                {{ obj.todo }}
+              </div>
+              <div class="card-contents-timelimit">
+                {{ obj.limit }}
+              </div>
+            </div>
+          </div>
+        </div>
+      
+        <button v-on:click="logout">ログアウト</button>
       </div>
-    </div> -->
-    <button v-on:click="logout">ログアウト</button>
+    </div>
   </div>
 </template>
 
