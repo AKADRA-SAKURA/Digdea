@@ -357,14 +357,14 @@ export default {
   border-radius: 10px;
 }
 
-.modal_content_area{
+.modal_content_area {
   width: 300px;
-  height: 150px; 
+  height: 150px;
   margin: auto;
-  background-color: #F8F8F8;
+  background-color: #f8f8f8;
 }
 
-.modal_todo_title{
+.modal_todo_title {
   width: 100%;
   height: 35px;
   font-weight: 500;
@@ -373,15 +373,15 @@ export default {
   display: flex;
 }
 
-.input_text{
+.input_text {
   font-weight: 500;
   font-size: 130%;
 }
 
-.modal_time{
+.modal_time {
   display: flex;
 }
-.modal_submit{
+.modal_submit {
   text-align: center;
   height: 50px;
 }
@@ -398,7 +398,7 @@ export default {
   color: white;
   margin-top: 10px;
 }
-.modal_icon{
+.modal_icon {
   width: 40px;
   text-align: center;
   font-size: 1.33333em;

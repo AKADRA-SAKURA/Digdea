@@ -1,10 +1,16 @@
 {
   "hosting": {
-    "public": "./",
-    "rewrites": [ {
+    "public": "dist",
+    "rewrites": [ 
+      {
         "source": "/linetodo/*",
         "function": "linetodo"
-    } ],
+      },
+      {
+        "source": "/getLineUsers",
+        "function": "getLineUsers"
+      } 
+    ],
     "ignore": [
     "firebase.json",
     "**/.*",
