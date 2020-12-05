@@ -467,12 +467,11 @@ export default {
   color: white;
   margin-top: 30px;
 }
-.modal_content_area{
+.modal_content_area {
   width: 300px;
   height: 260px;
-  background: #F8F8F8;
+  background: #f8f8f8;
 }
-.modal_content_area{
-  
+.modal_content_area {
 }
 </style>
