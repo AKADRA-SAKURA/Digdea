@@ -3,7 +3,7 @@
     "public": "dist",
     "rewrites": [ 
       {
-        "source": "/linetodo/*",
+        "source": "/linetodo*",
         "function": "linetodo"
       },
       {

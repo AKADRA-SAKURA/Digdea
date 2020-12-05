@@ -333,7 +333,7 @@ export default {
 };
 </script>
 
-<style>
+<style scoped>
 #overlay {
   z-index: 1;
   position: fixed;

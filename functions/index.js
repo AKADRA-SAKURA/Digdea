@@ -6,36 +6,20 @@ admin.initializeApp();
 var fireStore = admin.firestore()
 
 exports.linetodo = functions.https.onRequest(async (req, res) => {
-  const line_userId = req.query.line_id;
-  let userData;
-  fireStore.collection("line").where("line_id", "==", line_userId)
-    .get()
-    .then(async function(querySnapshot) {
-        querySnapshot.forEach(function(doc) {
-            userData = doc.data();
-            // doc.data() is never undefined for query doc snapshots
-        });
-        const uid = userData.user_id;
-
-        //Check関数を入れた
-        let userTodo = [];
-        fireStore.collection("todo").where("user_id", "==", uid)
-          .get()
-          .then(function(querySnapshot) {
-              querySnapshot.forEach((doc) =>{
-                userTodo.push(doc.data());
-                  // doc.data() is never undefined for query doc snapshots
-              });
-              res.json(userTodo);
-          })
-          .catch(function(error) {
-            console.log("Error getting documents: ", error);
-            res.status(500).end(error)
-          });
-    })
-    .catch(function(error) {
-      res.status(500).end(error)
-    });
+  try{
+    if (req.query.line_id){
+      const querySnapshot = await fireStore.collection("line").where("line_id", "==", req.query.line_id).get()
+      const uid = querySnapshot.docs.map(doc => doc.data().user_id).join('')
+      const querySnapshot2 = await fireStore.collection("todo").where("user_id", "==", uid).get()
+      const userTodos = querySnapshot2.docs.map(doc => doc.data())
+      res.json(userTodos);
+    }else{
+      throw 'line_idがありませんよーーーん';
+    }
+  }catch (error){
+    functions.logger.log(error)
+    res.status(500).end(error)
+  }
 });
 
 
