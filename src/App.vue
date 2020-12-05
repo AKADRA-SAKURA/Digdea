@@ -4,7 +4,7 @@
       <router-link to="/"><font-awesome-icon icon="home"/></router-link> |
       <router-link to="/process"><font-awesome-icon icon="brain"/></router-link>
       |
-      <router-link to="/todolist"><font-awesome-icon icon="list"/></router-link>
+      <router-link to="/Todolist"><font-awesome-icon icon="list"/></router-link>
       |
       <router-link to="/calendar"
         ><font-awesome-icon icon="calendar-check"

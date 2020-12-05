@@ -4,12 +4,6 @@
       <div class="goal-area">
         <div class="page-title">TODO LIST</div>
         {{ processtitle }}
-        todo :
-        <input type="text" v-model="text" /> 期限 :
-        <input type="date" v-model="timelimit" />
-        <button v-on:click="addlist">
-          送信
-        </button>
 
         <div v-for="(obj, index) in List" :key="index">
           <div class="card-base">
@@ -33,33 +27,74 @@
             </div>
           </div>
         </div>
+        <button v-on:click="openNewModal()">新規作成</button>
 
         <button v-on:click="logout">ログアウト</button>
         <!-- モーダルについて -->
         <div id="overlay" v-show="showContent">
-          <div id="content" class="modal_base">
-            <div class="page-title">
-      
-              <font-awesome-icon icon="window-close" v-on:click="closeModal" />
-              EDIT TODO
+          <div id="content">
+            <div id="content" class="modal_base">
+              <div class="page-title">
+                <font-awesome-icon
+                  icon="window-close"
+                  v-on:click="closeModal"
+                />
+                EDIT TODO
+              </div>
+              <div class="modal_content_area">
+                <div class="modal_todo_title">
+                  <div class="modal_icon">
+                    <font-awesome-icon icon="edit" />
+                  </div>
+                  <input type="text" v-model="text" class="input_text" />
+                </div>
+                <div class="modal_time">
+                  <div class="modal_icon">
+                    <font-awesome-icon icon="clock" />
+                  </div>
+                  <input type="date" v-model="timelimit" class="input_data" />
+                </div>
+                <div class="modal_submit">
+                  <button
+                    v-on:click="edittodo(editingId)"
+                    class="process-submit"
+                  >
+                    ➡︎
+                  </button>
+                </div>
+              </div>
             </div>
-            <div class="modal_content_area">
-              <div class="modal_todo_title">
-                <div class="modal_icon">
-                  <font-awesome-icon icon="edit" />
-                </div>
-                <input type="text" v-model="text" class="input_text" />
+          </div>
+        </div>
+
+        <div id="overlay" v-show="showContent2">
+          <div id="content">
+            <div id="content" class="modal_base">
+              <div class="page-title">
+                <font-awesome-icon
+                  icon="window-close"
+                  v-on:click="closeNewModal"
+                />
+                新規作成
               </div>
-              <div class="modal_time">
-                <div class="modal_icon">
-                  <font-awesome-icon icon="clock" />
+              <div class="modal_content_area">
+                <div class="modal_todo_title">
+                  <div class="modal_icon">
+                    <font-awesome-icon icon="edit" />
+                  </div>
+                  <input type="text" v-model="text" class="input_text" />
                 </div>
-                <input type="date" v-model="timelimit" class="input_data"/>
-              </div>
-              <div class="modal_submit">
-                <button v-on:click="edittodo(editingId)" class="process-submit">
-                  ➡︎
-                </button>
+                <div class="modal_time">
+                  <div class="modal_icon">
+                    <font-awesome-icon icon="clock" />
+                  </div>
+                  <input type="date" v-model="timelimit" class="input_data" />
+                </div>
+                <div class="modal_submit">
+                  <button v-on:click="addlist" class="process-submit">
+                    ➡︎
+                  </button>
+                </div>
               </div>
             </div>
           </div>
@@ -86,6 +121,7 @@ export default {
       now: "00:00:00",
       status: false,
       showContent: false,
+      showContent2: false,
       editingId: "",
     };
   },
@@ -113,8 +149,17 @@ export default {
         });
       this.showContent = true;
     },
+    openNewModal() {
+      this.showContent2 = true;
+    },
     closeModal: function() {
       this.showContent = false;
+      this.List = [];
+      this.clearbox();
+      this.reload();
+    },
+    closeNewModal: function() {
+      this.showContent2 = false;
       this.List = [];
       this.clearbox();
       this.reload();
@@ -159,7 +204,6 @@ export default {
         date.getMinutes() +
         ":" +
         date.getSeconds();
-      /*       this.List.push(this.text); */
       firebase
         .firestore()
         .collection("todo")
@@ -171,7 +215,9 @@ export default {
           user_id: store.state.now_user_id,
           process_id: store.getters.getProcessId,
         });
-      this.List = [];
+      this.List = null;
+      this.clearbox();
+      this.closeNewModal();
       firebase
         .firestore()
         .collection("todo")
@@ -210,6 +256,8 @@ export default {
           .catch(function(error) {
             alert.error("Error removing document: ", error);
           });
+        this.List = [];
+        this.clearbox();
         this.reload();
       }
     },
