@@ -35,17 +35,33 @@
         </div>
 
         <button v-on:click="logout">ログアウト</button>
-
+        <!-- モーダルについて -->
         <div id="overlay" v-show="showContent">
-          <div id="content">
-            <p>これがモーダルウィンドウです。</p>
-            todo :
-            <input type="text" v-model="text" />
-            期限 : <input type="date" v-model="timelimit" />
-            <button v-on:click="edittodo(editingId)">
-              送信
-            </button>
-            <button v-on:click="closeModal">Close</button>
+          <div id="content" class="modal_base">
+            <div class="page-title">
+      
+              <font-awesome-icon icon="window-close" v-on:click="closeModal" />
+              EDIT TODO
+            </div>
+            <div class="modal_content_area">
+              <div class="modal_todo_title">
+                <div class="modal_icon">
+                  <font-awesome-icon icon="edit" />
+                </div>
+                <input type="text" v-model="text" class="input_text" />
+              </div>
+              <div class="modal_time">
+                <div class="modal_icon">
+                  <font-awesome-icon icon="clock" />
+                </div>
+                <input type="date" v-model="timelimit" class="input_data"/>
+              </div>
+              <div class="modal_submit">
+                <button v-on:click="edittodo(editingId)" class="process-submit">
+                  ➡︎
+                </button>
+              </div>
+            </div>
           </div>
         </div>
       </div>
@@ -272,7 +288,6 @@ export default {
 <style>
 #overlay {
   z-index: 1;
-
   position: fixed;
   top: 0;
   left: 0;
@@ -286,8 +301,58 @@ export default {
 }
 #content {
   z-index: 2;
-  width: 50%;
+  width: 300px;
+  height: 200px;
   padding: 1em;
   background: #fff;
+  box-shadow: 0px 3px 4px rgba(0, 0, 0, 0.25);
+  border-radius: 10px;
+}
+
+.modal_content_area{
+  width: 300px;
+  height: 150px; 
+  margin: auto;
+  background-color: #F8F8F8;
+}
+
+.modal_todo_title{
+  width: 100%;
+  height: 35px;
+  font-weight: 500;
+  text-align: center;
+  padding: 10px 0px;
+  display: flex;
+}
+
+.input_text{
+  font-weight: 500;
+  font-size: 130%;
+}
+
+.modal_time{
+  display: flex;
+}
+.modal_submit{
+  text-align: center;
+  height: 50px;
+}
+
+.process-submit {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%; /*角丸*/
+  background-color: #3d9e8d;
+  border: none;
+  font-weight: 900;
+  font-size: 24px;
+  line-height: 44px;
+  color: white;
+  margin-top: 10px;
+}
+.modal_icon{
+  width: 40px;
+  text-align: center;
+  font-size: 1.33333em;
 }
 </style>
