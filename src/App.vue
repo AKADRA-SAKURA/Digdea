@@ -5,7 +5,7 @@
       <router-link to="/process"><div class="icon"><font-awesome-icon icon="brain"/></div></router-link> |
       <router-link to="/Todolist"><div class="icon"><font-awesome-icon icon="list"/></div></router-link> |
       <router-link to="/calendar"><div class="icon"><font-awesome-icon icon="calendar-check"/></div></router-link> |
-      <button v-on:click="logout">ログアウト</button>
+      <div class="icon"><font-awesome-icon icon="sign-out-alt" v-on:click="logout"/></div>
 
     </div>
     <router-view />
