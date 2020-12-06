@@ -8,21 +8,31 @@
         <div class="question">ゴールを達成するために必要なことを記入しよう！</div>
         <div class="process-box" v-for="(obj, index) in processlisttype" :key="index">
           <div class="process-content">
-            <input type="checkbox" v-model="obj.status" /> :
-            <div class="process-title">
-              <span v-on:click="ToToDo(index)">{{ obj.title }}</span>
+            <div class="process-content-box">
+              <div class="process-title">
+                <span v-on:click="ToToDo(index)">{{ obj.title }}</span>
+              </div>
+              <div class="icons">
+                <font-awesome-icon icon="trash-alt" class="icon" v-on:click="deleteprocess(obj.id)"/>
+                <font-awesome-icon icon="edit" class="icon" v-on:click="openModal(obj.id)"/>
+              </div>
             </div>
-            
-            <button v-on:click="deleteprocess(obj.id)">削除</button>
-            <button v-on:click="openModal(obj.id)">編集</button>
+          </div>
+        </div>
+        <div class="process-box">
+          <div class="process-content new">
+            <div class="process-content-box new-box">
+              <div class="process-title new-title">
+                <font-awesome-icon icon="plus" class="new-icon" v-on:click="openNewModal()"/>
+              </div>
+              
             </div>
+          </div>
         </div>
       </div>
     </div>
-    <button v-on:click="openNewModal()">新規作成</button>
-
     <button v-on:click="logout">ログアウト</button>
-
+    <!-- 新規投稿 -->
     <div class="overlay" v-show="showContent2">
       <div class="content">
         <div class="process-base">
@@ -32,12 +42,7 @@
             <div class="card-status-icon window red">
               <font-awesome-icon icon="window-close" class="process-icon" v-on:click="closeNewModal"/>
             </div>
-            <input
-                type="text"
-                v-model="title"
-                class="process-title title-only-input"
-                placeholder="小さな目標を書いてみよう"
-              />
+            <input type="text" v-model="title" class="process-title title-only-input" placeholder="小さな目標を書いてみよう"/>
           </div>
           <!-- 現状 -->
           <div class="process-cotent">
@@ -88,20 +93,24 @@
             </div>
           </div>
           <div class="number-area">
-            緊急度:<input
-              type="number"
-              v-model="emerge"
-              class="number-box"
-              min="1"
-              max="10"
-            />
-            重要度:<input
-              type="number"
-              v-model="essential"
-              class="number-box"
-              min="1"
-              max="10"
-            />
+            <div class="number-box">
+              緊急度:<input
+                type="number"
+                v-model="emerge"
+                class="number-box"
+                min="1"
+                max="10"
+              />
+            </div>
+            <div class="number-box">
+              重要度:<input
+                type="number"
+                v-model="essential"
+                class="number-box"
+                min="1"
+                max="10"
+              />
+            </div>
           </div>
           <!-- メモ -->
           <div class="process-cotent">
@@ -185,8 +194,12 @@
             </div>
           </div>
           <div class="number-area">
-            緊急度:<input type="number" v-model="emerge" class="number-box" min="1" max="10" />
-            重要度:<input type="number" v-model="essential" class="number-box" min="1" max="10" />
+            <div class="number-box">
+              緊急度:<input type="number" v-model="emerge" class="number-box" min="1" max="10" />
+            </div>
+            <div class="number-box">
+              重要度:<input type="number" v-model="essential" class="number-box" min="1" max="10" />
+            </div>
           </div>
           <!-- メモ -->
           <div class="process-cotent">
@@ -443,28 +456,7 @@ export default {
 };
 </script>
 <style lang="scss">
-#overlay_process_new {
-  z-index: 1;
 
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background-color: rgba(0, 0, 0, 0.5);
-
-  display: flex;
-  align-items: center;
-  justify-content: center;
-
-  #content_process_new {
-    z-index: 2;
-    width: 85%;
-    padding: 1em;
-    height: 650px;
-    background: #fff;
-  }
-}
 
 .overlay {
   z-index: 1;
@@ -486,6 +478,8 @@ export default {
     padding: 1em;
     height: 650px;
     background: #fff;
+    max-width: 800px;
+    border-radius: 10px;
     .modal-title{
       display: flex;
       padding-right: 30px;
@@ -506,6 +500,7 @@ export default {
   min-width: 375px;
   text-align: center;
   margin: auto;
+
   .page-title {
       width: 100%;
       height: 50px;
@@ -517,6 +512,62 @@ export default {
       letter-spacing: 0.05em;
       text-align: center;
     }
+  .process-area{
+    display: flex;
+    flex-wrap: wrap;
+    padding: 0px 20px;
+    justify-content:space-evenly;
+    
+    .process-box{
+      width: 150px;
+      margin: 20px 0px;
+      color: white;
+
+      .process-content{
+        width: 140px;
+        height: 140px;
+        border-radius: 50%;
+        background-color: #3d9e8d;
+        margin: auto;
+
+        .process-title{
+          font-weight: bold;
+          font-size: 15px;
+          line-height: 20px;
+          align-items: center;
+          
+        }
+        .icons {
+            font-size: 20px;
+            margin: auto;
+            text-align: center;
+
+            .icon{
+              width: 30px;
+            }
+          }
+      }
+      .new{
+        background-image: radial-gradient(#fff 68%, transparent 68% 70%, #fff 70%),
+        repeating-conic-gradient(currentColor 0% 3%, transparent 3% 5%);
+        .new-box{
+          padding-top: 53px;
+
+          .new-title{
+            font-size: 30px;
+            color: #3d9e8d;
+          }
+        }
+      }
+    }
+  }
+
+  .process-content-box{
+    margin: auto;
+    padding-top: 40px;
+
+    
+  }
 
   .goal-show{
     width: 95%;
@@ -539,30 +590,7 @@ export default {
     font-size: 13px;
     padding: 10px;
   }
-  .process-area{
-    display: flex;
-    flex-wrap: wrap;
-    padding: 0px 20px;
-    
-    .process-box{
-      width: 50%;
-      margin: 20px 0px;
-      .process-content{
-        width: 140px;
-        height: 140px;
-        border-radius: 50%;
-        background-color: #3d9e8d;
-        margin: auto;
-
-        .process-title{
-          font-weight: bold;
-          font-size: 14px;
-          line-height: 20px;
-          align-items: center;
-        }
-      }
-    }
-  }
+  
 }
 .process-base {
   border-radius: 10px;
@@ -609,7 +637,6 @@ export default {
       width: 40px;
       font-size: 20px;
       line-height: 30px;
-      color:darkgray;
       text-align: center;
     }
     .process-cotent-title {
@@ -623,10 +650,9 @@ export default {
     width: 60%;
     min-width: 230px;
     margin: 10px auto;
-
-    .number-box {
-      width: 30px;
-    }
+    display: flex;
+    justify-content: space-evenly;
+    
   }
 
   .process-submit {

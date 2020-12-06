@@ -84,4 +84,10 @@ body {
 .red{
   color: #e81d1d;
 }
+.theme{
+  color: #3d9e8d;
+}
+.orange{
+  color: orange;
+}
 </style>
