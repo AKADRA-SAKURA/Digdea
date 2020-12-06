@@ -5,7 +5,7 @@
         <div class="goal-show-title">{{ goaltitle }}
       </div>
       <div class="process-area">
-        <div class="question">ゴールを達成するためには…？</div>
+        <div class="question">ゴールを達成するために必要なことを記入しよう！</div>
         <div class="process-box" v-for="(obj, index) in processlisttype" :key="index">
           <div class="process-content">
             <input type="checkbox" v-model="obj.status" /> :
@@ -23,16 +23,20 @@
 
     <button v-on:click="logout">ログアウト</button>
 
-    <div id="overlay_process_new" v-show="showContent2">
-      <div id="content_process_new">
+    <div class="overlay" v-show="showContent2">
+      <div class="content">
         <div class="process-base">
           <!-- タイトル -->
-          <div class="process-cotent">
+          <div class="process-cotent modal-title">
+             <!-- 閉じる -->
+            <div class="card-status-icon window red">
+              <font-awesome-icon icon="window-close" class="process-icon" v-on:click="closeNewModal"/>
+            </div>
             <input
                 type="text"
                 v-model="title"
-                class="process-title"
-                placeholder="タイトル"
+                class="process-title title-only-input"
+                placeholder="小さな目標を書いてみよう"
               />
           </div>
           <!-- 現状 -->
@@ -120,19 +124,19 @@
           </button>
       
         </div>
-        <button v-on:click="closeNewModal">Close</button>
       </div>
     </div>
-
-    <div id="overlay" v-show="showContent">
-      <div id="content">
+    <!-- 編集 -->
+    <div class="overlay" v-show="showContent">
+      <div class="content">
         <div class="process-base">
-          <!-- 閉じる -->
-          <div class="card-status-icon window">
-            <font-awesome-icon icon="window-close" class="process-icon" v-on:click="closeModal"/>
-          </div>
+         
           <!-- タイトル -->
-          <div class="process-cotent">
+          <div class="process-cotent modal-title">
+            <!-- 閉じる -->
+            <div class="card-status-icon window red">
+              <font-awesome-icon icon="window-close" class="process-icon" v-on:click="closeModal"/>
+            </div>
             <input type="text" v-model="title" class="process-title title-only-input"/>
           </div>
           <!-- 現状 -->
@@ -462,7 +466,7 @@ export default {
   }
 }
 
-#overlay {
+.overlay {
   z-index: 1;
 
   position: fixed;
@@ -476,16 +480,22 @@ export default {
   align-items: center;
   justify-content: center;
 
-  #content {
+  .content {
     z-index: 2;
     width: 85%;
     padding: 1em;
     height: 650px;
     background: #fff;
-
+    .modal-title{
+      display: flex;
+      padding-right: 30px;
+      .title-only-input{
+        margin: auto;
+      }
+    }
     .window{
       font-size: 20px;
-      color: darkred;
+      
       text-align: left;
     }
   }
@@ -526,9 +536,7 @@ export default {
   .question{
     width: 100%;
     height: 20px;
-    text-align: left;
-    font-weight: bold;
-    font-size: 14px;
+    font-size: 13px;
     padding: 10px;
   }
   .process-area{
@@ -587,7 +595,7 @@ export default {
   }
 
   .process-cotent-input {
-    height: 65px;
+    height: 70px;
     width: 100%;
     border: 0.5px solid #f2e9e3;
     border-radius: 5px;

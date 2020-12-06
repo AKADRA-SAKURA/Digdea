@@ -81,4 +81,7 @@ body {
     }
   }
 }
+.red{
+  color: #e81d1d;
+}
 </style>
