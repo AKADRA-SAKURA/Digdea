@@ -5,17 +5,17 @@
         <div class="goal-show-title">{{ goaltitle }}
       </div>
       <div class="process-area">
-        <div class="question">ゴールを達成するために必要なことを記入しよう！</div>
+        <div class="question">ゴールを達成するためにやるべきことを記入しよう！</div>
         <div class="process-box" v-for="(obj, index) in processlisttype" :key="index">
           <div class="process-content">
             <div class="process-content-box">
-              <div class="process-title">
-                <span v-on:click="ToToDo(index)">{{ obj.title }}</span>
+              <div class="process-title" v-on:click="openModal(obj.id)">
+                <span >{{ obj.title }}</span>
               </div>
               <button class="tassei-button" v-on:click="truedata(obj.id)">達成率</button>
               <div class="icons">
                 <font-awesome-icon icon="trash-alt" class="icon" v-on:click="openDialog(obj.id)"/>
-                <font-awesome-icon icon="edit" class="icon" v-on:click="openModal(obj.id)"/>
+                <font-awesome-icon icon="list" class="icon" v-on:click="ToToDo(index)"/>
               </div>
             </div>
           </div>
@@ -43,7 +43,7 @@
             <div class="card-status-icon window red">
               <font-awesome-icon icon="times-circle" class="process-icon" v-on:click="closeNewModal"/>
             </div>
-            <input type="text" v-model="title" class="process-title title-only-input" placeholder="小さな目標を書いてみよう"/>
+            <input type="text" v-model="title" class="process-title title-only-input" placeholder="何をする？"/>
           </div>
           <!-- 現状 -->
           <div class="process-cotent">
@@ -57,7 +57,7 @@
               <textarea
                 v-model="now"
                 class="process-cotent-input"
-                placeholder="今の状態を書いてみよう"
+                placeholder="今の状態を客観的に見て書いてみよう！"
               />
             </div>
           </div>
@@ -67,13 +67,13 @@
               <div class="card-status-icon">
                 <font-awesome-icon icon="dizzy" class="process-icon" />
               </div>
-              <div class="process-cotent-title">考えられる要因</div>
+              <div class="process-cotent-title">考えられる原因</div>
             </div>
             <div class="process-cotent-input-area">
               <textarea
                 v-model="factor"
                 class="process-cotent-input"
-                placeholder="現状が起こっている原因はなんだろう？"
+                placeholder="現状を踏まえて目標達成する上で出来ていないことを書いてみよう！"
               />
             </div>
           </div>
@@ -83,13 +83,13 @@
               <div class="card-status-icon">
                 <font-awesome-icon icon="sun" class="process-icon" />
               </div>
-              <div class="process-cotent-title">理想状態に向けて</div>
+              <div class="process-cotent-title">目標達成に向けて</div>
             </div>
             <div class="process-cotent-input-area">
               <textarea
                 v-model="need"
                 class="process-cotent-input"
-                placeholder="原因を踏まえて、理想に近づけるために必要なことを書いてみよう！"
+                placeholder="上二つを踏まえて、目標達成するためにやるべきことを整理しよう！"
               />
             </div>
           </div>
@@ -596,8 +596,10 @@ export default {
         .process-title{
           font-weight: bold;
           font-size: 15px;
-          line-height: 20px;
+          line-height: 45px;
           align-items: center;
+          height: 45px;
+          padding-top: 20px;
           
         }
         .tassei-button{
@@ -621,7 +623,7 @@ export default {
         background-image: radial-gradient(#fff 68%, transparent 68% 70%, #fff 70%),
         repeating-conic-gradient(currentColor 0% 3%, transparent 3% 5%);
         .new-box{
-          padding-top: 53px;
+          padding-top: 30px;
 
           .new-title{
             font-size: 30px;
@@ -634,8 +636,6 @@ export default {
 
   .process-content-box{
     margin: auto;
-    padding-top: 40px;
-
     
   }
 
@@ -660,7 +660,7 @@ export default {
     width: 100%;
     height: 20px;
     font-size: 13px;
-    padding: 10px;
+    padding: 10px 0px;
   }
   
 }
