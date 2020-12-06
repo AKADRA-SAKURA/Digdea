@@ -13,7 +13,7 @@
                 <span v-on:click="ToToDo(index)">{{ obj.title }}</span>
               </div>
               <div class="icons">
-                <font-awesome-icon icon="trash-alt" class="icon" v-on:click="deleteprocess(obj.id)"/>
+                <font-awesome-icon icon="trash-alt" class="icon" v-on:click="openDialog(obj.id)"/>
                 <font-awesome-icon icon="edit" class="icon" v-on:click="openModal(obj.id)"/>
               </div>
             </div>
@@ -222,6 +222,18 @@
         </div>
       </div>
     </div>
+    <dialog id="dg1">
+      <p>削除してもいいですか？</p>
+      <button
+        v-on:click="deleteprocess(editingId)"
+        v-on:keydown.Enter="closeDialog()"
+      >
+        はい
+      </button>
+      <button v-on:click="closeDialog()" v-on:keydown.Enter="closeDialog()">
+        キャンセル
+      </button>
+    </dialog>
   </div>
 </template>
 
@@ -281,6 +293,13 @@ export default {
     },
     openNewModal() {
       this.showContent2 = true;
+    },
+    openDialog(index) {
+      this.editingId = index;
+      document.getElementById("dg1").show();
+    },
+    closeDialog() {
+      document.getElementById("dg1").close();
     },
     closeModal: function() {
       this.showContent = false;
@@ -360,22 +379,20 @@ export default {
         });
     },
     deleteprocess(index) {
-      var res = confirm("削除してもいいですか？");
-      if (res == true) {
-        firebase
-          .firestore()
-          .collection("process")
-          .doc(index)
-          .delete()
-          .then(function() {
-            alert("削除しました");
-          })
-          .catch(function(error) {
-            alert.error("Error removing document: ", error);
-          });
-        this.clearbox();
-        this.reload();
-      }
+      firebase
+        .firestore()
+        .collection("process")
+        .doc(index)
+        .delete()
+        .then(function() {
+          alert("削除しました");
+        })
+        .catch(function(error) {
+          alert.error("Error removing document: ", error);
+        });
+      this.clearbox();
+      document.getElementById("dg1").close();
+      this.reload();
     },
     editprocess(index) {
       firebase
@@ -500,7 +517,6 @@ export default {
   min-width: 375px;
   text-align: center;
   margin: auto;
-
   .page-title {
       width: 100%;
       height: 50px;
