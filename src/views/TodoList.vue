@@ -29,7 +29,6 @@
         </div>
         <button v-on:click="openNewModal()">新規作成</button>
 
-        <button v-on:click="logout">ログアウト</button>
         <!-- モーダルについて -->
         <div id="overlay" v-show="showContent">
           <div id="content">
@@ -290,19 +289,6 @@ export default {
         .add({
           status: this.List.status,
         }); */
-    },
-    logout() {
-      firebase
-        .auth()
-        .signOut()
-        .then(() => {
-          this.$router.push("/signin");
-          // Sign-out successful.
-        })
-        .catch(function(error) {
-          alert("ログアウトできませんでした" + error);
-          // An error happened.
-        });
     },
   },
   mounted() {

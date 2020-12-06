@@ -11,7 +11,6 @@
       </div>
       <button v-on:click="openNewModal()">新規作成</button>
     </div>
-    <button v-on:click="logout">ログアウト</button>
 
     <div class="overlay" v-show="showContent2">
       <div class="content">
@@ -342,19 +341,6 @@ export default {
       });
       this.$router.push("/TodoList");
     },
-    logout() {
-      firebase
-        .auth()
-        .signOut()
-        .then(() => {
-          this.$router.push("/signin");
-          // Sign-out successful.
-        })
-        .catch(function(error) {
-          alert("ログアウトできませんでした" + error);
-          // An error happened.
-        });
-    },
   },
   mounted() {
     this.goalrecall();
@@ -403,7 +389,7 @@ export default {
   text-align: center;
   margin: auto;
 }
-.goal-show-base{
+.goal-show-base {
   width: 80%;
   margin: auto;
   background-color: blue;
