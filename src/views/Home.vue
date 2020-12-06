@@ -18,7 +18,7 @@
                 {{ obj.timelimit }}
               </div>
             </span>
-            <button v-on:click="deletegoal(obj.id)">削除</button>
+            <button v-on:click="openDialog(obj.id)">削除</button>
             <button v-on:click="openModal(obj.id)">編集</button>
           </div>
         </div>
@@ -54,6 +54,18 @@
         <button v-on:click="closeNewModal">Close</button>
       </div>
     </div>
+    <dialog id="dg1">
+      <p>削除してもいいですか？</p>
+      <button
+        v-on:click="deletegoal(editingId)"
+        v-on:keydown.Enter="closeDialog()"
+      >
+        はい
+      </button>
+      <button v-on:click="closeDialog()" v-on:keydown.Enter="closeDialog()">
+        キャンセル
+      </button>
+    </dialog>
   </div>
 </template>
 
@@ -93,6 +105,13 @@ export default {
     },
     openNewModal() {
       this.showContent2 = true;
+    },
+    openDialog(index) {
+      this.editingId = index;
+      document.getElementById("dg1").show();
+    },
+    closeDialog() {
+      document.getElementById("dg1").close();
     },
     closeModal: function() {
       this.showContent = false;
@@ -136,21 +155,19 @@ export default {
         });
     },
     deletegoal(index) {
-      var res = confirm("削除してもいいですか？");
-      if (res == true) {
-        firebase
-          .firestore()
-          .collection("goal")
-          .doc(index)
-          .delete()
-          .then(function() {
-            alert("削除しました");
-          })
-          .catch(function(error) {
-            alert.error("Error removing document: ", error);
-          });
-        this.reload();
-      }
+      firebase
+        .firestore()
+        .collection("goal")
+        .doc(index)
+        .delete()
+        .then(function() {
+          alert("削除しました");
+        })
+        .catch(function(error) {
+          alert.error("Error removing document: ", error);
+        });
+      document.getElementById("dg1").close();
+      this.reload();
     },
     editgoal(index) {
       firebase

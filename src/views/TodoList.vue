@@ -22,7 +22,9 @@
               <div class="card-contents-timelimit">
                 {{ obj.limit }}
               </div>
-              <button v-on:click="deletetodo(obj.id)">削除</button>
+              <button v-on:click="openDialog(obj.id)">
+                削除
+              </button>
               <button v-on:click="openModal(obj.id)">編集</button>
             </div>
           </div>
@@ -99,6 +101,19 @@
             </div>
           </div>
         </div>
+
+        <dialog id="dg1">
+          <p>削除してもいいですか？</p>
+          <button
+            v-on:click="deletetodo(editingId)"
+            v-on:keydown.Enter="closeDialog()"
+          >
+            はい
+          </button>
+          <button v-on:click="closeDialog()" v-on:keydown.Enter="closeDialog()">
+            キャンセル
+          </button>
+        </dialog>
       </div>
     </div>
   </div>
@@ -157,6 +172,13 @@ export default {
       this.List = [];
       this.clearbox();
       this.reload();
+    },
+    openDialog(index) {
+      this.editingId = index;
+      document.getElementById("dg1").show();
+    },
+    closeDialog() {
+      document.getElementById("dg1").close();
     },
     closeNewModal: function() {
       this.showContent2 = false;
@@ -243,23 +265,21 @@ export default {
       this.clearbox();
     },
     deletetodo(index) {
-      var res = confirm("削除してもいいですか？");
-      if (res == true) {
-        firebase
-          .firestore()
-          .collection("todo")
-          .doc(index)
-          .delete()
-          .then(function() {
-            alert("削除しました");
-          })
-          .catch(function(error) {
-            alert.error("Error removing document: ", error);
-          });
-        this.List = [];
-        this.clearbox();
-        this.reload();
-      }
+      firebase
+        .firestore()
+        .collection("todo")
+        .doc(index)
+        .delete()
+        .then(function() {
+          alert("削除しました");
+        })
+        .catch(function(error) {
+          alert.error("Error removing document: ", error);
+        });
+      this.List = [];
+      this.clearbox();
+      document.getElementById("dg1").close();
+      this.reload();
     },
     edittodo(index) {
       firebase

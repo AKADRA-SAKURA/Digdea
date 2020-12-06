@@ -6,7 +6,7 @@
       <div v-for="(obj, index) in processlisttype" :key="index">
         <input type="checkbox" v-model="obj.status" /> :
         <span v-on:click="ToToDo(index)">{{ obj.title }}</span>
-        <button v-on:click="deleteprocess(obj.id)">削除</button>
+        <button v-on:click="openDialog(obj.id)">削除</button>
         <button v-on:click="openModal(obj.id)">編集</button>
       </div>
       <button v-on:click="openNewModal()">新規作成</button>
@@ -142,6 +142,18 @@
         <button v-on:click="closeModal">Close</button>
       </div>
     </div>
+    <dialog id="dg1">
+      <p>削除してもいいですか？</p>
+      <button
+        v-on:click="deleteprocess(editingId)"
+        v-on:keydown.Enter="closeDialog()"
+      >
+        はい
+      </button>
+      <button v-on:click="closeDialog()" v-on:keydown.Enter="closeDialog()">
+        キャンセル
+      </button>
+    </dialog>
   </div>
 </template>
 
@@ -201,6 +213,13 @@ export default {
     },
     openNewModal() {
       this.showContent2 = true;
+    },
+    openDialog(index) {
+      this.editingId = index;
+      document.getElementById("dg1").show();
+    },
+    closeDialog() {
+      document.getElementById("dg1").close();
     },
     closeModal: function() {
       this.showContent = false;
@@ -280,22 +299,20 @@ export default {
         });
     },
     deleteprocess(index) {
-      var res = confirm("削除してもいいですか？");
-      if (res == true) {
-        firebase
-          .firestore()
-          .collection("process")
-          .doc(index)
-          .delete()
-          .then(function() {
-            alert("削除しました");
-          })
-          .catch(function(error) {
-            alert.error("Error removing document: ", error);
-          });
-        this.clearbox();
-        this.reload();
-      }
+      firebase
+        .firestore()
+        .collection("process")
+        .doc(index)
+        .delete()
+        .then(function() {
+          alert("削除しました");
+        })
+        .catch(function(error) {
+          alert.error("Error removing document: ", error);
+        });
+      this.clearbox();
+      document.getElementById("dg1").close();
+      this.reload();
     },
     editprocess(index) {
       firebase
@@ -403,7 +420,7 @@ export default {
   text-align: center;
   margin: auto;
 }
-.goal-show-base{
+.goal-show-base {
   width: 80%;
   margin: auto;
   background-color: blue;
