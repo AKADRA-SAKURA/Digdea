@@ -15,10 +15,21 @@
 </template>
 
 <script>
-/* import firebase from "firebase";
+import firebase from "firebase";
+import store from "./store";
 
 export default {
-  mounted() {
+  created() {
+    firebase.auth().onAuthStateChanged(user => {
+      if (user) {
+        /*     console.log(user); */
+        store.dispatch("setUserIdAction", { id: user.uid });
+      } else {
+        /*     console.log(user); */
+      }
+    });
+  },
+  /*  mounted() {
     firebase
       .firestore()
       .collection("todo")
@@ -39,8 +50,8 @@ export default {
         });
         this.$store.dispatch("setTodoAction", { todos: newTodos });
       });
-  },
-}; */
+  }, */
+};
 </script>
 
 <style>
