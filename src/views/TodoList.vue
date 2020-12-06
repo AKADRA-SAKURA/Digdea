@@ -17,7 +17,6 @@
                 v-bind:id="'cloud' + obj.id"
                 icon="cloud"
                 class="cloud"
-                v-model="status"
                 v-on:click="check(obj.id)"
                 style="display: block;"
               />
@@ -25,7 +24,6 @@
                 v-bind:id="'sun' + obj.id"
                 icon="sun"
                 class="sun"
-                v-model="status"
                 v-on:click="check(obj.id)"
                 style="display: none;"
               />
@@ -318,6 +316,9 @@ export default {
             cloudstatus.style = "display: block;";
             sunstatus.style = "display: none;";
           }
+        })
+        .catch(function(error) {
+          console.log("Error getting document:", error);
         });
       console.log(index, this.status);
       firebase
