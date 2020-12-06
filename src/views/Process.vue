@@ -260,6 +260,7 @@ export default {
       showContent: false,
       showContent2: false,
       editingId: "",
+      trueList: [],
     };
   },
   methods: {
@@ -433,6 +434,37 @@ export default {
           status: this.processlisttype.status,
         });
     },
+    /*     countcheck(index) {
+      firebase
+        .firestore()
+        .collection("todo")
+        .where("user_id", "==", store.getters.getUserId)
+        .where("process_id", "==", index)
+                .where("status", "==", true)
+        .get()
+        .then(snapshot => {
+          snapshot.docs.forEach(doc => {
+            this.trueList.push({
+              id: doc.id,
+              ...doc.data(),
+            });
+          });
+        });
+      var finished = 0;
+      var all = 0;
+      var percent = 0;
+      for (a in this.List) {
+        if (a.status == true) {
+          finished++;
+          all++;
+        } else {
+          all++;
+        }
+        percent = (finished * 100) / all;
+        console.log(percent);
+      }
+    }, */
+    percent() {},
     ToToDo(index) {
       store.dispatch("setProcessIdAction", {
         id: this.processlisttype[index].id,
@@ -683,11 +715,4 @@ export default {
   color: white;
   }
 }
-
-
-
-
-
-
-
 </style>
