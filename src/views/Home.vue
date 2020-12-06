@@ -303,6 +303,7 @@ export default {
   min-width: 375px;
   margin: auto;
 }
+
 .page-title {
   width: 100%;
   height: 50px;
