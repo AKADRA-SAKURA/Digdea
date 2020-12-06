@@ -61,6 +61,27 @@
 // @ is an alias to /src
 import firebase from "firebase";
 import store from "../store";
+/* import $ from "jquery"; // ← 読み込む
+$("#confirm").click(function() {
+  var res = $.confirm({
+    buttons: {
+      OK: {
+        action: function() {
+          console.log("OK");
+          return true;
+        },
+      },
+      NO: {
+        btnClass: "btn-blue",
+        keys: ["enter"],
+        action: function() {
+          console.log("キャンセル");
+        },
+      },
+    },
+  });
+  alert(res);
+}); */
 
 export default {
   name: "GOAL",
@@ -136,7 +157,7 @@ export default {
         });
     },
     deletegoal(index) {
-      var res = confirm("削除してもいいですか？");
+      var res = window.confirm("削除してもいいですか？");
       if (res == true) {
         firebase
           .firestore()

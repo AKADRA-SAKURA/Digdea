@@ -8,12 +8,28 @@
         <div v-for="(obj, index) in List" :key="index">
           <div class="card-base">
             <div class="card-status-icon">
-              <input
+              <!--               <input
                 type="checkbox"
                 v-model="obj.status"
                 v-on:click="check(obj.id)"
+              /> -->
+              <font-awesome-icon
+                v-bind:id="'cloud' + obj.id"
+                icon="cloud"
+                class="cloud"
+                v-model="status"
+                v-on:click="check(obj.id)"
+                style="display: block;"
               />
-              <font-awesome-icon icon="cloud" class="cloud" />
+              <font-awesome-icon
+                v-bind:id="'sun' + obj.id"
+                icon="sun"
+                class="sun"
+                v-model="status"
+                v-on:click="check(obj.id)"
+                style="display: none;"
+              />
+              <!-- <font-awesome-icon icon="sun" class="sun" /> -->
             </div>
             <div class="card-contents">
               <div class="card-contents-title">
@@ -119,7 +135,7 @@ export default {
       text: "",
       timelimit: "",
       now: "00:00:00",
-      status: false,
+      status: null,
       showContent: false,
       showContent2: false,
       editingId: "",
@@ -281,15 +297,37 @@ export default {
       this.timelimit = "";
     },
     check(index) {
-      console.log(index, this.status);
-      /*       firebase
+      const cloudstatus = document.getElementById("cloud" + index);
+      const sunstatus = document.getElementById("sun" + index);
+      console.log(cloudstatus);
+      console.log(sunstatus);
+      firebase
         .firestore()
         .collection("todo")
         .doc(index)
         .get()
-        .add({
-          status: this.List.status,
-        }); */
+        .then(doc => {
+          console.log(this.status);
+          this.status = doc.data().status;
+          if (this.status == false) {
+            this.status = true;
+            cloudstatus.style = "display: none;";
+            sunstatus.style = "display: block;";
+          } else {
+            this.status = false;
+            cloudstatus.style = "display: block;";
+            sunstatus.style = "display: none;";
+          }
+        });
+      console.log(index, this.status);
+      firebase
+        .firestore()
+        .collection("todo")
+        .doc(index)
+        .update({
+          status: this.status,
+        });
+      this.reload();
     },
     logout() {
       firebase
@@ -328,6 +366,11 @@ export default {
           return obj;
         });
         this.$store.dispatch("setTodoAction", { todos: newTodos });
+        if (this.List.status == false) {
+          this.cloud = 1;
+        } else {
+          this.sun = 1;
+        }
       });
   },
 };
