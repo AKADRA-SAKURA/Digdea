@@ -5,7 +5,7 @@
     <div v-for="(obj, index) in processlisttype" :key="index">
       <input type="checkbox" v-model="obj.status" /> :
       <span v-on:click="ToToDo(index)">{{ obj.title }}</span> :
-      <!--       <button v-on:click="countcheck(obj.id)">％</button> -->
+      <button v-on:click="truedata(obj.id)">達成率</button>
       <button v-on:click="deleteprocess(obj.id)">削除</button>
       <button v-on:click="openModal(obj.id)">編集</button>
     </div>
@@ -338,36 +338,61 @@ export default {
         });
     },
     truedata(index) {
+      this.List = [];
       firebase
         .firestore()
         .collection("todo")
         .where("user_id", "==", store.getters.getUserId)
         .where("process_id", "==", index)
-        .where("status", "==", true)
         .get()
         .then(snapshot => {
           snapshot.docs.forEach(doc => {
-            this.trueList.push({
+            this.List.push({
               id: doc.id,
               ...doc.data(),
             });
           });
+          /*           console.log(this.List); */
+        })
+        .then(() => {
+          firebase
+            .firestore()
+            .collection("todo")
+            .where("user_id", "==", store.getters.getUserId)
+            .where("process_id", "==", index)
+            .where("status", "==", true)
+            .get()
+            .then(snapshot => {
+              snapshot.docs.forEach(doc => {
+                this.trueList.push({
+                  id: doc.id,
+                  ...doc.data(),
+                });
+              });
+              /*               console.log(this.trueList); */
+            });
+        })
+        .then(() => {
+          this.countTrue(this.List);
         });
+    },
+    countTrue(List) {
       var finished = 0;
       var all = 0;
       var percent = 0;
-      for (var a in this.List) {
-        if (a.status == true) {
+      for (var i = 0; i < List.length; i++) {
+        /*         console.log(List[i]); */
+        if (List[i].status == true) {
           finished++;
           all++;
         } else {
           all++;
         }
         percent = (finished * 100) / all;
-        console.log(percent);
       }
+      alert("達成率は" + percent + "%です。");
+      /*       console.log(finished, all, percent); */
     },
-    percent() {},
     ToToDo(index) {
       store.dispatch("setProcessIdAction", {
         id: this.processlisttype[index].id,
