@@ -422,11 +422,7 @@ export default {
 .process-cotent {
   margin-top: 20px;
 }
-.svg-inline--fa.fa-w-16 {
-  width: 20px;
-  height: 20px;
-  margin: 10px;
-}
+
 
 .process-cotent-title-area {
   height: 40px;

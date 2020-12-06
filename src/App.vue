@@ -1,14 +1,10 @@
 <template>
   <div id="app" class="app">
-    <div id="nav">
-      <router-link to="/"><font-awesome-icon icon="home"/></router-link> |
-      <router-link to="/process"><font-awesome-icon icon="brain"/></router-link>
-      |
-      <router-link to="/Todolist"><font-awesome-icon icon="list"/></router-link>
-      |
-      <router-link to="/calendar"
-        ><font-awesome-icon icon="calendar-check"
-      /></router-link>
+    <div id="nav" class="nav">
+      <router-link to="/"><div class="icon"><font-awesome-icon icon="home"/></div></router-link> |
+      <router-link to="/process"><div class="icon"><font-awesome-icon icon="brain"/></div></router-link> |
+      <router-link to="/Todolist"><div class="icon"><font-awesome-icon icon="list"/></div></router-link> |
+      <router-link to="/calendar"><div class="icon"><font-awesome-icon icon="calendar-check"/></div></router-link> |
     </div>
     <router-view />
   </div>
@@ -43,7 +39,7 @@ export default {
 }; */
 </script>
 
-<style>
+<style lang="scss">
 body {
   margin: 0px;
 }
@@ -71,5 +67,17 @@ body {
 }
 .bg-white {
   color: white;
+}
+.app{
+  .nav{
+    height: 40px;
+    display: flex;
+    justify-content: center;
+    .icon{
+      height: 30px;
+      width: 30px;
+      font-size: 20px;
+    }
+  }
 }
 </style>

@@ -246,14 +246,15 @@ export default {
   },
 };
 </script>
-<style>
+<style lang="scss">
 .base {
   max-width: 1440px;
   min-width: 375px;
-}
-.base-content {
-  display: flex;
-  flex-wrap: wrap;
+
+  .base-content {
+    display: flex;
+    flex-wrap: wrap;
+  }
 }
 .home {
   margin: auto;
