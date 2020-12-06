@@ -3,7 +3,6 @@
     <div class="page-title">PROCESS</div>
     {{ goaltitle }}
     <div v-for="(obj, index) in processlisttype" :key="index">
-      <input type="checkbox" v-model="obj.status" /> :
       <span v-on:click="ToToDo(index)">{{ obj.title }}</span> :
       <!--       <button v-on:click="countcheck(obj.id)">％</button> -->
       <button v-on:click="deleteprocess(obj.id)">削除</button>
