@@ -356,7 +356,7 @@ export default {
       var finished = 0;
       var all = 0;
       var percent = 0;
-      for (a in this.List) {
+      for (var a in this.List) {
         if (a.status == true) {
           finished++;
           all++;
