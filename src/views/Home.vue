@@ -3,11 +3,22 @@
     <div class="goal-area">
       <div class="page-title">GOALS</div>
       <div v-for="(obj, index) in goalList" :key="index">
-        {{ obj.status }},
         <div class="card-base">
           <div class="card-status-icon">
-            <input type="checkbox" v-model="obj.status" />
-            <font-awesome-icon icon="cloud" class="cloud" />
+            <font-awesome-icon
+              v-bind:id="'cloud' + obj.id"
+              icon="cloud"
+              class="cloud"
+              v-on:click="check(obj.id)"
+              style="display: block;"
+            />
+            <font-awesome-icon
+              v-bind:id="'sun' + obj.id"
+              icon="sun"
+              class="sun"
+              v-on:click="check(obj.id)"
+              style="display: none;"
+            />
           </div>
           <div class="card-contents">
             <span v-on:click="ToProcess(index)">
@@ -192,14 +203,43 @@ export default {
       this.timelimit = "";
     },
     check(index) {
+      const cloudstatus = document.getElementById("cloud" + index);
+      const sunstatus = document.getElementById("sun" + index);
+      console.log(cloudstatus);
+      console.log(sunstatus);
       firebase
         .firestore()
-        .collection("process")
+        .collection("goal")
         .doc(index)
         .get()
-        .add({
-          status: this.processlisttype.status,
+        .then(doc => {
+          this.status = doc.data().status;
+        })
+        .then(() => {
+          console.log(this.status);
+          if (this.status == false) {
+            this.status = true;
+            cloudstatus.style.display = "none";
+            sunstatus.style.display = "block";
+          } else {
+            this.status = false;
+            cloudstatus.style.display = "block";
+            sunstatus.style.display = "none";
+          }
+        })
+        .then(() => {
+          firebase
+            .firestore()
+            .collection("goal")
+            .doc(index)
+            .update({
+              status: this.status,
+            });
+        })
+        .catch(function(error) {
+          console.log("Error getting document:", error);
         });
+      console.log(index, this.status);
     },
     ToProcess(index) {
       store.dispatch("setGoalIdAction", { id: this.goalList[index].id });

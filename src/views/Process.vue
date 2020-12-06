@@ -505,11 +505,8 @@ export default {
 };
 </script>
 <style lang="scss">
-
-
 .overlay {
   z-index: 1;
-
   position: fixed;
   top: 0;
   left: 0;
@@ -547,6 +544,7 @@ export default {
 .Process {
   max-width: 1000px;
   min-width: 375px;
+  background-color: aquamarine;
   text-align: center;
   margin: auto;
   .page-title {
@@ -639,6 +637,11 @@ export default {
     padding: 10px;
   }
   
+}
+.goal-show-base{
+  width: 80%;
+  margin: auto;
+  background-color: blue;
 }
 .process-base {
   border-radius: 10px;
