@@ -1,17 +1,24 @@
 <template>
-  <div>
-    <h1>サインアップページ</h1>
-
-    <input type="email" v-model="email" placeholder="example@mail.com" />
-    <input type="password" v-model="password" placeholder="パスワード" />
-    <input
-      type="password"
-      v-model="password2"
-      placeholder="パスワード(確認用)"
-    />
-    <input type="email" v-model="lineID" placeholder="lineID" />
-    <button v-on:click="signup">サインアップ</button>
-    <router-link to="/signin">アカウントをお持ちの方はこちら</router-link> |
+  <div class="Sign_area">
+    <div class="sign_title">SIGN UP</div>
+    <div class="sign_input_area">
+      <div class="sign_input">
+        <input type="email" v-model="email" placeholder="example@mail.com" />
+      </div>
+      <div class="sign_input">
+        <input type="password" v-model="password" placeholder="パスワード" />
+      </div>
+      <div class="sign_input">
+        <input type="password" v-model="password2" placeholder="パスワード(確認用)"/>
+      </div>
+      <div class="sign_input">
+        <input type="email" v-model="lineID" placeholder="lineID" />
+      </div>
+      <div class="sign_button">
+        <button v-on:click="signup">サインアップ</button>
+      </div>
+      <router-link to="/signin">アカウントをお持ちの方はこちら</router-link> |
+    </div>
   </div>
 </template>
 
@@ -77,4 +84,20 @@ export default {
 };
 </script>
 
-<style></style>
+<style lang="scss">
+.Sign_area{
+    margin: auto;
+    .sign_title{
+      width: 100%;
+      font-size: 40px;
+      background-color: blue;
+      text-align: center;
+    }
+    .sign_input_area{
+      width: 100%;
+      font-size: 30px;
+      background-color:pink;
+      text-align: center;
+    }
+  }
+</style>
