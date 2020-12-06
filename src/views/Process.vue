@@ -337,13 +337,13 @@ export default {
           status: this.processlisttype.status,
         });
     },
-    /*     countcheck(index) {
+    truedata(index) {
       firebase
         .firestore()
         .collection("todo")
         .where("user_id", "==", store.getters.getUserId)
         .where("process_id", "==", index)
-                .where("status", "==", true)
+        .where("status", "==", true)
         .get()
         .then(snapshot => {
           snapshot.docs.forEach(doc => {
@@ -366,7 +366,7 @@ export default {
         percent = (finished * 100) / all;
         console.log(percent);
       }
-    }, */
+    },
     percent() {},
     ToToDo(index) {
       store.dispatch("setProcessIdAction", {
