@@ -233,7 +233,7 @@
       >
         YEN
       </button>
-      <button v-on:click="closeDialog()" v-on:keydown.Enter="closeDialog()" class="answer">
+      <button v-on:click="closeDialog()" v-on:keydown.Enter="closeDialog()" class="answer choice">
         NO
       </button>
     </dialog>
@@ -745,19 +745,5 @@ export default {
   color: white;
   }
 }
-.dg1{
-    left: 12px;
-    top: 58px;
-    position: fixed;
-    border: none;
-    background-color: #e81d1d;
-    color: white;
-    border-radius: 10px;
-    font-weight: bold;
-    .answer{
-      width: 50px;
-      height: 30px;
-      margin: 20px;
-    }
-}
+
 </style>

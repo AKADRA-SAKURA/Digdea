@@ -83,16 +83,17 @@
         </div>
       </div>
     </div>
-    <dialog id="dg1">
+    <dialog id="dg1" class="dg1">
       <p>削除してもいいですか？</p>
       <button
         v-on:click="deletegoal(editingId)"
         v-on:keydown.Enter="closeDialog()"
+        class="answer"
       >
-        はい
+        YES
       </button>
-      <button v-on:click="closeDialog()" v-on:keydown.Enter="closeDialog()">
-        キャンセル
+      <button v-on:click="closeDialog()" v-on:keydown.Enter="closeDialog()" class="answer choice">
+        NO
       </button>
     </dialog>
   </div>

@@ -88,4 +88,25 @@ body {
 .orange{
   color: orange;
 }
+.dg1{
+    left: 12px;
+    top: 58px;
+    position: fixed;
+    border: none;
+    font-weight: bold;
+    background: #FFFFFF;
+    box-shadow: 4px 4px 4px rgba(0, 0, 0, 0.25);
+    .answer{
+      width: 50px;
+      height: 30px;
+      margin: 20px;
+      background-color: white;
+      border: 1px solid #383838;
+    }
+    .choice{
+      background-color: #f2e9e3;
+      width: 60px;
+      height: 40px;
+    }
+}
 </style>
