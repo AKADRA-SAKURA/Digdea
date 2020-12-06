@@ -5,38 +5,35 @@
       <router-link to="/process"><div class="icon"><font-awesome-icon icon="brain"/></div></router-link> |
       <router-link to="/Todolist"><div class="icon"><font-awesome-icon icon="list"/></div></router-link> |
       <router-link to="/calendar"><div class="icon"><font-awesome-icon icon="calendar-check"/></div></router-link> |
+      <button v-on:click="logout">ログアウト</button>
+
     </div>
     <router-view />
   </div>
 </template>
 
 <script>
-/* import firebase from "firebase";
+import firebase from "firebase";
+import store from "./store";
 
 export default {
-  mounted() {
-    firebase
-      .firestore()
-      .collection("todo")
-      .get()
-      .then(snapshot => {
-        const list = [];
-        snapshot.docs.forEach(doc => {
-          list.push({
-            id: doc.id,
-            ...doc.data(),
-          });
+  methods: {
+    logout() {
+      firebase
+        .auth()
+        .signOut()
+        .then(() => {
+          store.dispatch("setUserIdAction", { id: null });
+          this.$router.push("/signin");
+          // Sign-out successful.
+        })
+        .catch(function(error) {
+          alert("ログアウトできませんでした" + error);
+          // An error happened.
         });
-        const newTodos = list.map(todo => {
-          const obj = {};
-          obj.date = todo.limit;
-          obj.title = todo.todo;
-          return obj;
-        });
-        this.$store.dispatch("setTodoAction", { todos: newTodos });
-      });
+    },
   },
-}; */
+};
 </script>
 
 <style lang="scss">
