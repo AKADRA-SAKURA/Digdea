@@ -21,6 +21,7 @@ const routes = [
     // which is lazy-loaded when the route is visited.
     component: () =>
       import(/* webpackChunkName: "about" */ "../views/Process.vue"),
+    meta: { requiresAuth: true },
   },
   {
     path: "/todolist",
@@ -30,6 +31,7 @@ const routes = [
     // which is lazy-loaded when the route is visited.
     component: () =>
       import(/* webpackChunkName: "about" */ "../views/TodoList.vue"),
+    meta: { requiresAuth: true },
   },
   {
     path: "/signin",
@@ -51,6 +53,7 @@ const routes = [
     path: "/calendar",
     name: "Calendar",
     component: Calendar,
+    meta: { requiresAuth: true },
   },
 ];
 

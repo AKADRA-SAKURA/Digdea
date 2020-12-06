@@ -3,11 +3,22 @@
     <div class="goal-area">
       <div class="page-title">GOALS</div>
       <div v-for="(obj, index) in goalList" :key="index">
-        {{ obj.status }},
         <div class="card-base">
           <div class="card-status-icon">
-            <input type="checkbox" v-model="obj.status" />
-            <font-awesome-icon icon="cloud" class="cloud" />
+            <font-awesome-icon
+              v-bind:id="'cloud' + obj.id"
+              icon="cloud"
+              class="cloud"
+              v-on:click="check(obj.id)"
+              style="display: block;"
+            />
+            <font-awesome-icon
+              v-bind:id="'sun' + obj.id"
+              icon="sun"
+              class="sun"
+              v-on:click="check(obj.id)"
+              style="display: none;"
+            />
           </div>
           <div class="card-contents">
             <span v-on:click="ToProcess(index)">
@@ -18,17 +29,18 @@
                 {{ obj.timelimit }}
               </div>
             </span>
-            <button v-on:click="deletegoal(obj.id)">削除</button>
-            <button v-on:click="openModal(obj.id)">編集</button>
+          </div>
+          <div class="edit_icons">
+            <font-awesome-icon icon="trash-alt" class="icon" v-on:click="openDialog(obj.id)"/>
+            <font-awesome-icon icon="edit" class="icon" v-on:click="openModal(obj.id)"/>
           </div>
         </div>
       </div>
     </div>
     <button v-on:click="openNewModal()">新規作成</button>
-    <button v-on:click="logout">ログアウト</button>
 
-    <div id="overlay" v-show="showContent">
-      <div id="content">
+    <div class="overlay" v-show="showContent">
+      <div class="content">
         <p>これがモーダルウィンドウです。</p>
         目標 :<input type="text" v-model="goaltext" /> 期限 :<input
           type="date"
@@ -54,6 +66,18 @@
         <button v-on:click="closeNewModal">Close</button>
       </div>
     </div>
+    <dialog id="dg1">
+      <p>削除してもいいですか？</p>
+      <button
+        v-on:click="deletegoal(editingId)"
+        v-on:keydown.Enter="closeDialog()"
+      >
+        はい
+      </button>
+      <button v-on:click="closeDialog()" v-on:keydown.Enter="closeDialog()">
+        キャンセル
+      </button>
+    </dialog>
   </div>
 </template>
 
@@ -94,6 +118,13 @@ export default {
     openNewModal() {
       this.showContent2 = true;
     },
+    openDialog(index) {
+      this.editingId = index;
+      document.getElementById("dg1").show();
+    },
+    closeDialog() {
+      document.getElementById("dg1").close();
+    },
     closeModal: function() {
       this.showContent = false;
       this.goalList = [];
@@ -122,35 +153,20 @@ export default {
           });
         });
     },
-    logout() {
+    deletegoal(index) {
       firebase
-        .auth()
-        .signOut()
-        .then(() => {
-          this.$router.push("/signin");
-          // Sign-out successful.
+        .firestore()
+        .collection("goal")
+        .doc(index)
+        .delete()
+        .then(function() {
+          alert("削除しました");
         })
         .catch(function(error) {
-          alert("ログアウトできませんでした" + error);
-          // An error happened.
+          alert.error("Error removing document: ", error);
         });
-    },
-    deletegoal(index) {
-      var res = window.confirm("削除してもいいですか？");
-      if (res == true) {
-        firebase
-          .firestore()
-          .collection("goal")
-          .doc(index)
-          .delete()
-          .then(function() {
-            alert("削除しました");
-          })
-          .catch(function(error) {
-            alert.error("Error removing document: ", error);
-          });
-        this.reload();
-      }
+      document.getElementById("dg1").close();
+      this.reload();
     },
     editgoal(index) {
       firebase
@@ -173,14 +189,43 @@ export default {
       this.timelimit = "";
     },
     check(index) {
+      const cloudstatus = document.getElementById("cloud" + index);
+      const sunstatus = document.getElementById("sun" + index);
+      console.log(cloudstatus);
+      console.log(sunstatus);
       firebase
         .firestore()
-        .collection("process")
+        .collection("goal")
         .doc(index)
         .get()
-        .add({
-          status: this.processlisttype.status,
+        .then(doc => {
+          this.status = doc.data().status;
+        })
+        .then(() => {
+          console.log(this.status);
+          if (this.status == false) {
+            this.status = true;
+            cloudstatus.style.display = "none";
+            sunstatus.style.display = "block";
+          } else {
+            this.status = false;
+            cloudstatus.style.display = "block";
+            sunstatus.style.display = "none";
+          }
+        })
+        .then(() => {
+          firebase
+            .firestore()
+            .collection("goal")
+            .doc(index)
+            .update({
+              status: this.status,
+            });
+        })
+        .catch(function(error) {
+          console.log("Error getting document:", error);
         });
+      console.log(index, this.status);
     },
     ToProcess(index) {
       store.dispatch("setGoalIdAction", { id: this.goalList[index].id });
@@ -246,74 +291,71 @@ export default {
   },
 };
 </script>
-<style>
-.base {
-  max-width: 1440px;
-  min-width: 375px;
-}
-.base-content {
-  display: flex;
-  flex-wrap: wrap;
-}
+<style lang="scss">
 .home {
   margin: auto;
-}
-.goal-area {
+
+  .goal-area {
   max-width: 650px;
   min-width: 375px;
   margin: auto;
-}
-.page-title {
-  width: 100%;
-  height: 50px;
-  font-family: "Noto Sans JP";
-  font-weight: bold;
-  font-size: 24px;
-  color: #3d9e8d;
-  line-height: 50px;
-  letter-spacing: 0.05em;
-  text-align: center;
-}
+  
+    .page-title {
+      width: 100%;
+      height: 50px;
+      font-family: "Noto Sans JP";
+      font-weight: bold;
+      font-size: 24px;
+      color: #3d9e8d;
+      line-height: 50px;
+      letter-spacing: 0.05em;
+      text-align: center;
+    }
+    .card-base {
+      width: 335px;
+      height: 50px;
+      background-color: white;
+      display: flex;
+      padding: 10px;
+      border-radius: 10px;
+      margin: 10px auto;
 
-.card-base {
-  width: 335px;
-  height: 50px;
-  background-color: white;
-  display: flex;
-  padding: 10px;
-  border-radius: 10px;
-  margin: 10px auto;
-}
-/* アイコンに関して */
-.card-status-icon {
-  width: 50px;
-  margin: auto;
-  text-align: center;
-}
-.svg-inline--fa.fa-w-20 {
-  width: 30px;
-  height: 20px;
-  margin: 10px;
-  color: #3d9e8d;
-}
+      /* アイコンに関して */
+      .card-status-icon {
+        width: 50px;
+        font-size: 25px;
+        color: pink;
+        margin: auto;
+        text-align: center;
+      }
+      .edit_icons {
+        font-size: 20px;
+        margin: auto;
+        text-align: center;
 
-/* カードの内容に関して */
-.card-contents {
-  width: 285px;
-}
-.card-contents-title {
-  height: 26px;
-  font-weight: bold;
-  font-size: 15.5px;
-  line-height: 25px;
-}
+        .icon{
+          width: 30px;
+        }
+      }
+      .card-contents {
+        width: 285px;
 
-.card-contents-timelimit {
-  height: 20px;
-  font-family: "Noto Sans JP";
-  font-weight: normal;
-  font-size: 10px;
-  line-height: 20px;
-  color: #757575;
+        .card-contents-title {
+          height: 26px;
+          font-weight: bold;
+          font-size: 15.5px;
+          line-height: 25px;
+        }
+        .card-contents-timelimit {
+          height: 20px;
+          font-family: "Noto Sans JP";
+          font-weight: normal;
+          font-size: 10px;
+          line-height: 20px;
+          color: #757575;
+        }
+      }
+    }
+  }
 }
 </style>
