@@ -41,7 +41,7 @@
           <div class="process-cotent modal-title">
              <!-- 閉じる -->
             <div class="card-status-icon window red">
-              <font-awesome-icon icon="window-close" class="process-icon" v-on:click="closeNewModal"/>
+              <font-awesome-icon icon="times-circle" class="process-icon" v-on:click="closeNewModal"/>
             </div>
             <input type="text" v-model="title" class="process-title title-only-input" placeholder="小さな目標を書いてみよう"/>
           </div>
@@ -146,7 +146,7 @@
           <div class="process-cotent modal-title">
             <!-- 閉じる -->
             <div class="card-status-icon window red">
-              <font-awesome-icon icon="window-close" class="process-icon" v-on:click="closeModal"/>
+              <font-awesome-icon icon="times-circle" class="process-icon" v-on:click="closeModal"/>
             </div>
             <input type="text" v-model="title" class="process-title title-only-input"/>
           </div>
