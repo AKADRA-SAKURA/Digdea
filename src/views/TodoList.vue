@@ -8,11 +8,6 @@
         <div v-for="(obj, index) in List" :key="index">
           <div class="card-base">
             <div class="card-status-icon">
-              <!--               <input
-                type="checkbox"
-                v-model="obj.status"
-                v-on:click="check(obj.id)"
-              /> -->
               <font-awesome-icon
                 v-bind:id="'cloud' + obj.id"
                 icon="cloud"
@@ -27,7 +22,6 @@
                 v-on:click="check(obj.id)"
                 style="display: none;"
               />
-              <!-- <font-awesome-icon icon="sun" class="sun" /> -->
             </div>
             <div class="card-contents">
               <div class="card-contents-title">
@@ -305,30 +299,33 @@ export default {
         .doc(index)
         .get()
         .then(doc => {
-          console.log(this.status);
           this.status = doc.data().status;
+        })
+        .then(() => {
+          console.log(this.status);
           if (this.status == false) {
             this.status = true;
-            cloudstatus.style = "display: none;";
-            sunstatus.style = "display: block;";
+            cloudstatus.style.display = "none";
+            sunstatus.style.display = "block";
           } else {
             this.status = false;
-            cloudstatus.style = "display: block;";
-            sunstatus.style = "display: none;";
+            cloudstatus.style.display = "block";
+            sunstatus.style.display = "none";
           }
+        })
+        .then(() => {
+          firebase
+            .firestore()
+            .collection("todo")
+            .doc(index)
+            .update({
+              status: this.status,
+            });
         })
         .catch(function(error) {
           console.log("Error getting document:", error);
         });
       console.log(index, this.status);
-      firebase
-        .firestore()
-        .collection("todo")
-        .doc(index)
-        .update({
-          status: this.status,
-        });
-      this.reload();
     },
     logout() {
       firebase
