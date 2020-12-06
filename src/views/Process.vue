@@ -12,7 +12,7 @@
               <div class="process-title">
                 <span v-on:click="ToToDo(index)">{{ obj.title }}</span>
               </div>
-              <button v-on:click="truedata(obj.id)">達成率</button>
+              <button class="tassei-button" v-on:click="truedata(obj.id)">達成率</button>
               <div class="icons">
                 <font-awesome-icon icon="trash-alt" class="icon" v-on:click="openDialog(obj.id)"/>
                 <font-awesome-icon icon="edit" class="icon" v-on:click="openModal(obj.id)"/>
@@ -223,16 +223,17 @@
         </div>
       </div>
     </div>
-    <dialog id="dg1">
+    <dialog id="dg1" class="dg1">
       <p>削除してもいいですか？</p>
       <button
         v-on:click="deleteprocess(editingId)"
         v-on:keydown.Enter="closeDialog()"
+        class="answer"
       >
-        はい
+        YEN
       </button>
-      <button v-on:click="closeDialog()" v-on:keydown.Enter="closeDialog()">
-        キャンセル
+      <button v-on:click="closeDialog()" v-on:keydown.Enter="closeDialog()" class="answer">
+        NO
       </button>
     </dialog>
   </div>
@@ -517,6 +518,7 @@ export default {
   },
 };
 </script>
+
 <style lang="scss">
 .overlay {
   z-index: 1;
@@ -534,11 +536,12 @@ export default {
   .content {
     z-index: 2;
     width: 85%;
-    padding: 1em;
     height: 650px;
     background: #fff;
-    max-width: 800px;
+    max-width: 750px;
+    min-width: 350px;
     border-radius: 10px;
+    overflow: auto;
     .modal-title{
       display: flex;
       padding-right: 30px;
@@ -557,7 +560,6 @@ export default {
 .Process {
   max-width: 1000px;
   min-width: 375px;
-  background-color: aquamarine;
   text-align: center;
   margin: auto;
   .page-title {
@@ -588,6 +590,7 @@ export default {
         border-radius: 50%;
         background-color: #3d9e8d;
         margin: auto;
+        max-width: 200px;
 
         .process-title{
           font-weight: bold;
@@ -595,6 +598,13 @@ export default {
           line-height: 20px;
           align-items: center;
           
+        }
+        .tassei-button{
+          border: 2px solid #3d9e8d;
+          box-sizing: border-box;
+          border-radius: 10px;
+          background-color: white;
+          color: #3d9e8d;
         }
         .icons {
             font-size: 20px;
@@ -633,6 +643,8 @@ export default {
     margin: auto;
     border-radius: 10px;
     background-color: white;
+    max-width: 750px;
+    min-width: 350px;
 
     .goal-show-title{
       width: 100%;
@@ -659,7 +671,8 @@ export default {
 .process-base {
   border-radius: 10px;
   background-color: white;
-  margin: auto;
+  margin: 20px auto;
+  width: 90%;
 
   .process-contents {
     padding: 0px 35px;
@@ -730,5 +743,20 @@ export default {
   line-height: 44px;
   color: white;
   }
+}
+.dg1{
+    left: 12px;
+    top: 58px;
+    position: fixed;
+    border: none;
+    background-color: #e81d1d;
+    color: white;
+    border-radius: 10px;
+    font-weight: bold;
+    .answer{
+      width: 50px;
+      height: 30px;
+      margin: 20px;
+    }
 }
 </style>
