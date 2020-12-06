@@ -58,6 +58,7 @@ body {
 
 #nav {
   padding: 30px;
+  text-align: center;
 }
 
 #nav a {
