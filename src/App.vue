@@ -7,6 +7,7 @@
       <router-link to="/calendar"><div class="icon"><font-awesome-icon icon="calendar-check"/></div></router-link> |
       <div class="icon"><font-awesome-icon icon="sign-out-alt" v-on:click="logout"/></div>
 
+
     </div>
     <router-view />
   </div>
