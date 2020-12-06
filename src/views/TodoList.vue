@@ -8,12 +8,20 @@
         <div v-for="(obj, index) in List" :key="index">
           <div class="card-base">
             <div class="card-status-icon">
-              <input
-                type="checkbox"
-                v-model="obj.status"
+              <font-awesome-icon
+                v-bind:id="'cloud' + obj.id"
+                icon="cloud"
+                class="cloud"
                 v-on:click="check(obj.id)"
+                style="display: block;"
               />
-              <font-awesome-icon icon="cloud" class="cloud" />
+              <font-awesome-icon
+                v-bind:id="'sun' + obj.id"
+                icon="sun"
+                class="sun"
+                v-on:click="check(obj.id)"
+                style="display: none;"
+              />
             </div>
             <div class="card-contents">
               <div class="card-contents-title">
@@ -22,7 +30,9 @@
               <div class="card-contents-timelimit">
                 {{ obj.limit }}
               </div>
-              <button v-on:click="deletetodo(obj.id)">削除</button>
+              <button v-on:click="openDialog(obj.id)">
+                削除
+              </button>
               <button v-on:click="openModal(obj.id)">編集</button>
             </div>
           </div>
@@ -98,6 +108,19 @@
             </div>
           </div>
         </div>
+
+        <dialog id="dg1">
+          <p>削除してもいいですか？</p>
+          <button
+            v-on:click="deletetodo(editingId)"
+            v-on:keydown.Enter="closeDialog()"
+          >
+            はい
+          </button>
+          <button v-on:click="closeDialog()" v-on:keydown.Enter="closeDialog()">
+            キャンセル
+          </button>
+        </dialog>
       </div>
     </div>
   </div>
@@ -118,7 +141,7 @@ export default {
       text: "",
       timelimit: "",
       now: "00:00:00",
-      status: false,
+      status: null,
       showContent: false,
       showContent2: false,
       editingId: "",
@@ -156,6 +179,13 @@ export default {
       this.List = [];
       this.clearbox();
       this.reload();
+    },
+    openDialog(index) {
+      this.editingId = index;
+      document.getElementById("dg1").show();
+    },
+    closeDialog() {
+      document.getElementById("dg1").close();
     },
     closeNewModal: function() {
       this.showContent2 = false;
@@ -242,23 +272,21 @@ export default {
       this.clearbox();
     },
     deletetodo(index) {
-      var res = confirm("削除してもいいですか？");
-      if (res == true) {
-        firebase
-          .firestore()
-          .collection("todo")
-          .doc(index)
-          .delete()
-          .then(function() {
-            alert("削除しました");
-          })
-          .catch(function(error) {
-            alert.error("Error removing document: ", error);
-          });
-        this.List = [];
-        this.clearbox();
-        this.reload();
-      }
+      firebase
+        .firestore()
+        .collection("todo")
+        .doc(index)
+        .delete()
+        .then(function() {
+          alert("削除しました");
+        })
+        .catch(function(error) {
+          alert.error("Error removing document: ", error);
+        });
+      this.List = [];
+      this.clearbox();
+      document.getElementById("dg1").close();
+      this.reload();
     },
     edittodo(index) {
       firebase
@@ -280,15 +308,43 @@ export default {
       this.timelimit = "";
     },
     check(index) {
-      console.log(index, this.status);
-      /*       firebase
+      const cloudstatus = document.getElementById("cloud" + index);
+      const sunstatus = document.getElementById("sun" + index);
+      console.log(cloudstatus);
+      console.log(sunstatus);
+      firebase
         .firestore()
         .collection("todo")
         .doc(index)
         .get()
-        .add({
-          status: this.List.status,
-        }); */
+        .then(doc => {
+          this.status = doc.data().status;
+        })
+        .then(() => {
+          console.log(this.status);
+          if (this.status == false) {
+            this.status = true;
+            cloudstatus.style.display = "none";
+            sunstatus.style.display = "block";
+          } else {
+            this.status = false;
+            cloudstatus.style.display = "block";
+            sunstatus.style.display = "none";
+          }
+        })
+        .then(() => {
+          firebase
+            .firestore()
+            .collection("todo")
+            .doc(index)
+            .update({
+              status: this.status,
+            });
+        })
+        .catch(function(error) {
+          console.log("Error getting document:", error);
+        });
+      console.log(index, this.status);
     },
   },
   mounted() {
@@ -314,12 +370,17 @@ export default {
           return obj;
         });
         this.$store.dispatch("setTodoAction", { todos: newTodos });
+        if (this.List.status == false) {
+          this.cloud = 1;
+        } else {
+          this.sun = 1;
+        }
       });
   },
 };
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
 #overlay {
   z-index: 1;
   position: fixed;
@@ -342,7 +403,15 @@ export default {
   box-shadow: 0px 3px 4px rgba(0, 0, 0, 0.25);
   border-radius: 10px;
 }
+.base {
+  max-width: 1440px;
+  min-width: 375px;
 
+  .base-content {
+    display: flex;
+    flex-wrap: wrap;
+  }
+}
 .modal_content_area {
   width: 300px;
   height: 150px;

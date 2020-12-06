@@ -1,13 +1,21 @@
 <template>
-  <div>
-    <h1>サインインページ</h1>
-
-    <input type="email" v-model="email" placeholder="example@mail.com" />
-    <input type="password" v-model="password" placeholder="パスワード" />
-    <button v-on:click="login">ログイン</button>
-
-    <button v-on:click="google">Googleアカウントでログイン</button>
-    <router-link to="/signup">初めての方はこちら</router-link> |
+  <div class="Sign_area">
+    <div class="sign_title">SIGN IN</div>
+    <div class="sign_input_area">
+      <div class="sign_input">
+        <input type="email" v-model="email" placeholder="example@mail.com" />
+      </div>
+      <div class="sign_input">
+        <input type="password" v-model="password" placeholder="パスワード" />
+      </div>
+      <div class="sign_button">
+        <button v-on:click="login">LOG IN</button>
+      </div>
+      <div class="sign_button">
+        <button v-on:click="google">Googleアカウントでログイン</button>
+      </div>
+      <router-link to="/signup">初めての方はこちら</router-link> |
+    </div>
   </div>
 </template>
 
@@ -92,4 +100,20 @@ export default {
 };
 </script>
 
-<style></style>
+<style lang="scss">
+  .Sign_area{
+    margin: auto;
+    .sign_title{
+      width: 100%;
+      font-size: 40px;
+      background-color: blue;
+      text-align: center;
+    }
+    .sign_input_area{
+      width: 100%;
+      font-size: 30px;
+      background-color:pink;
+      text-align: center;
+    }
+  }
+</style>
