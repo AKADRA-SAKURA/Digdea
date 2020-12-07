@@ -168,7 +168,8 @@ export default {
       text: "",
       timelimit: "",
       now: "00:00:00",
-      status: null,
+      status: false,
+      status2: false,
       showContent: false,
       showContent2: false,
       deleteDialog: false,
@@ -245,6 +246,38 @@ export default {
             return obj;
           });
           this.$store.dispatch("setTodoAction", { todos: newTodos });
+        })
+        .then(() => {
+          for (var i = 0; i < this.List.length; i++) {
+            const cloudstatus = document.getElementById(
+              "cloud" + this.List[i].id
+            );
+            const sunstatus = document.getElementById("sun" + this.List[i].id);
+            console.log(cloudstatus);
+            console.log(sunstatus);
+            firebase
+              .firestore()
+              .collection("todo")
+              .doc(this.List[i].id)
+              .get()
+              .then(doc => {
+                this.status2 = doc.data().status;
+              })
+              .then(() => {
+                console.log(this.status2);
+                if (this.status2 == false) {
+                  cloudstatus.style.display = "block";
+                  sunstatus.style.display = "none";
+                } else {
+                  cloudstatus.style.display = "none";
+                  sunstatus.style.display = "block";
+                }
+              })
+              .catch(function(error) {
+                console.log("Error getting document:", error);
+              });
+            console.log(this.List[i].id, this.status);
+          }
         });
     },
     addlist() {
@@ -346,11 +379,11 @@ export default {
         .doc(index)
         .get()
         .then(doc => {
-          this.status = doc.data().status;
+          this.status2 = doc.data().status;
         })
         .then(() => {
-          console.log(this.status);
-          if (this.status == false) {
+          console.log(this.status2);
+          if (this.status2 == false) {
             this.status = true;
             cloudstatus.style.display = "none";
             sunstatus.style.display = "block";
@@ -413,11 +446,11 @@ export default {
             .doc(this.List[i].id)
             .get()
             .then(doc => {
-              this.status = doc.data().status;
+              this.status2 = doc.data().status;
             })
             .then(() => {
-              console.log(this.status);
-              if (this.status == false) {
+              console.log(this.status2);
+              if (this.status2 == false) {
                 cloudstatus.style.display = "block";
                 sunstatus.style.display = "none";
               } else {
