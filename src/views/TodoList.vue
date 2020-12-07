@@ -458,7 +458,7 @@ export default {
           }
         }
         .edit_icons {
-          font-size: 20px;
+          font-size: 17gipx;
           margin: auto;
           text-align: center;
 
