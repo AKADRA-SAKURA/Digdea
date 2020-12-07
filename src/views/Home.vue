@@ -117,7 +117,7 @@
         </div>
       </div>
     </div>
-    <dialog id="dg1" class="dg1">
+    <dialog id="dg1" class="dg1" v-show="deleteDialog">
       <p>削除してもいいですか？</p>
       <button
         v-on:click="deletegoal(editingId)"
@@ -154,6 +154,7 @@ export default {
       nowtime: "00:00:00",
       showContent: false,
       showContent2: false,
+      deleteDialog: false,
       editingId: "",
     };
   },
@@ -176,9 +177,11 @@ export default {
     },
     openDialog(index) {
       this.editingId = index;
+      this.deleteDialog = true;
       document.getElementById("dg1").show();
     },
     closeDialog() {
+      this.deleteDialog = false;
       document.getElementById("dg1").close();
     },
     closeModal: function() {
@@ -385,10 +388,10 @@ export default {
   margin: auto;
 
   .goal-area {
-  max-width: 650px;
-  min-width: 300px;
-  margin: auto;
-  
+    max-width: 650px;
+    min-width: 300px;
+    margin: auto;
+
     .page-title {
       width: 100%;
       height: 50px;
@@ -406,7 +409,7 @@ export default {
       font-family: "Noto Sans JP";
       font-weight: bold;
       font-size: 15px;
- 
+
       line-height: 30px;
       letter-spacing: 0.05em;
       text-align: center;

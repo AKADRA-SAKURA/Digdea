@@ -5,7 +5,7 @@
         <div class="page-title-todo">TODO LIST</div>
         <div class="from-process">
           <div class="page-title-message">
-            {{ processtitle }}について<br>
+            {{ processtitle }}について<br />
             具体的なTodoを書いていこう！
           </div>
         </div>
@@ -129,7 +129,7 @@
           </div>
         </div>
 
-        <dialog id="dg1" class="dg1">
+        <dialog id="dg1" class="dg1" v-show="deleteDialog">
           <p>削除してもいいですか？</p>
           <button
             v-on:click="deletetodo(editingId)"
@@ -169,6 +169,7 @@ export default {
       status: null,
       showContent: false,
       showContent2: false,
+      deleteDialog: false,
       editingId: "",
     };
   },
@@ -207,9 +208,11 @@ export default {
     },
     openDialog(index) {
       this.editingId = index;
+      this.deleteDialog = true;
       document.getElementById("dg1").show();
     },
     closeDialog() {
+      this.deleteDialog = false;
       document.getElementById("dg1").close();
     },
     closeNewModal: function() {
@@ -463,7 +466,6 @@ export default {
   max-width: 1440px;
   min-width: 300px;
 
-
   .home {
     margin: auto;
 
@@ -472,80 +474,78 @@ export default {
       min-width: 300px;
       margin: auto;
 
-    
-        .page-title-todo {
-          width: 100%;
-          height: 50px;
-          font-family: "Noto Sans JP";
-          font-weight: bold;
-          font-size: 24px;
-          color: #3d9e8d;
-          line-height: 50px;
-          letter-spacing: 0.05em;
+      .page-title-todo {
+        width: 100%;
+        height: 50px;
+        font-family: "Noto Sans JP";
+        font-weight: bold;
+        font-size: 24px;
+        color: #3d9e8d;
+        line-height: 50px;
+        letter-spacing: 0.05em;
+        text-align: center;
+      }
+      .page-title-message {
+        width: 100%;
+        height: 50px;
+        font-family: "Noto Sans JP";
+        font-weight: bold;
+        font-size: 15.5px;
+        line-height: 25px;
+        letter-spacing: 0.05em;
+        text-align: center;
+      }
+      .card-base {
+        width: 80%;
+        height: 50px;
+        background-color: white;
+        display: flex;
+        padding: 10px;
+        border-radius: 10px;
+        margin: 10px auto;
+        min-width: 300px;
+
+        /* アイコンに関して */
+        .card-status-icon {
+          width: 50px;
+          font-size: 25px;
+          color: pink;
+          margin: auto;
           text-align: center;
+          .cloud {
+            color: grey;
+          }
+          .sun {
+            color: orange;
+          }
         }
-        .page-title-message {
-          width: 100%;
-          height: 50px;
-          font-family: "Noto Sans JP";
-          font-weight: bold;
-          font-size: 15.5px;
-          line-height: 25px;
-          letter-spacing: 0.05em;
+        .edit_icons {
+          font-size: 17gipx;
+          margin: auto;
           text-align: center;
+
+          .icon {
+            width: 30px;
+          }
         }
-        .card-base {
-          width: 80%;
-          height: 50px;
-          background-color: white;
-          display: flex;
-          padding: 10px;
-          border-radius: 10px;
-          margin: 10px auto;
-          min-width: 300px;
+        .card-contents {
+          width: 285px;
 
-          /* アイコンに関して */
-          .card-status-icon {
-            width: 50px;
-            font-size: 25px;
-            color: pink;
-            margin: auto;
-            text-align: center;
-            .cloud {
-              color: grey;
-            }
-            .sun {
-              color: orange;
-            }
+          .card-contents-title {
+            height: 26px;
+            font-weight: bold;
+            font-size: 15.5px;
+            line-height: 25px;
           }
-          .edit_icons {
-            font-size: 17gipx;
-            margin: auto;
-            text-align: center;
-
-            .icon {
-              width: 30px;
-            }
+          .card-contents-timelimit {
+            height: 20px;
+            font-family: "Noto Sans JP";
+            font-weight: normal;
+            font-size: 10px;
+            line-height: 20px;
+            color: #757575;
           }
-          .card-contents {
-            width: 285px;
-
-            .card-contents-title {
-              height: 26px;
-              font-weight: bold;
-              font-size: 15.5px;
-              line-height: 25px;
-            }
-            .card-contents-timelimit {
-              height: 20px;
-              font-family: "Noto Sans JP";
-              font-weight: normal;
-              font-size: 10px;
-              line-height: 20px;
-              color: #757575;
-            }
-          }
-        
+        }
       }
     }
   }
