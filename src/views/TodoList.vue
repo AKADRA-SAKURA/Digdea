@@ -28,7 +28,7 @@
                 style="display: block;"
               />
             </div>
-            <div class="card-contents" v-on:click="openModal(obj.id)">
+            <div class="card-contents" v-on:click="backtoProcess(obj.id)">
               <div class="card-contents-title">
                 {{ obj.todo }}
               </div>
@@ -406,6 +406,12 @@ export default {
           console.log("Error getting document:", error);
         });
       console.log(index, this.status);
+    },
+    backtoProcess(index) {
+      store.dispatch("setProcessIdAction", {
+        id: index,
+      });
+      this.$router.push("/Process");
     },
   },
   mounted() {
