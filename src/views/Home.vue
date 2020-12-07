@@ -410,17 +410,19 @@ export default {
         }
       })
       .then(() => {
-        for (var i = 0; i < this.List.length; i++) {
+        for (var i = 0; i < this.goalList.length; i++) {
           const cloudstatus = document.getElementById(
-            "cloud" + this.List[i].id
+            "cloud" + this.goalList[i].id
           );
-          const sunstatus = document.getElementById("sun" + this.List[i].id);
+          const sunstatus = document.getElementById(
+            "sun" + this.goalList[i].id
+          );
           console.log(cloudstatus);
           console.log(sunstatus);
           firebase
             .firestore()
             .collection("todo")
-            .doc(this.List[i].id)
+            .doc(this.goalList[i].id)
             .get()
             .then(doc => {
               this.status2 = doc.data().status;
@@ -438,7 +440,7 @@ export default {
             .catch(function(error) {
               console.log("Error getting document:", error);
             });
-          console.log(this.List[i].id, this.status);
+          console.log(this.goalList[i].id, this.status);
         }
       });
   },
