@@ -479,6 +479,10 @@ export default {
           this.reload();
         });
       this.closeModal();
+      store.dispatch("setProcessIdAction", {
+        id: index,
+      });
+      this.$router.push("/TodoList");
       this.clearbox();
     },
     clearbox() {
@@ -532,7 +536,6 @@ export default {
                   ...doc.data(),
                 });
               });
-              /*               console.log(this.trueList); */
             });
         })
         .then(() => {
