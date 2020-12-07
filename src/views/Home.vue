@@ -315,7 +315,7 @@ export default {
 
   .goal-area {
   max-width: 650px;
-  min-width: 375px;
+  min-width: 300px;
   margin: auto;
   
     .page-title {
@@ -330,13 +330,14 @@ export default {
       text-align: center;
     }
     .card-base {
-      width: 335px;
+      width: 80%;
       height: 50px;
       background-color: white;
       display: flex;
       padding: 10px;
       border-radius: 10px;
       margin: 10px auto;
+      min-width: 300px;
 
       /* アイコンに関して */
       .card-status-icon {
@@ -418,7 +419,7 @@ export default {
     height: 190px;
     background: #fff;
     max-width: 400px;
-    min-width: 350px;
+    min-width: 300px;
     border-radius: 10px;
     overflow: auto;
     text-align: center;

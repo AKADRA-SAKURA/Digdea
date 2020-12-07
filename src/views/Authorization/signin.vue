@@ -103,10 +103,16 @@ export default {
 <style lang="scss">
   .Sign_area{
     margin: auto;
+    width: 85%;
+    max-width: 400px;
+    min-width: 300px;
+    border-radius: 10px;
+    text-align: center;
+    background-color: aqua;
     .sign_title{
       width: 100%;
       font-size: 40px;
-   
+     
       text-align: center;
     }
     .sign_input_area{
