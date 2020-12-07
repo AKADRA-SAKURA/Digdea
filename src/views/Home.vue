@@ -2,6 +2,7 @@
   <div class="home">
     <div class="goal-area">
       <div class="page-title">GOALS</div>
+      <div class="page-title-message">達成したい課題を書いてみよう！</div>
       <div v-for="(obj, index) in goalList" :key="index">
         <div class="card-base">
           <div class="card-status-icon">
@@ -31,30 +32,50 @@
             </span>
           </div>
           <div class="edit_icons">
-            <font-awesome-icon icon="trash-alt" class="icon" v-on:click="openDialog(obj.id)"/>
-            <font-awesome-icon icon="edit" class="icon" v-on:click="openModal(obj.id)"/>
+            <font-awesome-icon
+              icon="trash-alt"
+              class="icon"
+              v-on:click="openDialog(obj.id)"
+            />
+            <font-awesome-icon
+              icon="edit"
+              class="icon"
+              v-on:click="openModal(obj.id)"
+            />
           </div>
         </div>
       </div>
     </div>
     <div class="new_goal">
       <div class="icon">
-        <font-awesome-icon icon="plus" v-on:click="openNewModal()"/>
+        <font-awesome-icon icon="plus" v-on:click="openNewModal()" />
       </div>
     </div>
-   <!-- 編集 -->
+    <!-- 編集 -->
     <div class="overlay-home" v-show="showContent">
       <div class="content">
         <div class="home-modal-base">
           <!-- 閉じる -->
           <div class="card-status-icon window red">
-            <font-awesome-icon icon="times-circle" class="process-icon" v-on:click="closeModal"/>
+            <font-awesome-icon
+              icon="times-circle"
+              class="process-icon"
+              v-on:click="closeModal"
+            />
           </div>
           <div class="process-cotent modal-title">
-            目標 :<input type="text" v-model="goaltext" class="process-title title-only-input" />
+            目標 :<input
+              type="text"
+              v-model="goaltext"
+              class="process-title title-only-input"
+            />
           </div>
           <div class="process-cotent modal-title">
-            期限 :<input type="date" v-model="timelimit" class="process-title title-only-input"/>
+            期限 :<input
+              type="date"
+              v-model="timelimit"
+              class="process-title title-only-input"
+            />
           </div>
           <button v-on:click="editgoal(editingId)" class="process-submit">
             ➡︎
@@ -68,14 +89,27 @@
         <div class="home-modal-base">
           <!-- 閉じる -->
           <div class="card-status-icon window red">
-            <font-awesome-icon icon="times-circle" class="process-icon" v-on:click="closeNewModal"/>
-            <div class="question">いつまでに何を達成したいですか？</div>
+            <font-awesome-icon
+              icon="times-circle"
+              class="process-icon"
+              v-on:click="closeNewModal"
+            />
+            <div class="question">いつまでに何をする？</div>
           </div>
           <div class="process-cotent modal-title">
-            目標 :<input type="text" v-model="goaltext" class="process-title title-only-input" placeholder="大きな目標"/> 
+            目標 :<input
+              type="text"
+              v-model="goaltext"
+              class="process-title title-only-input"
+              placeholder="大きな目標"
+            />
           </div>
           <div class="process-cotent modal-title">
-            期限 :<input type="date" v-model="timelimit" class="process-title title-only-input"/>
+            期限 :<input
+              type="date"
+              v-model="timelimit"
+              class="process-title title-only-input"
+            />
           </div>
           <button v-on:click="addgoal" class="process-submit">
             ➡︎
@@ -92,7 +126,11 @@
       >
         YES
       </button>
-      <button v-on:click="closeDialog()" v-on:keydown.Enter="closeDialog()" class="answer choice">
+      <button
+        v-on:click="closeDialog()"
+        v-on:keydown.Enter="closeDialog()"
+        class="answer choice"
+      >
         NO
       </button>
     </dialog>
@@ -304,7 +342,40 @@ export default {
             ...doc.data(),
           });
         });
-        /*         console.log(this.goalList); */
+      })
+      .then(() => {
+        for (var i = 0; i < this.goalList.length; i++) {
+          const cloudstatus = document.getElementById(
+            "cloud" + this.goalList[i].id
+          );
+          const sunstatus = document.getElementById(
+            "sun" + this.goalList[i].id
+          );
+          console.log(cloudstatus);
+          console.log(sunstatus);
+          firebase
+            .firestore()
+            .collection("goal")
+            .doc(this.goalList[i].id)
+            .get()
+            .then(doc => {
+              this.status = doc.data().status;
+            })
+            .then(() => {
+              console.log(this.status);
+              if (this.status == false) {
+                cloudstatus.style.display = "block";
+                sunstatus.style.display = "none";
+              } else {
+                cloudstatus.style.display = "none";
+                sunstatus.style.display = "block";
+              }
+            })
+            .catch(function(error) {
+              console.log("Error getting document:", error);
+            });
+          console.log(this.goalList[i].id, this.status);
+        }
       });
   },
 };
@@ -329,6 +400,16 @@ export default {
       letter-spacing: 0.05em;
       text-align: center;
     }
+    .page-title-message {
+      width: 100%;
+      height: 30px;
+      font-family: "Noto Sans JP";
+      font-weight: bold;
+      font-size: 15px;
+      line-height: 30px;
+      letter-spacing: 0.05em;
+      text-align: center;
+    }
     .card-base {
       width: 80%;
       height: 50px;
@@ -346,10 +427,10 @@ export default {
         color: pink;
         margin: auto;
         text-align: center;
-        .cloud{
+        .cloud {
           color: grey;
         }
-        .sun{
+        .sun {
           color: orange;
         }
       }
@@ -358,7 +439,7 @@ export default {
         margin: auto;
         text-align: center;
 
-        .icon{
+        .icon {
           width: 30px;
         }
       }
@@ -383,7 +464,7 @@ export default {
     }
   }
 }
-.new_goal{
+.new_goal {
   width: 70px;
   height: 70px;
   background-color: white;
@@ -391,13 +472,12 @@ export default {
   position: fixed;
   bottom: 20px;
   right: 20px;
-  .icon{
+  .icon {
     text-align: center;
     margin: auto;
     font-size: 25px;
     line-height: 70px;
-    color: #3D9E8D;
-    
+    color: #3d9e8d;
   }
 }
 .overlay-home {
@@ -424,10 +504,10 @@ export default {
     overflow: auto;
     text-align: center;
 
-    .home-modal-base{
+    .home-modal-base {
       padding: 20px;
 
-      .process-title{
+      .process-title {
         width: 70%;
         height: 25px;
         font-weight: bold;
@@ -435,30 +515,30 @@ export default {
         line-height: 22px;
         border: 0.5px solid #f2e9e3;
         border-radius: 5px;
-        
+
         align-items: center;
         text-align: center;
       }
-      .modal-title{
+      .modal-title {
         display: flex;
         padding-right: 30px;
-        .title-only-input{
+        .title-only-input {
           margin: auto;
         }
       }
-      .window{
+      .window {
         font-size: 20px;
         margin-bottom: 10px;
         text-align: left;
         display: flex;
-        .process-icon{
+        .process-icon {
           margin-right: 10px;
         }
-         .question{
-            color: black;
-            font-size: 15px;
-            padding-right: 20px;
-          }
+        .question {
+          color: black;
+          font-size: 15px;
+          padding-right: 20px;
+        }
       }
       .process-submit {
         width: 44px;
@@ -475,5 +555,4 @@ export default {
     }
   }
 }
-
 </style>

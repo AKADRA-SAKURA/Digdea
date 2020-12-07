@@ -4,7 +4,10 @@
       <div class="goal-area">
         <div class="page-title-todo">TODO LIST</div>
         <div class="from-process">
-          <span class="process-title-main">{{ processtitle }}</span>を達成するために・・
+          <div class="page-title-message">
+            {{ processtitle }}について<br>
+            具体的なTodoを書いていこう！
+          </div>
         </div>
 
         <div v-for="(obj, index) in List" :key="index">
@@ -22,7 +25,7 @@
                 icon="sun"
                 class="sun"
                 v-on:click="check(obj.id)"
-                style="display: none;"
+                style="display: block;"
               />
             </div>
             <div class="card-contents" v-on:click="openModal(obj.id)">
@@ -34,82 +37,98 @@
               </div>
             </div>
             <div class="edit_icons">
-              <font-awesome-icon icon="trash-alt" class="icon" v-on:click="openDialog(obj.id)"/>
-              <font-awesome-icon icon="edit" class="icon" v-on:click="openModal(obj.id)"/>
+              <font-awesome-icon
+                icon="trash-alt"
+                class="icon"
+                v-on:click="openDialog(obj.id)"
+              />
+              <font-awesome-icon
+                icon="edit"
+                class="icon"
+                v-on:click="openModal(obj.id)"
+              />
             </div>
           </div>
         </div>
         <div class="new_goal">
           <div class="icon">
-            <font-awesome-icon icon="plus" v-on:click="openNewModal()"/>
+            <font-awesome-icon icon="plus" v-on:click="openNewModal()" />
           </div>
         </div>
         <!-- モーダルについて -->
         <div class="overlay" v-show="showContent">
           <div class="content modal_base">
-              <div class="page-title">
-                <div class="card-status-icon window red">
-                  <font-awesome-icon icon="times-circle" class="process-icon" v-on:click="closeModal"/>
-                </div>
-                <div class="window_title">EDIT TODO</div>
-                
+            <div class="page-title">
+              <div class="card-status-icon window red">
+                <font-awesome-icon
+                  icon="times-circle"
+                  class="process-icon"
+                  v-on:click="closeModal"
+                />
               </div>
-              <div class="modal_content_area">
-                <div class="modal_todo_title">
-                  <div class="modal_icon">
-                    <font-awesome-icon icon="edit" />
-                  </div>
-                  <input type="text" v-model="text" class="input_text" />
+              <div class="window_title">EDIT TODO</div>
+            </div>
+            <div class="modal_content_area">
+              <div class="modal_todo_title">
+                <div class="modal_icon">
+                  <font-awesome-icon icon="edit" />
                 </div>
-                <div class="modal_time">
-                  <div class="modal_icon">
-                    <font-awesome-icon icon="clock" />
-                  </div>
-                  <input type="date" v-model="timelimit" class="input_data" />
+                <input type="text" v-model="text" class="input_text" />
+              </div>
+              <div class="modal_time">
+                <div class="modal_icon">
+                  <font-awesome-icon icon="clock" />
                 </div>
-                <div class="modal_submit">
-                  <button
-                    v-on:click="edittodo(editingId)"
-                    class="process-submit"
-                  >
-                    ➡︎
-                  </button>
-                </div>
+                <input type="date" v-model="timelimit" class="input_data" />
+              </div>
+              <div class="modal_submit">
+                <button v-on:click="edittodo(editingId)" class="process-submit">
+                  ➡︎
+                </button>
               </div>
             </div>
+          </div>
         </div>
 
         <div class="overlay" v-show="showContent2">
           <div class="content modal_base">
-              <div class="page-title">
-                <div class="card-status-icon window red">
-                  <font-awesome-icon icon="times-circle" class="process-icon" v-on:click="closeNewModal"/>
-                </div>
-                <div class="window_title">NEW TODO</div>
+            <div class="page-title">
+              <div class="card-status-icon window red">
+                <font-awesome-icon
+                  icon="times-circle"
+                  class="process-icon"
+                  v-on:click="closeNewModal"
+                />
               </div>
-              <div class="modal_content_area">
-                <div class="modal_todo_title">
-                  <div class="modal_icon">
-                    <font-awesome-icon icon="edit" />
-                  </div>
-                  <input type="text" v-model="text" class="input_text" placeholder="Todo作成"/>
+              <div class="window_title">NEW TODO</div>
+            </div>
+            <div class="modal_content_area">
+              <div class="modal_todo_title">
+                <div class="modal_icon">
+                  <font-awesome-icon icon="edit" />
                 </div>
-                <div class="modal_time">
-                  <div class="modal_icon">
-                    <font-awesome-icon icon="clock" />
-                  </div>
-                  <input type="date" v-model="timelimit" class="input_data" />
+                <input
+                  type="text"
+                  v-model="text"
+                  class="input_text"
+                  placeholder="Todo作成"
+                />
+              </div>
+              <div class="modal_time">
+                <div class="modal_icon">
+                  <font-awesome-icon icon="clock" />
                 </div>
-                <div class="modal_submit">
-                  <button v-on:click="addlist" class="process-submit">
-                    ➡︎
-                  </button>
-                </div>
+                <input type="date" v-model="timelimit" class="input_data" />
+              </div>
+              <div class="modal_submit">
+                <button v-on:click="addlist" class="process-submit">
+                  ➡︎
+                </button>
               </div>
             </div>
+          </div>
         </div>
 
-       
         <dialog id="dg1" class="dg1">
           <p>削除してもいいですか？</p>
           <button
@@ -119,7 +138,11 @@
           >
             YEN
           </button>
-          <button v-on:click="closeDialog()" v-on:keydown.Enter="closeDialog()" class="answer choice">
+          <button
+            v-on:click="closeDialog()"
+            v-on:keydown.Enter="closeDialog()"
+            class="answer choice"
+          >
             NO
           </button>
         </dialog>
@@ -128,7 +151,7 @@
   </div>
 </template>
 
-<script >
+<script>
 // @ is an alias to /src
 import firebase from "firebase";
 import store from "../store";
@@ -372,10 +395,37 @@ export default {
           return obj;
         });
         this.$store.dispatch("setTodoAction", { todos: newTodos });
-        if (this.List.status == false) {
-          this.cloud = 1;
-        } else {
-          this.sun = 1;
+      })
+      .then(() => {
+        for (var i = 0; i < this.List.length; i++) {
+          const cloudstatus = document.getElementById(
+            "cloud" + this.List[i].id
+          );
+          const sunstatus = document.getElementById("sun" + this.List[i].id);
+          console.log(cloudstatus);
+          console.log(sunstatus);
+          firebase
+            .firestore()
+            .collection("todo")
+            .doc(this.List[i].id)
+            .get()
+            .then(doc => {
+              this.status = doc.data().status;
+            })
+            .then(() => {
+              console.log(this.status);
+              if (this.status == false) {
+                cloudstatus.style.display = "block";
+                sunstatus.style.display = "none";
+              } else {
+                cloudstatus.style.display = "none";
+                sunstatus.style.display = "block";
+              }
+            })
+            .catch(function(error) {
+              console.log("Error getting document:", error);
+            });
+          console.log(this.List[i].id, this.status);
         }
       });
   },
@@ -413,166 +463,177 @@ export default {
   max-width: 1440px;
   min-width: 300px;
 
- .home {
-  margin: auto;
 
-  .goal-area {
-    max-width: 650px;
-    min-width: 300px;
+  .home {
     margin: auto;
+
+    .goal-area {
+      max-width: 650px;
+      min-width: 300px;
+      margin: auto;
+
     
-      .page-title-todo{
-        width: 100%;
-        height: 50px;
-        font-family: "Noto Sans JP";
-        font-weight: bold;
-        font-size: 24px;
-        color: #3d9e8d;
-        line-height: 50px;
-        letter-spacing: 0.05em;
-        text-align: center;
-      
-      }
-      .card-base {
-        width: 80%;
-        height: 50px;
-        background-color: white;
-        display: flex;
-        padding: 10px;
-        border-radius: 10px;
-        margin: 10px auto;
-        min-width: 300px;
-
-        /* アイコンに関して */
-        .card-status-icon {
-          width: 50px;
-          font-size: 25px;
-          color: pink;
-          margin: auto;
+        .page-title-todo {
+          width: 100%;
+          height: 50px;
+          font-family: "Noto Sans JP";
+          font-weight: bold;
+          font-size: 24px;
+          color: #3d9e8d;
+          line-height: 50px;
+          letter-spacing: 0.05em;
           text-align: center;
-          .cloud{
-            color: grey;
-          }
-          .sun{
-            color: orange;
-          }
         }
-        .edit_icons {
-          font-size: 17gipx;
-          margin: auto;
+        .page-title-message {
+          width: 100%;
+          height: 50px;
+          font-family: "Noto Sans JP";
+          font-weight: bold;
+          font-size: 15.5px;
+          line-height: 25px;
+          letter-spacing: 0.05em;
           text-align: center;
-
-          .icon{
-            width: 30px;
-          }
         }
-        .card-contents {
-          width: 285px;
+        .card-base {
+          width: 80%;
+          height: 50px;
+          background-color: white;
+          display: flex;
+          padding: 10px;
+          border-radius: 10px;
+          margin: 10px auto;
+          min-width: 300px;
 
-          .card-contents-title {
-            height: 26px;
-            font-weight: bold;
-            font-size: 15.5px;
-            line-height: 25px;
+          /* アイコンに関して */
+          .card-status-icon {
+            width: 50px;
+            font-size: 25px;
+            color: pink;
+            margin: auto;
+            text-align: center;
+            .cloud {
+              color: grey;
+            }
+            .sun {
+              color: orange;
+            }
           }
-          .card-contents-timelimit {
-            height: 20px;
-            font-family: "Noto Sans JP";
-            font-weight: normal;
-            font-size: 10px;
-            line-height: 20px;
-            color: #757575;
+          .edit_icons {
+            font-size: 17gipx;
+            margin: auto;
+            text-align: center;
+
+            .icon {
+              width: 30px;
+            }
           }
-        }
+          .card-contents {
+            width: 285px;
+
+            .card-contents-title {
+              height: 26px;
+              font-weight: bold;
+              font-size: 15.5px;
+              line-height: 25px;
+            }
+            .card-contents-timelimit {
+              height: 20px;
+              font-family: "Noto Sans JP";
+              font-weight: normal;
+              font-size: 10px;
+              line-height: 20px;
+              color: #757575;
+            }
+          }
+        
       }
     }
   }
-}
-.modal_content_area {
-  width: 300px;
-  height: 150px;
-  margin: auto;
-  background-color: #f8f8f8;
-}
-
-.modal_todo_title {
-  width: 100%;
-  height: 35px;
-  font-weight: 500;
-  text-align: center;
-  padding: 10px 0px;
-  display: flex;
-}
-
-.input_text {
-  font-weight: 500;
-  font-size: 130%;
-}
-
-.modal_time {
-  display: flex;
-}
-.modal_submit {
-  text-align: center;
-  height: 50px;
-}
-
-.process-submit {
-  width: 44px;
-  height: 44px;
-  border-radius: 50%; /*角丸*/
-  background-color: #3d9e8d;
-  border: none;
-  font-weight: 900;
-  font-size: 24px;
-  line-height: 44px;
-  color: white;
-  margin-top: 10px;
-}
-.modal_icon {
-  width: 40px;
-  text-align: center;
-  font-size: 1.33333em;
-}
-
-.window{
-  font-size: 20px;
-  margin-bottom: 10px;
-  text-align: left;
-  display: flex;
-  .process-icon{
-    margin-right: 10px;
+  .modal_content_area {
+    width: 300px;
+    height: 150px;
+    margin: auto;
+    background-color: #f8f8f8;
   }
-    .question{
+
+  .modal_todo_title {
+    width: 100%;
+    height: 35px;
+    font-weight: 500;
+    text-align: center;
+    padding: 10px 0px;
+    display: flex;
+  }
+
+  .input_text {
+    font-weight: 500;
+    font-size: 130%;
+  }
+
+  .modal_time {
+    display: flex;
+  }
+  .modal_submit {
+    text-align: center;
+    height: 50px;
+  }
+
+  .process-submit {
+    width: 44px;
+    height: 44px;
+    border-radius: 50%; /*角丸*/
+    background-color: #3d9e8d;
+    border: none;
+    font-weight: 900;
+    font-size: 24px;
+    line-height: 44px;
+    color: white;
+    margin-top: 10px;
+  }
+  .modal_icon {
+    width: 40px;
+    text-align: center;
+    font-size: 1.33333em;
+  }
+
+  .window {
+    font-size: 20px;
+    margin-bottom: 10px;
+    text-align: left;
+    display: flex;
+    .process-icon {
+      margin-right: 10px;
+    }
+    .question {
       color: black;
       font-size: 15px;
       padding-right: 20px;
     }
-}
-.window_title{
-  text-align: center;
-  margin: auto;
-}
-.page-title{
-  width: 100%;
-  height: 50px;
-  font-family: "Noto Sans JP";
-  font-weight: bold;
-  font-size: 24px;
-  color: #3d9e8d;
-  line-height: 50px;
-  letter-spacing: 0.05em;
-  text-align: center;
-  display: flex;
-}
-.from-process{
-  text-align: center;
-  .process-title-main{
+  }
+  .window_title {
+    text-align: center;
+    margin: auto;
+  }
+  .page-title {
+    width: 100%;
+    height: 50px;
+    font-family: "Noto Sans JP";
+    font-weight: bold;
+    font-size: 24px;
+    color: #3d9e8d;
+    line-height: 50px;
+    letter-spacing: 0.05em;
+    text-align: center;
+    display: flex;
+  }
+  .from-process {
+    text-align: center;
+    .process-title-main {
       font-weight: bold;
       font-size: 15px;
       line-height: 45px;
       text-align: center;
+    }
   }
 }
-
 </style>
