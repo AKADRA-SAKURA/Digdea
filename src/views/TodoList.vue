@@ -136,7 +136,7 @@
             v-on:keydown.Enter="closeDialog()"
             class="answer"
           >
-            YEN
+            YES
           </button>
           <button
             v-on:click="closeDialog()"

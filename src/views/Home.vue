@@ -406,6 +406,7 @@ export default {
       font-family: "Noto Sans JP";
       font-weight: bold;
       font-size: 15px;
+ 
       line-height: 30px;
       letter-spacing: 0.05em;
       text-align: center;
