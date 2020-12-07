@@ -1,23 +1,6 @@
 <template>
   <div>
-    <button @click="toggleWeekends">toggle weekends</button>
     <FullCalendar :options="calendarOptions" />
-    <!-- モーダル -->
-    <div class="example-modal-window">
-      <button @click="openModal">開く</button>
-      <!-- コンポーネント MyModal -->
-      <Modal @close="closeModal" v-if="modal">
-        <!-- default スロットコンテンツ -->
-        <p>Vue.js Modal Window!</p>
-        <div><input v-model="message" /></div>
-        <!-- /default -->
-        <!-- footer スロットコンテンツ -->
-        <template slot="footer">
-          <button @click="doSend">送信</button>
-        </template>
-        <!-- /footer -->
-      </Modal>
-    </div>
   </div>
 </template>
 
@@ -25,14 +8,13 @@
 import FullCalendar from "@fullcalendar/vue";
 import dayGridPlugin from "@fullcalendar/daygrid";
 import interactionPlugin from "@fullcalendar/interaction";
-import Modal from "../components/modal.vue";
 // import TodoList from './TodoList'
 import { mapGetters } from "vuex";
 
 export default {
   components: {
     FullCalendar, // make the <FullCalendar> tag available
-    Modal,
+  
     // TodoList,
   },
   computed: {
@@ -54,24 +36,6 @@ export default {
     this.addEvent();
   },
   methods: {
-    toggleWeekends: function() {
-      this.calendarOptions.weekends = !this.calendarOptions.weekends; // toggle the boolean!
-    },
-    openModal() {
-      this.modal = true;
-    },
-    closeModal() {
-      this.modal = false;
-    },
-    doSend() {
-      if (this.message.length > 0) {
-        alert(this.message);
-        this.message = "";
-        this.closeModal();
-      } else {
-        alert("メッセージを入力してください");
-      }
-    },
     // イベントを追加する関数
     addEvent() {
       this.calendarOptions.events = this.$store.getters.allTodos;
@@ -88,3 +52,31 @@ export default {
   },
 };
 </script>
+<style lang="scss">
+.fc-toolbar-chunk{
+  display: flex;
+  .fc-event-title {
+    background-color: #3d9e8d;
+  }
+}
+.fc-view-harness{
+  background-color: white;
+}
+.fc-event-title{
+    background-color: #3d9e8d;
+
+}
+.fc .fc-view-harness-active > .fc-view {
+    height: 500px;
+}
+.fc {
+  height: 630px;
+}
+
+.fc .fc-daygrid-day-frame {
+    position: relative;
+    min-height: 100%;
+    height: 75px;
+}
+
+</style>
