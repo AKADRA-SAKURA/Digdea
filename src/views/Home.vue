@@ -117,7 +117,7 @@
         </div>
       </div>
     </div>
-    <dialog id="dg1" class="dg1">
+    <dialog id="dg1" class="dg1" v-show="deleteLog">
       <p>削除してもいいですか？</p>
       <button
         v-on:click="deletegoal(editingId)"
@@ -155,6 +155,7 @@ export default {
       showContent: false,
       showContent2: false,
       editingId: "",
+      deleteLog: false,
     };
   },
   methods: {
@@ -176,6 +177,7 @@ export default {
     },
     openDialog(index) {
       this.editingId = index;
+      this.deleteLog = true;
       document.getElementById("dg1").show();
     },
     closeDialog() {
@@ -385,10 +387,10 @@ export default {
   margin: auto;
 
   .goal-area {
-  max-width: 650px;
-  min-width: 300px;
-  margin: auto;
-  
+    max-width: 650px;
+    min-width: 300px;
+    margin: auto;
+
     .page-title {
       width: 100%;
       height: 50px;

@@ -1,21 +1,36 @@
 <template>
   <div class="Process">
     <div class="page-title">PROCESS</div>
-      <div class="goal-show">
-        <div class="goal-show-title">{{ goaltitle }}
-      </div>
+    <div class="goal-show">
+      <div class="goal-show-title">{{ goaltitle }}</div>
       <div class="process-area">
-        <div class="question">ゴールを達成するためにやるべきことを記入しよう！</div>
-        <div class="process-box" v-for="(obj, index) in processlisttype" :key="index">
+        <div class="question">
+          ゴールを達成するためにやるべきことを記入しよう！
+        </div>
+        <div
+          class="process-box"
+          v-for="(obj, index) in processlisttype"
+          :key="index"
+        >
           <div class="process-content">
             <div class="process-content-box">
               <div class="process-title" v-on:click="openModal(obj.id)">
-                <span >{{ obj.title }}</span>
+                <span>{{ obj.title }}</span>
               </div>
-              <button class="tassei-button" v-on:click="truedata(obj.id)">達成率</button>
+              <button class="tassei-button" v-on:click="truedata(obj.id)">
+                達成率
+              </button>
               <div class="icons">
-                <font-awesome-icon icon="trash-alt" class="icon" v-on:click="openDialog(obj.id)"/>
-                <font-awesome-icon icon="list" class="icon" v-on:click="ToToDo(index)"/>
+                <font-awesome-icon
+                  icon="trash-alt"
+                  class="icon"
+                  v-on:click="openDialog(obj.id)"
+                />
+                <font-awesome-icon
+                  icon="list"
+                  class="icon"
+                  v-on:click="ToToDo(index)"
+                />
               </div>
             </div>
           </div>
@@ -24,9 +39,12 @@
           <div class="process-content new">
             <div class="process-content-box new-box">
               <div class="process-title new-title">
-                <font-awesome-icon icon="plus" class="new-icon" v-on:click="openNewModal()"/>
+                <font-awesome-icon
+                  icon="plus"
+                  class="new-icon"
+                  v-on:click="openNewModal()"
+                />
               </div>
-              
             </div>
           </div>
         </div>
@@ -39,9 +57,13 @@
         <div class="process-base">
           <!-- タイトル -->
           <div class="process-cotent modal-title">
-             <!-- 閉じる -->
+            <!-- 閉じる -->
             <div class="card-status-icon window red">
-              <font-awesome-icon icon="times-circle" class="process-icon" v-on:click="closeNewModal"/>
+              <font-awesome-icon
+                icon="times-circle"
+                class="process-icon"
+                v-on:click="closeNewModal"
+              />
             </div>
           </div>
           <!-- Todo -->
@@ -150,7 +172,6 @@
           <button v-on:click="addprocess" class="process-submit">
             ➡︎
           </button>
-      
         </div>
       </div>
     </div>
@@ -158,15 +179,18 @@
     <div class="overlay" v-show="showContent">
       <div class="content">
         <div class="process-base">
-         
           <!-- タイトル -->
           <div class="process-cotent modal-title">
             <!-- 閉じる -->
             <div class="card-status-icon window red">
-              <font-awesome-icon icon="times-circle" class="process-icon" v-on:click="closeModal"/>
+              <font-awesome-icon
+                icon="times-circle"
+                class="process-icon"
+                v-on:click="closeModal"
+              />
             </div>
           </div>
-           <!-- Todo -->
+          <!-- Todo -->
           <div class="process-cotent">
             <div class="process-cotent-title-area">
               <div class="card-status-icon">
@@ -191,10 +215,7 @@
               <div class="process-cotent-title">現状</div>
             </div>
             <div class="process-cotent-input-area">
-              <textarea
-                v-model="now"
-                class="process-cotent-input"
-              />
+              <textarea v-model="now" class="process-cotent-input" />
             </div>
           </div>
           <!-- 考えられる原因 -->
@@ -206,10 +227,7 @@
               <div class="process-cotent-title">考えられる要因</div>
             </div>
             <div class="process-cotent-input-area">
-              <textarea
-                v-model="factor"
-                class="process-cotent-input"
-              />
+              <textarea v-model="factor" class="process-cotent-input" />
             </div>
           </div>
           <!-- 理想状態に向けて -->
@@ -221,18 +239,27 @@
               <div class="process-cotent-title">理想状態に向けて</div>
             </div>
             <div class="process-cotent-input-area">
-              <textarea
-                v-model="need"
-                class="process-cotent-input"
-              />
+              <textarea v-model="need" class="process-cotent-input" />
             </div>
           </div>
           <div class="number-area">
             <div class="number-box">
-              緊急度:<input type="number" v-model="emerge" class="number-box" min="1" max="10" />
+              緊急度:<input
+                type="number"
+                v-model="emerge"
+                class="number-box"
+                min="1"
+                max="10"
+              />
             </div>
             <div class="number-box">
-              重要度:<input type="number" v-model="essential" class="number-box" min="1" max="10" />
+              重要度:<input
+                type="number"
+                v-model="essential"
+                class="number-box"
+                min="1"
+                max="10"
+              />
             </div>
           </div>
           <!-- メモ -->
@@ -244,10 +271,7 @@
               <div class="process-cotent-title">メモ</div>
             </div>
             <div class="process-cotent-input-area">
-              <textarea
-                v-model="memo"
-                class="process-cotent-input"
-              />
+              <textarea v-model="memo" class="process-cotent-input" />
             </div>
           </div>
           <button v-on:click="editprocess(editingId)" class="process-submit">
@@ -265,7 +289,11 @@
       >
         YEN
       </button>
-      <button v-on:click="closeDialog()" v-on:keydown.Enter="closeDialog()" class="answer choice">
+      <button
+        v-on:click="closeDialog()"
+        v-on:keydown.Enter="closeDialog()"
+        class="answer choice"
+      >
         NO
       </button>
     </dialog>
@@ -292,10 +320,12 @@ export default {
       emerge: "",
       memo: "",
       nowtime: "00:00:00",
+      TIME: "00:00:00",
       showContent: false,
       showContent2: false,
       editingId: "",
       trueList: [],
+      idx: "",
     };
   },
   methods: {
@@ -381,6 +411,7 @@ export default {
         date.getMinutes() +
         ":" +
         date.getSeconds();
+      this.TIME = this.nowtime;
 
       firebase
         .firestore()
@@ -396,9 +427,23 @@ export default {
           created_at: this.nowtime,
           user_id: store.state.now_user_id,
           goal_id: store.getters.getGoalId,
+        })
+        .then(() => {
+          firebase
+            .firestore()
+            .collection("process")
+            .where("created_at", "==", this.TIME)
+            .get()
+            .then(doc => {
+              this.closeNewModal();
+              this.clearbox();
+              console.log(doc.data());
+              this.idx = doc.data().id;
+              this.ToToDo(this.idx);
+            });
         });
-      this.clearbox();
-      this.closeNewModal();
+
+      /*       
       firebase
         .firestore()
         .collection("process")
@@ -412,7 +457,7 @@ export default {
               ...doc.data(),
             });
           });
-        });
+        }); */
     },
     deleteprocess(index) {
       firebase
@@ -484,7 +529,6 @@ export default {
               ...doc.data(),
             });
           });
-          /*           console.log(this.List); */
         })
         .then(() => {
           firebase
@@ -575,16 +619,16 @@ export default {
     min-width: 300px;
     border-radius: 10px;
     overflow: auto;
-    .modal-title{
+    .modal-title {
       display: flex;
       padding-right: 30px;
-      .title-only-input{
+      .title-only-input {
         margin: auto;
       }
     }
-    .window{
+    .window {
       font-size: 20px;
-      
+
       text-align: left;
     }
   }
@@ -596,28 +640,28 @@ export default {
   text-align: center;
   margin: auto;
   .page-title {
-      width: 100%;
-      height: 50px;
-      font-family: "Noto Sans JP";
-      font-weight: bold;
-      font-size: 24px;
-      color: #3d9e8d;
-      line-height: 50px;
-      letter-spacing: 0.05em;
-      text-align: center;
-    }
-  .process-area{
+    width: 100%;
+    height: 50px;
+    font-family: "Noto Sans JP";
+    font-weight: bold;
+    font-size: 24px;
+    color: #3d9e8d;
+    line-height: 50px;
+    letter-spacing: 0.05em;
+    text-align: center;
+  }
+  .process-area {
     display: flex;
     flex-wrap: wrap;
     padding: 0px 20px;
-    justify-content:space-evenly;
-    
-    .process-box{
+    justify-content: space-evenly;
+
+    .process-box {
       width: 150px;
       margin: 20px 0px;
       color: white;
 
-      .process-content{
+      .process-content {
         width: 140px;
         height: 140px;
         border-radius: 50%;
@@ -625,16 +669,15 @@ export default {
         margin: auto;
         max-width: 200px;
 
-        .process-title{
+        .process-title {
           font-weight: bold;
           font-size: 15px;
           line-height: 45px;
           align-items: center;
           height: 45px;
           padding-top: 20px;
-          
         }
-        .tassei-button{
+        .tassei-button {
           border: 2px solid #3d9e8d;
           box-sizing: border-box;
           border-radius: 10px;
@@ -642,22 +685,26 @@ export default {
           color: #3d9e8d;
         }
         .icons {
-            font-size: 20px;
-            margin: auto;
-            text-align: center;
+          font-size: 20px;
+          margin: auto;
+          text-align: center;
 
-            .icon{
-              width: 30px;
-            }
+          .icon {
+            width: 30px;
           }
+        }
       }
-      .new{
-        background-image: radial-gradient(#fff 68%, transparent 68% 70%, #fff 70%),
-        repeating-conic-gradient(currentColor 0% 3%, transparent 3% 5%);
-        .new-box{
+      .new {
+        background-image: radial-gradient(
+            #fff 68%,
+            transparent 68% 70%,
+            #fff 70%
+          ),
+          repeating-conic-gradient(currentColor 0% 3%, transparent 3% 5%);
+        .new-box {
           padding-top: 30px;
 
-          .new-title{
+          .new-title {
             font-size: 30px;
             color: #3d9e8d;
           }
@@ -666,12 +713,11 @@ export default {
     }
   }
 
-  .process-content-box{
+  .process-content-box {
     margin: auto;
-    
   }
 
-  .goal-show{
+  .goal-show {
     width: 95%;
     margin: auto;
     border-radius: 10px;
@@ -679,22 +725,21 @@ export default {
     max-width: 750px;
     min-width: 300px;
 
-    .goal-show-title{
+    .goal-show-title {
       width: 100%;
       height: 50px;
       font-weight: bold;
       font-size: 15.5px;
       line-height: 50px;
-      border-bottom: 1px solid #F0F0F0;
+      border-bottom: 1px solid #f0f0f0;
     }
   }
-  .question{
+  .question {
     width: 100%;
     height: 20px;
     font-size: 13px;
     padding: 10px 0px;
   }
-  
 }
 .goal-show-base {
   width: 80%;
@@ -718,8 +763,7 @@ export default {
     }
   }
 
-
-  .process-title{
+  .process-title {
     width: 70%;
     height: 25px;
     font-weight: bold;
@@ -727,7 +771,7 @@ export default {
     line-height: 22px;
     border: 0.5px solid #f2e9e3;
     border-radius: 5px;
-    
+
     align-items: center;
     text-align: center;
   }
@@ -746,12 +790,11 @@ export default {
     border-radius: 5px;
   }
 
-
   .process-cotent-title-area {
     height: 30px;
     display: flex;
 
-    .card-status-icon{
+    .card-status-icon {
       width: 40px;
       font-size: 20px;
       line-height: 30px;
@@ -770,20 +813,18 @@ export default {
     margin: 10px auto;
     display: flex;
     justify-content: space-evenly;
-    
   }
 
   .process-submit {
-  width: 44px;
-  height: 44px;
-  border-radius: 50%; /*角丸*/
-  background-color: #3d9e8d;
-  border: none;
-  font-weight: 900;
-  font-size: 24px;
-  line-height: 44px;
-  color: white;
+    width: 44px;
+    height: 44px;
+    border-radius: 50%; /*角丸*/
+    background-color: #3d9e8d;
+    border: none;
+    font-weight: 900;
+    font-size: 24px;
+    line-height: 44px;
+    color: white;
   }
 }
-
 </style>
