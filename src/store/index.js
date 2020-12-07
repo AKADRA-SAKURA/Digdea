@@ -10,10 +10,7 @@ const store = new Vuex.Store({
     To_Pro_goal_id: null,
     To_Todo_Pro_id: null,
     //カレンダーの内容
-    todos: [
-      { title: "おぬまっち", date: "2020-11-20" },
-      { title: "ホゲホゲ", date: "2020-11-21" },
-    ],
+    todos: [],
   },
   mutations: {
     //メソッド
