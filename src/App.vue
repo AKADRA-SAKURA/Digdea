@@ -90,9 +90,7 @@ body {
   color: orange;
 }
 .dg1{
-    left: 12px;
-    top: 58px;
-    position: fixed;
+ 
     border: none;
     font-weight: bold;
     background: #FFFFFF;

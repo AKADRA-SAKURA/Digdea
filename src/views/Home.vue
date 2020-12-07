@@ -118,7 +118,7 @@
       </div>
     </div>
     <div class="overlay-home" v-show="deleteDialog">
-      <div class="content">
+      <div class="content dg1">
         <p>削除してもいいですか？</p>
         <button v-on:click="deletegoal(editingId)" class="answer">
           YES
