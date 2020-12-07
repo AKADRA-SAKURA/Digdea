@@ -9,7 +9,7 @@
         <input type="password" class="sign" v-model="password" placeholder="パスワード" />
       </div>
       <div class="select">
-        <button class="sign_button " v-on:click="login"><span class="up">LOG IN</span></button>
+        <button class="sign_button" v-on:click="login"><span class="up">LOG IN</span></button>
       </div>
       <div class="sign_button">
         <router-link to="/signup" class="up">SIGN UP</router-link>
@@ -180,7 +180,7 @@ export default {
         color: #383838;
       }
        .select{
-         margin-bottom: 30px;
+         margin: 10px 0px 30px;
          .sign_button{
           background-color: #3d9e8d;
           
