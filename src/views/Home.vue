@@ -148,6 +148,7 @@ export default {
       goalList: [],
       goaltext: "",
       status: false,
+      status2: null,
       timelimit: "",
       nowtime: "00:00:00",
       showContent: false,
@@ -206,6 +207,38 @@ export default {
               ...doc.data(),
             });
           });
+        })
+        .then(() => {
+          for (var i = 0; i < this.List.length; i++) {
+            const cloudstatus = document.getElementById(
+              "cloud" + this.List[i].id
+            );
+            const sunstatus = document.getElementById("sun" + this.List[i].id);
+            console.log(cloudstatus);
+            console.log(sunstatus);
+            firebase
+              .firestore()
+              .collection("todo")
+              .doc(this.List[i].id)
+              .get()
+              .then(doc => {
+                this.status2 = doc.data().status;
+              })
+              .then(() => {
+                console.log(this.status2);
+                if (this.status2 == false) {
+                  cloudstatus.style.display = "block";
+                  sunstatus.style.display = "none";
+                } else {
+                  cloudstatus.style.display = "none";
+                  sunstatus.style.display = "block";
+                }
+              })
+              .catch(function(error) {
+                console.log("Error getting document:", error);
+              });
+            console.log(this.List[i].id, this.status);
+          }
         });
     },
     deletegoal(index) {
@@ -374,6 +407,38 @@ export default {
               console.log("Error getting document:", error);
             });
           console.log(this.goalList[i].id, this.status);
+        }
+      })
+      .then(() => {
+        for (var i = 0; i < this.List.length; i++) {
+          const cloudstatus = document.getElementById(
+            "cloud" + this.List[i].id
+          );
+          const sunstatus = document.getElementById("sun" + this.List[i].id);
+          console.log(cloudstatus);
+          console.log(sunstatus);
+          firebase
+            .firestore()
+            .collection("todo")
+            .doc(this.List[i].id)
+            .get()
+            .then(doc => {
+              this.status2 = doc.data().status;
+            })
+            .then(() => {
+              console.log(this.status2);
+              if (this.status2 == false) {
+                cloudstatus.style.display = "block";
+                sunstatus.style.display = "none";
+              } else {
+                cloudstatus.style.display = "none";
+                sunstatus.style.display = "block";
+              }
+            })
+            .catch(function(error) {
+              console.log("Error getting document:", error);
+            });
+          console.log(this.List[i].id, this.status);
         }
       });
   },
