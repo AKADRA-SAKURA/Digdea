@@ -45,7 +45,7 @@ body {
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  color: #2c3e50;
+  color: #383838;
   background: #f2e9e3;
   min-height: 800px;
   font-family: "Noto Sans JP";
