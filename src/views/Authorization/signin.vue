@@ -106,13 +106,13 @@ export default {
     .sign_title{
       width: 100%;
       font-size: 40px;
-      background-color: blue;
+   
       text-align: center;
     }
     .sign_input_area{
       width: 100%;
       font-size: 30px;
-      background-color:pink;
+   
       text-align: center;
     }
   }

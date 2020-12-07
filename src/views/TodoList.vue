@@ -1,9 +1,11 @@
 <template>
   <div class="base">
-    <div class="base-content">
+    <div class="home">
       <div class="goal-area">
-        <div class="page-title">TODO LIST</div>
-        {{ processtitle }}
+        <div class="page-title-todo">TODO LIST</div>
+        <div class="from-process">
+          <span class="process-title-main">{{ processtitle }}</span>を達成するために・・
+        </div>
 
         <div v-for="(obj, index) in List" :key="index">
           <div class="card-base">
@@ -23,32 +25,34 @@
                 style="display: none;"
               />
             </div>
-            <div class="card-contents">
+            <div class="card-contents" v-on:click="openModal(obj.id)">
               <div class="card-contents-title">
                 {{ obj.todo }}
               </div>
               <div class="card-contents-timelimit">
                 {{ obj.limit }}
               </div>
-              <button v-on:click="openDialog(obj.id)">
-                削除
-              </button>
-              <button v-on:click="openModal(obj.id)">編集</button>
+            </div>
+            <div class="edit_icons">
+              <font-awesome-icon icon="trash-alt" class="icon" v-on:click="openDialog(obj.id)"/>
+              <font-awesome-icon icon="edit" class="icon" v-on:click="openModal(obj.id)"/>
             </div>
           </div>
         </div>
-        <button v-on:click="openNewModal()">新規作成</button>
-
+        <div class="new_goal">
+          <div class="icon">
+            <font-awesome-icon icon="plus" v-on:click="openNewModal()"/>
+          </div>
+        </div>
         <!-- モーダルについて -->
-        <div id="overlay" v-show="showContent">
-          <div id="content">
-            <div id="content" class="modal_base">
+        <div class="overlay" v-show="showContent">
+          <div class="content modal_base">
               <div class="page-title">
-                <font-awesome-icon
-                  icon="window-close"
-                  v-on:click="closeModal"
-                />
-                EDIT TODO
+                <div class="card-status-icon window red">
+                  <font-awesome-icon icon="times-circle" class="process-icon" v-on:click="closeModal"/>
+                </div>
+                <div class="window_title">EDIT TODO</div>
+                
               </div>
               <div class="modal_content_area">
                 <div class="modal_todo_title">
@@ -73,25 +77,22 @@
                 </div>
               </div>
             </div>
-          </div>
         </div>
 
-        <div id="overlay" v-show="showContent2">
-          <div id="content">
-            <div id="content" class="modal_base">
+        <div class="overlay" v-show="showContent2">
+          <div class="content modal_base">
               <div class="page-title">
-                <font-awesome-icon
-                  icon="window-close"
-                  v-on:click="closeNewModal"
-                />
-                新規作成
+                <div class="card-status-icon window red">
+                  <font-awesome-icon icon="times-circle" class="process-icon" v-on:click="closeNewModal"/>
+                </div>
+                <div class="window_title">NEW TODO</div>
               </div>
               <div class="modal_content_area">
                 <div class="modal_todo_title">
                   <div class="modal_icon">
                     <font-awesome-icon icon="edit" />
                   </div>
-                  <input type="text" v-model="text" class="input_text" />
+                  <input type="text" v-model="text" class="input_text" placeholder="Todo作成"/>
                 </div>
                 <div class="modal_time">
                   <div class="modal_icon">
@@ -106,19 +107,20 @@
                 </div>
               </div>
             </div>
-          </div>
         </div>
 
-        <dialog id="dg1">
+       
+        <dialog id="dg1" class="dg1">
           <p>削除してもいいですか？</p>
           <button
             v-on:click="deletetodo(editingId)"
             v-on:keydown.Enter="closeDialog()"
+            class="answer"
           >
-            はい
+            YEN
           </button>
-          <button v-on:click="closeDialog()" v-on:keydown.Enter="closeDialog()">
-            キャンセル
+          <button v-on:click="closeDialog()" v-on:keydown.Enter="closeDialog()" class="answer choice">
+            NO
           </button>
         </dialog>
       </div>
@@ -126,7 +128,7 @@
   </div>
 </template>
 
-<script>
+<script >
 // @ is an alias to /src
 import firebase from "firebase";
 import store from "../store";
@@ -381,7 +383,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-#overlay {
+.overlay {
   z-index: 1;
   position: fixed;
   top: 0;
@@ -393,23 +395,96 @@ export default {
   display: flex;
   align-items: center;
   justify-content: center;
-}
-#content {
-  z-index: 2;
-  width: 300px;
-  height: 200px;
-  padding: 1em;
-  background: #fff;
-  box-shadow: 0px 3px 4px rgba(0, 0, 0, 0.25);
-  border-radius: 10px;
+
+  .content {
+    z-index: 2;
+    width: 85%;
+    height: 220px;
+    background: #fff;
+    max-width: 400px;
+    min-width: 335px;
+    border-radius: 10px;
+    overflow: auto;
+    text-align: center;
+    padding: 10px;
+  }
 }
 .base {
   max-width: 1440px;
   min-width: 375px;
 
-  .base-content {
-    display: flex;
-    flex-wrap: wrap;
+ .home {
+  margin: auto;
+
+  .goal-area {
+    max-width: 650px;
+    min-width: 375px;
+    margin: auto;
+    
+      .page-title-todo{
+        width: 100%;
+        height: 50px;
+        font-family: "Noto Sans JP";
+        font-weight: bold;
+        font-size: 24px;
+        color: #3d9e8d;
+        line-height: 50px;
+        letter-spacing: 0.05em;
+        text-align: center;
+      
+      }
+      .card-base {
+        width: 335px;
+        height: 50px;
+        background-color: white;
+        display: flex;
+        padding: 10px;
+        border-radius: 10px;
+        margin: 10px auto;
+
+        /* アイコンに関して */
+        .card-status-icon {
+          width: 50px;
+          font-size: 25px;
+          color: pink;
+          margin: auto;
+          text-align: center;
+          .cloud{
+            color: grey;
+          }
+          .sun{
+            color: orange;
+          }
+        }
+        .edit_icons {
+          font-size: 20px;
+          margin: auto;
+          text-align: center;
+
+          .icon{
+            width: 30px;
+          }
+        }
+        .card-contents {
+          width: 285px;
+
+          .card-contents-title {
+            height: 26px;
+            font-weight: bold;
+            font-size: 15.5px;
+            line-height: 25px;
+          }
+          .card-contents-timelimit {
+            height: 20px;
+            font-family: "Noto Sans JP";
+            font-weight: normal;
+            font-size: 10px;
+            line-height: 20px;
+            color: #757575;
+          }
+        }
+      }
+    }
   }
 }
 .modal_content_area {
@@ -458,4 +533,45 @@ export default {
   text-align: center;
   font-size: 1.33333em;
 }
+
+.window{
+  font-size: 20px;
+  margin-bottom: 10px;
+  text-align: left;
+  display: flex;
+  .process-icon{
+    margin-right: 10px;
+  }
+    .question{
+      color: black;
+      font-size: 15px;
+      padding-right: 20px;
+    }
+}
+.window_title{
+  text-align: center;
+  margin: auto;
+}
+.page-title{
+  width: 100%;
+  height: 50px;
+  font-family: "Noto Sans JP";
+  font-weight: bold;
+  font-size: 24px;
+  color: #3d9e8d;
+  line-height: 50px;
+  letter-spacing: 0.05em;
+  text-align: center;
+  display: flex;
+}
+.from-process{
+  text-align: center;
+  .process-title-main{
+      font-weight: bold;
+      font-size: 15px;
+      line-height: 45px;
+      text-align: center;
+  }
+}
+
 </style>

@@ -37,45 +37,63 @@
         </div>
       </div>
     </div>
-    <button v-on:click="openNewModal()">新規作成</button>
-
-    <div class="overlay" v-show="showContent">
+    <div class="new_goal">
+      <div class="icon">
+        <font-awesome-icon icon="plus" v-on:click="openNewModal()"/>
+      </div>
+    </div>
+   <!-- 編集 -->
+    <div class="overlay-home" v-show="showContent">
       <div class="content">
-        <p>これがモーダルウィンドウです。</p>
-        目標 :<input type="text" v-model="goaltext" /> 期限 :<input
-          type="date"
-          v-model="timelimit"
-        />
-        <button v-on:click="editgoal(editingId)">
-          送信
-        </button>
-        <button v-on:click="closeModal">Close</button>
+        <div class="home-modal-base">
+          <!-- 閉じる -->
+          <div class="card-status-icon window red">
+            <font-awesome-icon icon="times-circle" class="process-icon" v-on:click="closeModal"/>
+          </div>
+          <div class="process-cotent modal-title">
+            目標 :<input type="text" v-model="goaltext" class="process-title title-only-input" />
+          </div>
+          <div class="process-cotent modal-title">
+            期限 :<input type="date" v-model="timelimit" class="process-title title-only-input"/>
+          </div>
+          <button v-on:click="editgoal(editingId)" class="process-submit">
+            ➡︎
+          </button>
+        </div>
       </div>
     </div>
-
-    <div id="overlay" v-show="showContent2">
-      <p>新規作成</p>
-      <div id="content">
-        目標 :<input type="text" v-model="goaltext" /> 期限 :<input
-          type="date"
-          v-model="timelimit"
-        />
-        <button v-on:click="addgoal">
-          送信
-        </button>
-        <button v-on:click="closeNewModal">Close</button>
+    <!-- 新規作成 -->
+    <div class="overlay-home" v-show="showContent2">
+      <div class="content">
+        <div class="home-modal-base">
+          <!-- 閉じる -->
+          <div class="card-status-icon window red">
+            <font-awesome-icon icon="times-circle" class="process-icon" v-on:click="closeNewModal"/>
+            <div class="question">いつまでに何を達成したいですか？</div>
+          </div>
+          <div class="process-cotent modal-title">
+            目標 :<input type="text" v-model="goaltext" class="process-title title-only-input" placeholder="大きな目標"/> 
+          </div>
+          <div class="process-cotent modal-title">
+            期限 :<input type="date" v-model="timelimit" class="process-title title-only-input"/>
+          </div>
+          <button v-on:click="addgoal" class="process-submit">
+            ➡︎
+          </button>
+        </div>
       </div>
     </div>
-    <dialog id="dg1">
+    <dialog id="dg1" class="dg1">
       <p>削除してもいいですか？</p>
       <button
         v-on:click="deletegoal(editingId)"
         v-on:keydown.Enter="closeDialog()"
+        class="answer"
       >
-        はい
+        YES
       </button>
-      <button v-on:click="closeDialog()" v-on:keydown.Enter="closeDialog()">
-        キャンセル
+      <button v-on:click="closeDialog()" v-on:keydown.Enter="closeDialog()" class="answer choice">
+        NO
       </button>
     </dialog>
   </div>
@@ -327,6 +345,12 @@ export default {
         color: pink;
         margin: auto;
         text-align: center;
+        .cloud{
+          color: grey;
+        }
+        .sun{
+          color: orange;
+        }
       }
       .edit_icons {
         font-size: 20px;
@@ -358,4 +382,97 @@ export default {
     }
   }
 }
+.new_goal{
+  width: 70px;
+  height: 70px;
+  background-color: white;
+  border-radius: 50px;
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  .icon{
+    text-align: center;
+    margin: auto;
+    font-size: 25px;
+    line-height: 70px;
+    color: #3D9E8D;
+    
+  }
+}
+.overlay-home {
+  z-index: 1;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  .content {
+    z-index: 2;
+    width: 85%;
+    height: 190px;
+    background: #fff;
+    max-width: 400px;
+    min-width: 350px;
+    border-radius: 10px;
+    overflow: auto;
+    text-align: center;
+
+    .home-modal-base{
+      padding: 20px;
+
+      .process-title{
+        width: 70%;
+        height: 25px;
+        font-weight: bold;
+        font-size: 15.5px;
+        line-height: 22px;
+        border: 0.5px solid #f2e9e3;
+        border-radius: 5px;
+        
+        align-items: center;
+        text-align: center;
+      }
+      .modal-title{
+        display: flex;
+        padding-right: 30px;
+        .title-only-input{
+          margin: auto;
+        }
+      }
+      .window{
+        font-size: 20px;
+        margin-bottom: 10px;
+        text-align: left;
+        display: flex;
+        .process-icon{
+          margin-right: 10px;
+        }
+         .question{
+            color: black;
+            font-size: 15px;
+            padding-right: 20px;
+          }
+      }
+      .process-submit {
+        width: 44px;
+        height: 44px;
+        border-radius: 50%; /*角丸*/
+        background-color: #3d9e8d;
+        border: none;
+        font-weight: 900;
+        font-size: 24px;
+        line-height: 44px;
+        color: white;
+        margin: 10px;
+      }
+    }
+  }
+}
+
 </style>
