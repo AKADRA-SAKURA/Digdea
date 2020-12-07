@@ -280,23 +280,25 @@
         </div>
       </div>
     </div>
-    <dialog id="dg1" class="dg1" v-show="deleteDialog">
-      <p>削除してもいいですか？</p>
-      <button
-        v-on:click="deleteprocess(editingId)"
-        v-on:keydown.Enter="closeDialog()"
-        class="answer"
-      >
-        YEN
-      </button>
-      <button
-        v-on:click="closeDialog()"
-        v-on:keydown.Enter="closeDialog()"
-        class="answer choice"
-      >
-        NO
-      </button>
-    </dialog>
+    <div class="overlay-home" v-show="deleteDialog">
+      <div class="content">
+        <p>削除してもいいですか？</p>
+        <button
+          v-on:click="deleteprocess(editingId)"
+          v-on:keydown.Enter="closeDialog()"
+          class="answer"
+        >
+          YEN
+        </button>
+        <button
+          v-on:click="closeDialog()"
+          v-on:keydown.Enter="closeDialog()"
+          class="answer choice"
+        >
+          NO
+        </button>
+      </div>
+    </div>
   </div>
 </template>
 
@@ -362,11 +364,9 @@ export default {
     openDialog(index) {
       this.editingId = index;
       this.deleteDialog = true;
-      document.getElementById("dg1").show();
     },
     closeDialog() {
       this.deleteDialog = false;
-      document.getElementById("dg1").close();
     },
     closeModal: function() {
       this.showContent = false;
@@ -458,7 +458,7 @@ export default {
           alert.error("Error removing document: ", error);
         });
       this.clearbox();
-      document.getElementById("dg1").close();
+      this.closeDialog();
       this.reload();
     },
     editprocess(index) {
