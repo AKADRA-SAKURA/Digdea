@@ -55,19 +55,13 @@ export default {
 <style lang="scss">
 .fc-toolbar-chunk{
   display: flex;
-  .fc-event-title {
-    background-color: #3d9e8d;
-  }
+ 
 }
 .fc-view-harness{
   background-color: white;
 }
-.fc-event-title{
-    background-color: #3d9e8d;
-
-}
 .fc .fc-view-harness-active > .fc-view {
-    height: 500px;
+  height: 500px;
 }
 .fc {
   height: 630px;
@@ -78,5 +72,12 @@ export default {
     min-height: 100%;
     height: 75px;
 }
-
+.fc .fc-button-group > .fc-button {
+    width: 35px;
+  
+}
+.fc .fc-button {
+    padding: 0px;
+  
+}
 </style>
