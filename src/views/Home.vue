@@ -117,7 +117,7 @@
         </div>
       </div>
     </div>
-    <dialog id="dg1" class="dg1" v-show="deleteLog">
+    <dialog id="dg1" class="dg1">
       <p>削除してもいいですか？</p>
       <button
         v-on:click="deletegoal(editingId)"
@@ -155,7 +155,6 @@ export default {
       showContent: false,
       showContent2: false,
       editingId: "",
-      deleteLog: false,
     };
   },
   methods: {
