@@ -43,8 +43,25 @@
             <div class="card-status-icon window red">
               <font-awesome-icon icon="times-circle" class="process-icon" v-on:click="closeNewModal"/>
             </div>
-            <input type="text" v-model="title" class="process-title title-only-input" placeholder="何をする？"/>
           </div>
+          <!-- Todo -->
+          <div class="process-cotent">
+            <div class="process-cotent-title-area">
+              <div class="card-status-icon">
+                <font-awesome-icon icon="thumbtack" class="process-icon" />
+              </div>
+              <div class="process-cotent-title">実行項目</div>
+            </div>
+            <div class="process-cotent-input-area">
+              <input
+                type="text"
+                v-model="title"
+                class="process-cotent-input-text"
+                placeholder="目標のために何をしよう？"
+              />
+            </div>
+          </div>
+
           <!-- 現状 -->
           <div class="process-cotent">
             <div class="process-cotent-title-area">
@@ -61,35 +78,35 @@
               />
             </div>
           </div>
-          <!-- 考えられる原因 -->
+          <!-- 課題 -->
           <div class="process-cotent">
             <div class="process-cotent-title-area">
               <div class="card-status-icon">
                 <font-awesome-icon icon="dizzy" class="process-icon" />
               </div>
-              <div class="process-cotent-title">考えられる原因</div>
+              <div class="process-cotent-title">課題</div>
             </div>
             <div class="process-cotent-input-area">
               <textarea
                 v-model="factor"
                 class="process-cotent-input"
-                placeholder="現状を踏まえて目標達成する上で出来ていないことを書いてみよう！"
+                placeholder="現状を踏まえて目標達成する上での課題を見つけよう！"
               />
             </div>
           </div>
-          <!-- 理想状態に向けて -->
+          <!-- 対策 -->
           <div class="process-cotent">
             <div class="process-cotent-title-area">
               <div class="card-status-icon">
                 <font-awesome-icon icon="sun" class="process-icon" />
               </div>
-              <div class="process-cotent-title">目標達成に向けて</div>
+              <div class="process-cotent-title">対策</div>
             </div>
             <div class="process-cotent-input-area">
               <textarea
                 v-model="need"
                 class="process-cotent-input"
-                placeholder="上二つを踏まえて、目標達成するためにやるべきことを整理しよう！"
+                placeholder="現状と課題から目標達成するためにやるべきことを整理しよう！"
               />
             </div>
           </div>
@@ -148,7 +165,22 @@
             <div class="card-status-icon window red">
               <font-awesome-icon icon="times-circle" class="process-icon" v-on:click="closeModal"/>
             </div>
-            <input type="text" v-model="title" class="process-title title-only-input"/>
+          </div>
+           <!-- Todo -->
+          <div class="process-cotent">
+            <div class="process-cotent-title-area">
+              <div class="card-status-icon">
+                <font-awesome-icon icon="thumbtack" class="process-icon" />
+              </div>
+              <div class="process-cotent-title">実行項目</div>
+            </div>
+            <div class="process-cotent-input-area">
+              <input
+                type="text"
+                v-model="title"
+                class="process-cotent-input-text"
+              />
+            </div>
           </div>
           <!-- 現状 -->
           <div class="process-cotent">
@@ -706,6 +738,14 @@ export default {
     border: 0.5px solid #f2e9e3;
     border-radius: 5px;
   }
+  .process-cotent-input-text {
+    height: 30px;
+    width: 100%;
+    font-size: 15px;
+    border: 0.5px solid #f2e9e3;
+    border-radius: 5px;
+  }
+
 
   .process-cotent-title-area {
     height: 30px;

@@ -4,8 +4,10 @@
       <div class="goal-area">
         <div class="page-title-todo">TODO LIST</div>
         <div class="from-process">
-          <span class="process-title-main">{{ processtitle }}</span
-          >を達成するために・・
+          <div class="page-title-message">
+            {{ processtitle }}について<br>
+            具体的なTodoを書いていこう！
+          </div>
         </div>
 
         <div v-for="(obj, index) in List" :key="index">
@@ -462,169 +464,176 @@ export default {
   min-width: 300px;
 
 
- .home {
-  margin: auto;
-
-  .goal-area {
-    max-width: 650px;
-    min-width: 300px;
+  .home {
     margin: auto;
 
     .goal-area {
       max-width: 650px;
-      min-width: 375px;
+      min-width: 300px;
       margin: auto;
 
-      .page-title-todo {
-        width: 100%;
-        height: 50px;
-        font-family: "Noto Sans JP";
-        font-weight: bold;
-        font-size: 24px;
-        color: #3d9e8d;
-        line-height: 50px;
-        letter-spacing: 0.05em;
-        text-align: center;
-      }
-      .card-base {
-        width: 80%;
-        height: 50px;
-        background-color: white;
-        display: flex;
-        padding: 10px;
-        border-radius: 10px;
-        margin: 10px auto;
-        min-width: 300px;
-
-        /* アイコンに関して */
-        .card-status-icon {
-          width: 50px;
-          font-size: 25px;
-          color: pink;
-          margin: auto;
+    
+        .page-title-todo {
+          width: 100%;
+          height: 50px;
+          font-family: "Noto Sans JP";
+          font-weight: bold;
+          font-size: 24px;
+          color: #3d9e8d;
+          line-height: 50px;
+          letter-spacing: 0.05em;
           text-align: center;
-          .cloud {
-            color: grey;
-          }
-          .sun {
-            color: orange;
-          }
         }
-        .edit_icons {
-          font-size: 17gipx;
-          margin: auto;
+        .page-title-message {
+          width: 100%;
+          height: 50px;
+          font-family: "Noto Sans JP";
+          font-weight: bold;
+          font-size: 15.5px;
+          line-height: 25px;
+          letter-spacing: 0.05em;
           text-align: center;
-
-          .icon {
-            width: 30px;
-          }
         }
-        .card-contents {
-          width: 285px;
+        .card-base {
+          width: 80%;
+          height: 50px;
+          background-color: white;
+          display: flex;
+          padding: 10px;
+          border-radius: 10px;
+          margin: 10px auto;
+          min-width: 300px;
 
-          .card-contents-title {
-            height: 26px;
-            font-weight: bold;
-            font-size: 15.5px;
-            line-height: 25px;
+          /* アイコンに関して */
+          .card-status-icon {
+            width: 50px;
+            font-size: 25px;
+            color: pink;
+            margin: auto;
+            text-align: center;
+            .cloud {
+              color: grey;
+            }
+            .sun {
+              color: orange;
+            }
           }
-          .card-contents-timelimit {
-            height: 20px;
-            font-family: "Noto Sans JP";
-            font-weight: normal;
-            font-size: 10px;
-            line-height: 20px;
-            color: #757575;
+          .edit_icons {
+            font-size: 17gipx;
+            margin: auto;
+            text-align: center;
+
+            .icon {
+              width: 30px;
+            }
           }
-        }
+          .card-contents {
+            width: 285px;
+
+            .card-contents-title {
+              height: 26px;
+              font-weight: bold;
+              font-size: 15.5px;
+              line-height: 25px;
+            }
+            .card-contents-timelimit {
+              height: 20px;
+              font-family: "Noto Sans JP";
+              font-weight: normal;
+              font-size: 10px;
+              line-height: 20px;
+              color: #757575;
+            }
+          }
+        
       }
     }
   }
-}
-.modal_content_area {
-  width: 300px;
-  height: 150px;
-  margin: auto;
-  background-color: #f8f8f8;
-}
-
-.modal_todo_title {
-  width: 100%;
-  height: 35px;
-  font-weight: 500;
-  text-align: center;
-  padding: 10px 0px;
-  display: flex;
-}
-
-.input_text {
-  font-weight: 500;
-  font-size: 130%;
-}
-
-.modal_time {
-  display: flex;
-}
-.modal_submit {
-  text-align: center;
-  height: 50px;
-}
-
-.process-submit {
-  width: 44px;
-  height: 44px;
-  border-radius: 50%; /*角丸*/
-  background-color: #3d9e8d;
-  border: none;
-  font-weight: 900;
-  font-size: 24px;
-  line-height: 44px;
-  color: white;
-  margin-top: 10px;
-}
-.modal_icon {
-  width: 40px;
-  text-align: center;
-  font-size: 1.33333em;
-}
-
-.window {
-  font-size: 20px;
-  margin-bottom: 10px;
-  text-align: left;
-  display: flex;
-  .process-icon {
-    margin-right: 10px;
+  .modal_content_area {
+    width: 300px;
+    height: 150px;
+    margin: auto;
+    background-color: #f8f8f8;
   }
-  .question {
-    color: black;
-    font-size: 15px;
-    padding-right: 20px;
-  }
-}
-.window_title {
-  text-align: center;
-  margin: auto;
-}
-.page-title {
-  width: 100%;
-  height: 50px;
-  font-family: "Noto Sans JP";
-  font-weight: bold;
-  font-size: 24px;
-  color: #3d9e8d;
-  line-height: 50px;
-  letter-spacing: 0.05em;
-  text-align: center;
-  display: flex;
-}
-.from-process {
-  text-align: center;
-  .process-title-main {
-    font-weight: bold;
-    font-size: 15px;
-    line-height: 45px;
+
+  .modal_todo_title {
+    width: 100%;
+    height: 35px;
+    font-weight: 500;
     text-align: center;
+    padding: 10px 0px;
+    display: flex;
+  }
+
+  .input_text {
+    font-weight: 500;
+    font-size: 130%;
+  }
+
+  .modal_time {
+    display: flex;
+  }
+  .modal_submit {
+    text-align: center;
+    height: 50px;
+  }
+
+  .process-submit {
+    width: 44px;
+    height: 44px;
+    border-radius: 50%; /*角丸*/
+    background-color: #3d9e8d;
+    border: none;
+    font-weight: 900;
+    font-size: 24px;
+    line-height: 44px;
+    color: white;
+    margin-top: 10px;
+  }
+  .modal_icon {
+    width: 40px;
+    text-align: center;
+    font-size: 1.33333em;
+  }
+
+  .window {
+    font-size: 20px;
+    margin-bottom: 10px;
+    text-align: left;
+    display: flex;
+    .process-icon {
+      margin-right: 10px;
+    }
+    .question {
+      color: black;
+      font-size: 15px;
+      padding-right: 20px;
+    }
+  }
+  .window_title {
+    text-align: center;
+    margin: auto;
+  }
+  .page-title {
+    width: 100%;
+    height: 50px;
+    font-family: "Noto Sans JP";
+    font-weight: bold;
+    font-size: 24px;
+    color: #3d9e8d;
+    line-height: 50px;
+    letter-spacing: 0.05em;
+    text-align: center;
+    display: flex;
+  }
+  .from-process {
+    text-align: center;
+    .process-title-main {
+      font-weight: bold;
+      font-size: 15px;
+      line-height: 45px;
+      text-align: center;
+    }
   }
 }
 </style>

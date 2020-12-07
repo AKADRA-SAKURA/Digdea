@@ -2,6 +2,7 @@
   <div class="home">
     <div class="goal-area">
       <div class="page-title">GOALS</div>
+      <div class="page-title-message">達成したい課題を書いてみよう！</div>
       <div v-for="(obj, index) in goalList" :key="index">
         <div class="card-base">
           <div class="card-status-icon">
@@ -93,7 +94,7 @@
               class="process-icon"
               v-on:click="closeNewModal"
             />
-            <div class="question">いつまでに何を達成したいですか？</div>
+            <div class="question">いつまでに何をする？</div>
           </div>
           <div class="process-cotent modal-title">
             目標 :<input
@@ -396,6 +397,16 @@ export default {
       font-size: 24px;
       color: #3d9e8d;
       line-height: 50px;
+      letter-spacing: 0.05em;
+      text-align: center;
+    }
+    .page-title-message {
+      width: 100%;
+      height: 30px;
+      font-family: "Noto Sans JP";
+      font-weight: bold;
+      font-size: 15px;
+      line-height: 30px;
       letter-spacing: 0.05em;
       text-align: center;
     }
