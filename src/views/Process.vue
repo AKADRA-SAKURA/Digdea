@@ -540,7 +540,7 @@ export default {
     height: 650px;
     background: #fff;
     max-width: 750px;
-    min-width: 350px;
+    min-width: 300px;
     border-radius: 10px;
     overflow: auto;
     .modal-title{
@@ -560,7 +560,7 @@ export default {
 
 .Process {
   max-width: 1000px;
-  min-width: 375px;
+  min-width: 300px;
   text-align: center;
   margin: auto;
   .page-title {
@@ -645,7 +645,7 @@ export default {
     border-radius: 10px;
     background-color: white;
     max-width: 750px;
-    min-width: 350px;
+    min-width: 300px;
 
     .goal-show-title{
       width: 100%;

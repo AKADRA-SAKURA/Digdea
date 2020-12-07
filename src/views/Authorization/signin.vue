@@ -1,20 +1,21 @@
 <template>
   <div class="Sign_area">
-    <div class="sign_title">SIGN IN</div>
+    <div class="sign_title">Welcome</div>
     <div class="sign_input_area">
       <div class="sign_input">
-        <input type="email" v-model="email" placeholder="example@mail.com" />
+        <input type="email" class="sign" v-model="email" placeholder="example@mail.com" />
       </div>
       <div class="sign_input">
-        <input type="password" v-model="password" placeholder="パスワード" />
+        <input type="password" class="sign" v-model="password" placeholder="パスワード" />
+      </div>
+      <div class="select">
+        <button class="sign_button" v-on:click="login"><span class="up">LOG IN</span></button>
       </div>
       <div class="sign_button">
-        <button v-on:click="login">LOG IN</button>
+        <router-link to="/signup" class="up">SIGN UP</router-link>
       </div>
-      <div class="sign_button">
-        <button v-on:click="google">Googleアカウントでログイン</button>
-      </div>
-      <router-link to="/signup">初めての方はこちら</router-link> |
+      <button class="google_button" v-on:click="google">Googleアカウントでログイン</button>
+
     </div>
   </div>
 </template>
@@ -103,17 +104,94 @@ export default {
 <style lang="scss">
   .Sign_area{
     margin: auto;
+    width: 85%;
+    max-width: 400px;
+    min-width: 300px;
+    border-radius: 10px;
+    text-align: center;
+    background-color: white;
+    padding-bottom: 30px;
+
+     
+    
+  
     .sign_title{
       width: 100%;
+      height: 50px;
       font-size: 40px;
-   
+      font-size: 15.5px;
+      line-height: 50px;
+      font-weight: bold;
+      border-bottom: 1px solid #F0F0F0;
       text-align: center;
     }
     .sign_input_area{
-      width: 100%;
+      width: 80%;
       font-size: 30px;
-   
-      text-align: center;
+      margin: auto;
+      color: #383838;
+      
+      .sign_input{
+        display: flex;
+        
+
+        .sign{
+          width: 70%;
+          height: 25px;
+          font-weight: bold;
+          font-size: 15.5px;
+          line-height: 22px;
+          border: 0.5px solid #f2e9e3;
+          border-radius: 5px;
+          align-items: center;
+          text-align: center;
+          margin: 10px auto;
+        }
+        
+      }
+      .sign_button{
+          border: 1px solid #3d9e8d;
+          box-sizing: border-box;
+          border-radius: 10px;
+          background-color: white;
+          width: 75px;
+          height: 30px;
+          margin: 5px auto;
+          display: flex;
+          font-weight: bold;
+
+      }
+      
+     
+
+      .google_button{
+        border: 1px solid #3d9e8d;
+        box-sizing: border-box;
+        border-radius: 10px;
+        background-color: white;
+
+        font-size: 13px;
+        height: 35px;
+      }
+      .up{
+        font-size: 13px;
+        text-decoration: none;
+        margin: auto;
+        color: #383838;
+      }
+       .select{
+         margin: 10px 0px 30px;
+         .sign_button{
+          background-color: #3d9e8d;
+          
+            .up{
+              color: white;
+            }
+          }
+       }
+    
     }
+    
   }
+   
 </style>
