@@ -1,4 +1,4 @@
-# diy
+# Digdea
 
 ## Project setup
 ```
